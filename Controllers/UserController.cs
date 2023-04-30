@@ -4,8 +4,7 @@ using DMApp.Dtos;
 using DMApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using DmApp.HelperClasses;
-using DmAppAPI.Dtos;
+using DMApp.HelperClasses;
 
 namespace DMApp.Controllers
 {
@@ -36,15 +35,15 @@ namespace DMApp.Controllers
             return BadRequest(error: JsonConvert.SerializeObject(response));
         }
 
-        [HttpPost]
-        public ActionResult<UserReadDto> CreateUser([FromForm] UserCreateDto userCreateDto)
+        [HttpPost("/SignIn")]
+        public ActionResult<UserReadDto> CreateUser([FromBody] UserCreateDto userCreateDto)
         {
-            var userModel = _mapper.Map<User>(userCreateDto);
+            User userModel = _mapper.Map<User>(userCreateDto);
 
             _repository.CreateUser(userModel);
             _repository.SaveChanges();
 
-            var userReadDto = _mapper.Map<UserReadDto>(userModel);
+            UserReadDto userReadDto = _mapper.Map<UserReadDto>(userModel);
 
             return Ok(userReadDto);
         }

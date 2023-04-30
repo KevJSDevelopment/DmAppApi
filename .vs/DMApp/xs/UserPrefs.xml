@@ -1,0 +1,47 @@
+﻿<Properties StartupConfiguration="{487F0B0E-38F5-4118-8352-A580318D592C}|DmAppApi">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Properties/launchSettings.json">
+    <Files>
+      <File FileName="Data/DMAppContext.cs" Line="27" Column="27" IsPinned="True" />
+      <File FileName="Properties/launchSettings.json" Line="24" Column="57" />
+      <File FileName="Program.cs" />
+      <File FileName="Startup.cs" Line="41" Column="68" />
+      <File FileName="appsettings.json" Line="10" Column="133" />
+      <File FileName="Controllers/UserController.cs" Line="29" Column="57" />
+      <File FileName="Data/SqlUserRepo.cs" Line="44" Column="20" />
+      <File FileName="Data/IUserRepo.cs" Line="1" Column="1" />
+      <File FileName="Models/User.cs" Line="12" Column="64" />
+      <File FileName="Dtos/UserCreateDto.cs" Line="16" Column="2" />
+      <File FileName="Controllers/CharacterController.cs" Line="31" Column="70" />
+      <File FileName="HelperClasses/FileHelper.cs" Line="11" Column="72" />
+      <File FileName="Data/IUserRepo (copy).cs" Line="11" Column="13" />
+      <File FileName="Data/SqlCahracterRepo.cs" Line="17" Column="35" />
+      <File FileName="Migrations/20230430172914_initial.cs" Line="8" Column="26" />
+      <File FileName="Migrations/DMAppContextModelSnapshot.cs" Line="1" Column="1" />
+      <File FileName="Migrations/20230430042240_InitialCreate.cs" Line="1" Column="1" />
+      <File FileName="Dtos/CharacterReadDto.cs" Line="10" Column="1" />
+      <File FileName="Dtos/UserLoginDto.cs" Line="11" Column="23" />
+      <File FileName="Dtos/UserReadDto.cs" Line="17" Column="39" />
+      <File FileName="Dtos/UserUpdateDto.cs" Line="13" Column="23" />
+      <File FileName="Models/Character.cs" Line="16" Column="21" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DMApp" expanded="True">
+            <Node name="DMApp" expanded="True" selected="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Properties" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.DMApp PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+</Properties>

@@ -1,6 +1,6 @@
 using DMApp.Models;
 
-namespace DmApp.HelperClasses
+namespace DMApp.HelperClasses
 {
     public class RequestResponse 
     {

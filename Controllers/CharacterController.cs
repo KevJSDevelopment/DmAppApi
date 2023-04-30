@@ -10,38 +10,48 @@ using PdfSharpCore.Pdf;
 using PdfSharpCore.Pdf.AcroForms;
 using System.Net.Http;
 using System.Threading.Tasks;
-using DmApp;
 using DMApp.Dtos;
+using DMApp.HelperClasses;
+using OpenAI_API.Completions;
+using OpenAI_API.Chat;
+using Microsoft.Extensions.Configuration;
+using OpenAI_API.Models;
+using System.IO;
 
 namespace DMApp.Controllers
 {
     public class CharacterController : Controller
     {
-        private readonly IUserRepo _repository;
+        private readonly ICharacterRepo _repository;
         private readonly IMapper _mapper;
+        private readonly OpenAIAPI _api;
 
-        public CharacterController(IUserRepo repository, IMapper mapper)
+        public CharacterController(ICharacterRepo repository, IMapper mapper, IConfiguration configuration)
         {
+            string? openai_key = configuration.GetValue<string>("OpenAI_Key");
+            string? openai_org = configuration.GetValue<string>("OpenAi_Organization");
             _repository = repository;
             _mapper = mapper;
+            _api = new OpenAIAPI(new APIAuthentication(openai_key, openai_org));
         }
 
-        [HttpPost]
-        public async Task<ActionResult> CreateCharacter([FromBody] dynamic data)
+        [HttpPost("/new-character")]
+        public async Task<ActionResult<Character>> CreateCharacter([FromBody] dynamic data)
         {
             string message = data.message;
             try
             {
-                // var response = await openai.CreateCompletionAsync(new CompletionRequest
-                // {
-                //     Model = "text-davinci-003",
-                //     Prompt = $"{message}",
-                //     MaxTokens = 1000,
-                //     Temperature = 0
-                // });
+                ChatResult response = await _api.Chat.CreateChatCompletionAsync(new ChatRequest()
+                {
+                    Model = Model.ChatGPTTurbo,
+                    Temperature = 0.1,
+                    MaxTokens = 50,
+                    Messages = new ChatMessage[] {
+                        new ChatMessage(ChatMessageRole.User, message)
+                    }
+                });
 
-                // dynamic data = JsonConvert.DeserializeObject<dynamic>(response.Choices[0].Text);
-                // CharacterModel character = await CharacterModel.FindByIdAsync("63f15a8f5990d0403c791e9d");
+                Console.WriteLine(response);
 
                 return Ok(); // Json(new { character });
             }
@@ -53,28 +63,23 @@ namespace DMApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SaveCharacter([FromBody] dynamic data)
+        public ActionResult SaveCharacter([FromBody] CharacterReadDto _characterReadDto)
         {
-            Character character = data.character.ToObject<Character>();
-            //CharacterModel newChar = await CharacterModel.CreateAsync(character);
-            return Json(new { character = character }); // change to newChar
+            Character character = _mapper.Map<Character>(_characterReadDto);
+            _repository.CreateCharacter(character);
+
+            RequestResponse response = new RequestResponse();
+
+            response.Status = 200;
+            response.Message = $"Character{_characterReadDto.Name} created";
+
+            return Ok(response); 
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetCharacter([FromBody] dynamic data)
+        public async Task<ActionResult> GetCharacterSheet([FromBody] CharacterReadDto _characterReadDto)
         {
-            string name = data.name;
-            int age = data.age;
-            int height = data.height;
-            int weight = data.weight;
-            string eyes = data.eyes;
-            string skin = data.skin;
-            string hair = data.hair;
-            string backstory = data.backstory;
-
-            var characterReadDto = _mapper.Map<CharacterReadDto>(data);
-
-            string pdfDataUri = await FileHelper.FillFormAsync(characterReadDto);
+            string pdfDataUri = await FileHelper.FillFormAsync(_characterReadDto);
 
             return File(Convert.FromBase64String(pdfDataUri), "application/pdf", "CharacterSheet.pdf");
         }

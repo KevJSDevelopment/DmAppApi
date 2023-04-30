@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using DMApp.Models;
 
-namespace DmAppAPI.Dtos
+namespace DMApp.Dtos
 {
     public class UserCreateDto
     {
-        public int UserId { get; set; }
         [Required]
-        public string Username { get; set; }
+        public string? Username { get; set; }
         [Required]
-        public string DisplayName { get; set; }
+        public string? Email { get; set; }
         [Required]
-        public string Password { get; set; }
-        public byte[] ImageFiles { get; set; }
-        public ICollection<Character> Characters { get; set; }
+        public string? Password { get; set; }
     }
 }

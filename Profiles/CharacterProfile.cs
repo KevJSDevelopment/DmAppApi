@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DMApp.Dtos;
 using DMApp.Models;
-using DmAppAPI.Dtos;
 
 namespace DMApp.Profiles
 {

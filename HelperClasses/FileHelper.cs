@@ -4,7 +4,7 @@ using PdfSharpCore.Pdf;
 using PdfSharpCore.Pdf.AcroForms;
 using PdfSharpCore.Pdf.IO;
 
-namespace DmApp
+namespace DMApp
 {
     public class FileHelper
     {
