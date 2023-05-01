@@ -17,6 +17,7 @@ using OpenAI_API.Chat;
 using Microsoft.Extensions.Configuration;
 using OpenAI_API.Models;
 using System.IO;
+using DMApp.Utils;
 
 namespace DMApp.Controllers
 {
@@ -36,9 +37,17 @@ namespace DMApp.Controllers
         }
 
         [HttpPost("/new-character")]
-        public async Task<ActionResult<Character>> CreateCharacter([FromBody] dynamic data)
+        public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterReadDto _characterReadDto, [FromQuery] string description)
         {
-            string message = data.message;
+            string propertyList = "";
+
+            foreach (var property in _characterReadDto.GetType().GetProperties())
+            {
+                propertyList = propertyList + "," + property.Name + ": " + _characterReadDto.Name;
+            }
+
+            string message = Prompts.CreateCharacter(propertyList, description);
+
             try
             {
                 ChatResult response = await _api.Chat.CreateChatCompletionAsync(new ChatRequest()
@@ -51,9 +60,9 @@ namespace DMApp.Controllers
                     }
                 });
 
-                Console.WriteLine(response);
+                
 
-                return Ok(); // Json(new { character });
+                return Ok(response); // Json(new { character });
             }
             catch (Exception ex)
             {

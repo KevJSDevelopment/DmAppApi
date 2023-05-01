@@ -36,7 +36,7 @@ namespace DMApp
             var factionImageButton = (PdfButtonField)form.Fields["Faction Symbol Image"];
 
             nameField.Value = new PdfString(characterReadDto.Name);
-            ageField.Value = new PdfString($"{characterReadDto.Age} years");
+            /*ageField.Value = new PdfString($"{characterReadDto.Age} years");
             heightField.Value = new PdfString(characterReadDto.Height);
             weightField.Value = new PdfString($"{characterReadDto.Weight} lbs");
             eyesField.Value = new PdfString(characterReadDto.Eyes);
@@ -45,6 +45,7 @@ namespace DMApp
 
             var backStoryArray = characterReadDto.Background.Split(". ");
             backstoryField.Value = new PdfString(string.Join("\n", backStoryArray));
+            */
 
             var pdfDocumentStream = new System.IO.MemoryStream();
             document.Save(pdfDocumentStream, closeStream: false);

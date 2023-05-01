@@ -15,7 +15,7 @@ namespace DMApp.Models
 
         public User? User { get; set; }
 
-        public int Age { get; set; }
+        public string? Age { get; set; }
 
         public string? Height { get; set; }
 

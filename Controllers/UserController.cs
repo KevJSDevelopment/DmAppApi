@@ -22,7 +22,7 @@ namespace DMApp.Controllers
         [HttpPost("/login")]
         public ActionResult<User> Login(UserLoginDto userLoginDto)
         {
-            var user = _repository.GetUserByUsername(userLoginDto.Username);
+            User user = _repository.GetUserByUsername(userLoginDto.Username);
             if (user != null && user.Password == userLoginDto.Password)
             {
                 return Ok(_mapper.Map<UserReadDto>(user));
