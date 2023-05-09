@@ -10,6 +10,7 @@ namespace DMApp.Profiles
         public CharacterProfile()
         { 
             CreateMap<Character, CharacterReadDto>();
+            CreateMap<CharacterReadDto, Character>();
         }
     }
 }

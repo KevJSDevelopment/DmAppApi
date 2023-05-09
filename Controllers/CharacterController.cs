@@ -18,6 +18,8 @@ using Microsoft.Extensions.Configuration;
 using OpenAI_API.Models;
 using System.IO;
 using DMApp.Utils;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace DMApp.Controllers
 {
@@ -39,30 +41,32 @@ namespace DMApp.Controllers
         [HttpPost("/new-character")]
         public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterReadDto _characterReadDto, [FromQuery] string description)
         {
-            string propertyList = "";
+            string jsonString = JsonConvert.SerializeObject(_characterReadDto);
 
-            foreach (var property in _characterReadDto.GetType().GetProperties())
-            {
-                propertyList = propertyList + "," + property.Name + ": " + _characterReadDto.Name;
-            }
+            // replace the quotes with escaped quotes
+            string escapedJsonString = jsonString.Replace("\"", "\\\"");
+
+            // create a string literal
+            string propertyList = $"\"{escapedJsonString}\"";
 
             string message = Prompts.CreateCharacter(propertyList, description);
-
+            
             try
             {
                 ChatResult response = await _api.Chat.CreateChatCompletionAsync(new ChatRequest()
                 {
                     Model = Model.ChatGPTTurbo,
                     Temperature = 0.1,
-                    MaxTokens = 50,
+                    MaxTokens = 250,
                     Messages = new ChatMessage[] {
                         new ChatMessage(ChatMessageRole.User, message)
                     }
                 });
 
-                
+                CharacterReadDto characterReadDto = JsonConvert.DeserializeObject<CharacterReadDto>(response.Choices[0].Message.Content);
+                Character character = _mapper.Map<Character>(characterReadDto);
 
-                return Ok(response); // Json(new { character });
+                return Json(response); // Json(new { character });
             }
             catch (Exception ex)
             {
