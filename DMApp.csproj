@@ -23,6 +23,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
     <PackageReference Include="OpenAI" Version="1.7.2" />
     <PackageReference Include="PdfSharpCore" Version="1.3.56" />
+    <PackageReference Include="RestSharp" Version="110.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 

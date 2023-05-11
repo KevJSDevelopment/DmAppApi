@@ -20,6 +20,7 @@ using System.IO;
 using DMApp.Utils;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using RestSharp;
 
 namespace DMApp.Controllers
 {
@@ -39,17 +40,11 @@ namespace DMApp.Controllers
         }
 
         [HttpPost("/new-character")]
-        public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterReadDto _characterReadDto, [FromQuery] string description)
+        public async Task<ActionResult<Character>> GenerateCharacters([FromBody] CharacterReadDto _characterReadDto, [FromQuery] string description, [FromForm] int tokens = 250)
         {
-            string jsonString = JsonConvert.SerializeObject(_characterReadDto);
+            string properties = JsonConvert.SerializeObject(_characterReadDto);
 
-            // replace the quotes with escaped quotes
-            string escapedJsonString = jsonString.Replace("\"", "\\\"");
-
-            // create a string literal
-            string propertyList = $"\"{escapedJsonString}\"";
-
-            string message = Prompts.CreateCharacter(propertyList, description);
+            string message = Prompts.CreateCharacter(properties, description);
             
             try
             {
@@ -57,16 +52,27 @@ namespace DMApp.Controllers
                 {
                     Model = Model.ChatGPTTurbo,
                     Temperature = 0.1,
-                    MaxTokens = 250,
+                    MaxTokens = tokens,
                     Messages = new ChatMessage[] {
                         new ChatMessage(ChatMessageRole.User, message)
                     }
                 });
 
-                CharacterReadDto characterReadDto = JsonConvert.DeserializeObject<CharacterReadDto>(response.Choices[0].Message.Content);
-                Character character = _mapper.Map<Character>(characterReadDto);
+                ICollection<CharacterReadDto> characterReadDtos = new List<CharacterReadDto>();
 
-                return Json(response); // Json(new { character });
+                foreach(ChatChoice choice in response.Choices)
+                {
+                    characterReadDtos.Add(JsonConvert.DeserializeObject<CharacterReadDto>(choice.Message.Content));
+                }
+
+                var client = new RestClient("https://cloud.leonardo.ai/api/rest/v1/generations");
+                var request = new RestRequest("POST");
+                request.AddHeader("accept", "application/json");
+                request.AddHeader("content-type", "application/json");
+                request.AddParameter("application/json", "{\"prompt\":\"An oil painting of a cat\",\"negative_prompt\":\"string\",\"modelId\":\"6bef9f1b-29cb-40c7-b9df-32b51c1f67d3\",\"sd_version\":\"v1_5\",\"num_images\":0,\"width\":512,\"height\":512,\"num_inference_steps\":0,\"guidance_scale\":0,\"init_generation_image_id\":\"string\",\"init_image_id\":\"string\",\"init_strength\":0,\"scheduler\":\"KLMS\",\"presetStyle\":\"LEONARDO\",\"tiling\":true,\"public\":true,\"promptMagic\":true,\"controlNet\":true,\"controlNetType\":\"POSE\"}", ParameterType.RequestBody);
+                RestResponse leoResponse = client.Execute(request);
+
+                return Ok(characterReadDtos); // Json(new { character });
             }
             catch (Exception ex)
             {
