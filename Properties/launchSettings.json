@@ -25,8 +25,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "OpenAI_Key": "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",
-        "OpenAi_Organization": "org-NoZJKQcLU2tk0zdcu6wut0va",
-        "Discord_Client_Token": "MTEwNzg1MjkyNjk1NDc3ODYyNQ.GpuOJt.w0fCqKR1PNIaILXVl5mx4wu4o6aEh_G19gNsAQ"
+        "OpenAi_Organization": "org-NoZJKQcLU2tk0zdcu6wut0va"
       },
       "dotnetRunMessages": true
     }
