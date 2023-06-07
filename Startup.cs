@@ -25,8 +25,8 @@ namespace DMApp
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IUserRepo, SqlUserRepo>();
             services.AddScoped<ICharacterRepo, SqlCharacterRepo>();
+            services.AddScoped<ICharacterTokenRepo, SqlCharacterTokenRepo>();
 
             services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 

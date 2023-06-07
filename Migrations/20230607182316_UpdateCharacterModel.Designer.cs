@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DMApp.Migrations
 {
     [DbContext(typeof(DMAppContext))]
-    [Migration("20230430042240_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230607182316_UpdateCharacterModel")]
+    partial class UpdateCharacterModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,11 +33,10 @@ namespace DMApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CharacterId"));
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
+                    b.Property<string>("Age")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Background")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Class")
@@ -48,15 +47,12 @@ namespace DMApp.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Eyes")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Hair")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Height")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -68,69 +64,60 @@ namespace DMApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Skin")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TokenId")
+                    b.Property<int?>("TokenId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Weight")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CharacterId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("TokenId");
 
                     b.ToTable("Characters");
                 });
 
-            modelBuilder.Entity("DMApp.Models.User", b =>
+            modelBuilder.Entity("DMApp.Models.CharacterToken", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("TokenId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TokenId"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("bit");
 
-                    b.HasKey("UserId");
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
 
-                    b.HasAlternateKey("Username")
-                        .HasName("AlternateKey_Username");
+                    b.HasKey("TokenId");
 
-                    b.ToTable("Users");
+                    b.ToTable("CharacterTokens");
                 });
 
             modelBuilder.Entity("DMApp.Models.Character", b =>
                 {
-                    b.HasOne("DMApp.Models.User", "User")
+                    b.HasOne("DMApp.Models.CharacterToken", "Token")
                         .WithMany("Characters")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("TokenId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("User");
+                    b.Navigation("Token");
                 });
 
-            modelBuilder.Entity("DMApp.Models.User", b =>
+            modelBuilder.Entity("DMApp.Models.CharacterToken", b =>
                 {
                     b.Navigation("Characters");
                 });

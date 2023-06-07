@@ -1,40 +1,50 @@
 ﻿<Properties StartupConfiguration="{487F0B0E-38F5-4118-8352-A580318D592C}|DmAppApi">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Applications/DmAppApi/Controllers/CharacterTokenController.cs" relfile="Controllers/CharacterTokenController.cs" line="89" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.DMApp PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/CharacterController.cs">
     <Files>
-      <File FileName="Data/DMAppContext.cs" Line="27" Column="27" IsPinned="True" />
-      <File FileName="Properties/launchSettings.json" Line="29" Column="10" />
-      <File FileName="Program.cs" Line="20" Column="1" />
-      <File FileName="Startup.cs" Line="6" Column="16" />
-      <File FileName="appsettings.json" Line="10" Column="133" />
-      <File FileName="Controllers/UserController.cs" />
-      <File FileName="Data/SqlUserRepo.cs" />
-      <File FileName="Data/IUserRepo.cs" />
-      <File FileName="Models/User.cs" />
-      <File FileName="Dtos/UserCreateDto.cs" />
-      <File FileName="Controllers/CharacterController.cs" Line="24" Column="88" />
+      <File FileName="Controllers/CharacterController.cs" Line="66" Column="18" />
       <File FileName="Data/SqlCahracterRepo.cs" />
-      <File FileName="Migrations/20230430172914_initial.cs" />
-      <File FileName="Migrations/DMAppContextModelSnapshot.cs" />
-      <File FileName="Migrations/20230430042240_InitialCreate.cs" />
-      <File FileName="Dtos/CharacterReadDto.cs" Line="7" Column="9" />
-      <File FileName="Dtos/UserLoginDto.cs" />
-      <File FileName="Dtos/UserReadDto.cs" />
-      <File FileName="Dtos/UserUpdateDto.cs" />
-      <File FileName="Models/Character.cs" Line="17" Column="1" />
+      <File FileName="Dtos/CharacterReadDto.cs" />
+      <File FileName="Utils/Prompts.cs" />
+      <File FileName="Models/Character.cs" />
+      <File FileName="appsettings.json" />
+      <File FileName="Properties/launchSettings.json" />
+      <File FileName="Data/DMAppContext.cs" />
+      <File FileName="Data/ICharacterRepo.cs" />
       <File FileName="Profiles/CharacterProfile.cs" />
-      <File FileName="Profiles/UsersProfile.cs" />
-      <File FileName="Utils/RequestResponse.cs" Line="1" Column="1" />
-      <File FileName="Utils/Prompts.cs" Line="13" Column="87" />
-      <File FileName="appsettings.Development.json" Line="1" Column="1" />
+      <File FileName="Models/ErrorViewModel.cs" />
+      <File FileName="Models/CharacterToken.cs" />
+      <File FileName="Data/ICharacterTokenRepo.cs" />
+      <File FileName="Utils/RequestResponse.cs" />
+      <File FileName="Utils/FileHelper.cs" />
+      <File FileName="Program.cs" />
+      <File FileName="Startup.cs" />
+      <File FileName="Views/User/Index.cshtml" />
+      <File FileName=".gitignore" />
+      <File FileName="Migrations/DMAppContextModelSnapshot.cs" />
+      <File FileName="Dtos/CharacterImageDto.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="DMApp" expanded="True">
             <Node name="DMApp" expanded="True">
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="CharacterController.cs" selected="True" />
+              </Node>
+              <Node name="Data" expanded="True" />
+              <Node name="Dtos" expanded="True" />
+              <Node name="Migrations" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Profiles" expanded="True" />
               <Node name="Properties" expanded="True" />
-              <Node name="Program.cs" selected="True" />
+              <Node name="Utils" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -46,11 +56,4 @@
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Applications/DmAppApi/Controllers/CharacterController.cs" relfile="Controllers/CharacterController.cs" line="56" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.DMApp PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

@@ -9,6 +9,8 @@ using OpenAI_API.Chat;
 using OpenAI_API.Models;
 using DMApp.Utils;
 using Newtonsoft.Json;
+using RestSharp;
+using Discord.Net.Rest;
 
 namespace DMApp.Controllers
 {
@@ -17,6 +19,7 @@ namespace DMApp.Controllers
         private readonly ICharacterRepo _repository;
         private readonly IMapper _mapper;
         private readonly OpenAIAPI _api;
+        private readonly string? _neural_love_token;
 
         public CharacterController(ICharacterRepo repository, IMapper mapper)
         {
@@ -27,16 +30,27 @@ namespace DMApp.Controllers
             _api = new OpenAIAPI(new APIAuthentication(openai_key, openai_org));
         }
 
-        [HttpPost("/new-character")]
-        public async Task<ActionResult<Character>> GenerateCharacters([FromBody] CharacterReadDto _characterReadDto, [FromQuery] string description, [FromForm] int tokens = 250)
+        [HttpGet("/characters/{characterId}")]
+        public ActionResult GetCharacterById(int characterId)
+        {
+            Character character = _repository.GetCharacterById(characterId);
+
+            CharacterReadDto characterReadDto = _mapper.Map<CharacterReadDto>(character);
+
+            return Ok(characterReadDto);
+        }
+
+
+        [HttpPost("/characters/new")]
+        public async Task<ActionResult<Character>> GenerateCharacters([FromBody] CharacterReadDto _characterReadDto, [FromForm] int tokens = 250)
         {
             string properties = JsonConvert.SerializeObject(_characterReadDto);
 
-            string message = Prompts.CreateCharacter(properties, description);
+            string message = Prompts.CreateCharacter(properties);
             
             try
             {
-                ChatResult response = await _api.Chat.CreateChatCompletionAsync(new ChatRequest()
+                ChatResult chatResponse = await _api.Chat.CreateChatCompletionAsync(new ChatRequest()
                 {
                     Model = Model.ChatGPTTurbo,
                     Temperature = 0.1,
@@ -46,11 +60,26 @@ namespace DMApp.Controllers
                     }
                 });
 
-                ICollection<CharacterReadDto> characterReadDtos = new List<CharacterReadDto>();
+                IList<CharacterReadDto> characterReadDtos = new List<CharacterReadDto>();
 
-                foreach(ChatChoice choice in response.Choices)
+                foreach(ChatChoice choice in chatResponse.Choices)
                 {
-                    characterReadDtos.Add(JsonConvert.DeserializeObject<CharacterReadDto>(choice.Message.Content));
+                    Character character = JsonConvert.DeserializeObject<Character>(choice.Message.Content);
+
+                    character = _repository.CreateCharacter(character);
+                    if (_repository.SaveChanges())
+                    {
+                        CharacterReadDto characterReadDto = _mapper.Map<CharacterReadDto>(character);
+                        characterReadDtos.Add(characterReadDto);
+                    }
+                    else
+                    {
+                        RequestResponse response = new RequestResponse();
+                        response.Status = 500;
+                        response.Message = $"Failed to create character {character.Name}";
+
+                        return BadRequest(error: JsonConvert.SerializeObject(response));
+                    }
                 }
 
                 return Ok(characterReadDtos); // Json(new { character });
@@ -62,39 +91,47 @@ namespace DMApp.Controllers
             }
         }
 
-        [HttpPost("/character-image")]
-        public async Task<ActionResult> GenerateCharacterImages([FromBody] CharacterReadDto characterReadDto)
+        [HttpPatch("/characters/{characterId}")] // update this
+        public ActionResult SaveCharacterImage(int characterId, int tokenId)
         {
-            var image = await _api.ImageGenerations.CreateImageAsync(new OpenAI_API.Images.ImageGenerationRequest()
-            {
-                Prompt = Prompts.CreateCharacterImage(JsonConvert.SerializeObject(characterReadDto)),
-                NumOfImages = 1,
-                Size = OpenAI_API.Images.ImageSize._1024
-            });
+            Character character = _repository.GetCharacterById(characterId);
 
-            return Ok(image);
+            return Ok(character);
         }
 
-        [HttpPost]
-        public ActionResult SaveCharacter([FromBody] CharacterReadDto _characterReadDto)
+        [HttpGet("/characters/characterPDF/{characterId}")]
+        public async Task<ActionResult> GetCharacterSheet(int characterId)
         {
-            Character character = _mapper.Map<Character>(_characterReadDto);
-            _repository.CreateCharacter(character);
+            Character character = _repository.GetCharacterById(characterId);
 
-            RequestResponse response = new RequestResponse();
+            CharacterReadDto characterReadDto = _mapper.Map<CharacterReadDto>(character);
 
-            response.Status = 200;
-            response.Message = $"Character{_characterReadDto.Name} created";
-
-            return Ok(response); 
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> GetCharacterSheet([FromBody] CharacterReadDto _characterReadDto)
-        {
-            string pdfDataUri = await FileHelper.FillFormAsync(_characterReadDto);
+            string pdfDataUri = await FileHelper.FillFormAsync(characterReadDto);
 
             return File(Convert.FromBase64String(pdfDataUri), "application/pdf", "CharacterSheet.pdf");
+        }
+
+        [HttpDelete("/characters/{characterId}")]
+        public ActionResult DeleteCharacter(int characterId)
+        {
+            Character character = _repository.GetCharacterById(characterId);
+            string name = character.Name;
+
+            _repository.DeleteCharacter(character);
+
+            RequestResponse response = new RequestResponse();
+            if(_repository.SaveChanges())
+            {
+                response.Status = 200;
+                response.Message = $"{name} was deleted";
+            }
+            else
+            {
+                response.Status = 500;
+                response.Message = $"Failed to delete character {name}";
+            }
+
+            return Ok(response);
         }
     }
 }

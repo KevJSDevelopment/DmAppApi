@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata;
 
 namespace DMApp.Models
 {
@@ -11,11 +12,14 @@ namespace DMApp.Models
         [Required] public string? Class { get; set; }
 
         [Required] public string? Race { get; set; }
-        [Required] public int UserId { get; set; }
 
-        public User? User { get; set; }
+        public int? TokenId { get; set; }
+
+        public CharacterToken? Token { get; set; }
 
         public string? Age { get; set; }
+
+        public string? Sex { get; set; }
 
         public string? Height { get; set; }
 
@@ -28,8 +32,6 @@ namespace DMApp.Models
         public string? Hair { get; set; }
 
         public string? Background { get; set; }
-
-        public int TokenId { get; set; }
 
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 

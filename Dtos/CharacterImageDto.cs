@@ -2,10 +2,8 @@
 
 namespace DMApp.Dtos
 {
-    public class CharacterReadDto
+    public class CharacterImageDto
     {
-        public int? CharacterId { get; set; }
-
         public string? Name { get; set; }
 
         public string? Class { get; set; }
@@ -15,10 +13,6 @@ namespace DMApp.Dtos
         public string? Age { get; set; }
 
         public string? Sex { get; set; }
-
-        public string? Height { get; set; }
-
-        public string? Weight { get; set; }
 
         public string? Eyes { get; set; }
 

@@ -10,22 +10,16 @@ namespace DMApp.Data
 
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Character> Characters { get; set; }
+        public DbSet<CharacterToken> CharacterTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-            .HasAlternateKey(k => k.Username)
-            .HasName("AlternateKey_Username");
-
-
             modelBuilder.Entity<Character>()
-            .HasOne(c => c.User)
-            .WithMany(c => c.Characters)
-            .HasForeignKey(c => c.UserId)
+            .HasOne(c => c.Token)
+            .WithMany(t => t.Characters)
+            .HasForeignKey(c => c.TokenId)
             .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }

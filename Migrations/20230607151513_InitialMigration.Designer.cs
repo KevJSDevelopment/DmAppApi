@@ -4,6 +4,7 @@ using DMApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DMApp.Migrations
 {
     [DbContext(typeof(DMAppContext))]
-    partial class DMAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230607151513_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,13 +63,10 @@ namespace DMApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Sex")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Skin")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TokenId")
+                    b.Property<int>("TokenId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedOn")
@@ -112,7 +112,8 @@ namespace DMApp.Migrations
                     b.HasOne("DMApp.Models.CharacterToken", "Token")
                         .WithMany("Characters")
                         .HasForeignKey("TokenId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Token");
                 });

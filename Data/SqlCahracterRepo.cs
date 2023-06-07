@@ -14,14 +14,7 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public User GetUser(int id)
-        {
-            Character character = _context.Characters.FirstOrDefault(c => c.CharacterId == id);
-
-            return _context.Users.FirstOrDefault(u => character.UserId == u.UserId);
-        }
-
-        public void CreateCharacter(Character character)
+        public Character CreateCharacter(Character character)
         {
             if(character == null)
             {
@@ -29,6 +22,9 @@ namespace DMApp.Data
             }
 
             _context.Characters.Add(character);
+            _context.SaveChanges();
+
+            return character;
         }
 
         public void DeleteCharacter(Character character)

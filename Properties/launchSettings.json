@@ -25,7 +25,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "OpenAI_Key": "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",
-        "OpenAi_Organization": "org-NoZJKQcLU2tk0zdcu6wut0va"
+        "OpenAi_Organization": "org-NoZJKQcLU2tk0zdcu6wut0va",
+        "Neural_Love_Token": "v1.75fa439eaa019a815c302ca4df12bb17b75e062d03a63fe914c14c438dc40f9e"
       },
       "dotnetRunMessages": true
     }
