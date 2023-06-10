@@ -6,8 +6,8 @@ namespace DMApp.Data
     public interface IDiscordGuildRepo
     {
         bool SaveChanges();
-        IList<Character> GetCharactersByGuildId(int guildId);
-        void CreateGuild(int guildId);
-        void DeleteGuild(int guildId);
+        IList<Character> GetCharactersByGuildId(long guildId);
+        DiscordGuild CreateGuild(long guildId);
+        void DeleteGuild(long guildId);
     }
 }

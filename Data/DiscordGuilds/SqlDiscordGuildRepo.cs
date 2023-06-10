@@ -17,16 +17,18 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public void CreateGuild(int guildId)
+        public DiscordGuild CreateGuild(long guildId)
         {
-            DiscordGuild guild = _context.DiscordGuilds.FirstOrDefault(g => g.GuildId == guildId);
-
+            DiscordGuild guild = new DiscordGuild();
+            guild.GuildId = guildId;
             if (guild == null)
             {
                 throw new ArgumentNullException(nameof(guild));
             }
 
             _context.DiscordGuilds.Add(guild);
+
+            return guild;
         }
 
         public void DeleteGuild(int guildId)
