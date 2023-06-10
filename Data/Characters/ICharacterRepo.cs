@@ -7,7 +7,7 @@ namespace DMApp.Data
     {
         bool SaveChanges();
         Character GetCharacterById(int id);
-        Character CreateCharacter(Character character);
+        Character CreateCharacter(Character character, long guildId);
         void UpdateCharacter(Character character);
         void DeleteCharacter(Character character);
     }

@@ -12,14 +12,18 @@ namespace DMApp.Data
 
         public DbSet<Character> Characters { get; set; }
         public DbSet<CharacterToken> CharacterTokens { get; set; }
+        public DbSet<DiscordGuild> DiscordGuilds { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Character>()
-            .HasOne(c => c.Token)
-            .WithMany(t => t.Characters)
-            .HasForeignKey(c => c.TokenId)
-            .OnDelete(DeleteBehavior.Restrict);
+               .HasMany(c => c.Guilds)
+               .WithMany(g => g.Characters)
+               .UsingEntity(j => j.ToTable("CharacterGuild"));
+
+            modelBuilder.Entity<Character>()
+               .HasOne(c => c.Token)
+               .WithMany(g => g.Characters);
         }
     }
 }

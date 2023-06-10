@@ -1,18 +1,21 @@
 ﻿using System;
 using DMApp.Dtos;
+using Newtonsoft.Json;
 
 namespace DMApp.Utils
 {
 	public class Prompts
 	{
-		public static string CreateCharacter(string properties)
+		public static string CreateCharacter(string input)
 		{
-			return $"Create a D&D character by creating a json object with key value pairs that match the keys passed in from the properties. " +
-				$"Replace all values that say 'any' with generated values that make sense for the character and that specific key. " +
-				$"Make sure each key and value is formatted with both an opening and closing double quote. " +
-				$"Also make sure the object has an opening and closing curly bracket to make a proper json object. " +
-				$"If description is 'any' then make sure to write a paragraph or two about the character based on the other properties" +
-				$"Properties: {properties}.";
+			CharacterReadDto characterReadDto = new CharacterReadDto();
+
+			string properties = JsonConvert.SerializeObject(characterReadDto);
+
+			return $"Using these input properties: {input}, " +
+				$"create a D&D character and enter values for the character using key value pair formatting using the following keys: {properties}. " +
+				$"Replace values that are 'any' or empty with a value for the given key that makes sense based on the rest of the character properties. " +
+				$"Make sure to write a paragraph or two for the background of the character.";
 		}
 
         public static string CreateCharacterImage(string properties)

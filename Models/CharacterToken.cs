@@ -12,7 +12,8 @@ namespace DMApp.Models
 
         public Byte[]? Image { get; set; }
 
-        public IList<Character>? Characters { get; set; }
+        [Required]
+        public IList<Character>? Characters { get; set; } = new List<Character>();
 
         // Additional properties related to the token
 

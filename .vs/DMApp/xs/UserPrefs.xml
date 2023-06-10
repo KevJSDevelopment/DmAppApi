@@ -1,4 +1,6 @@
 ﻿<Properties StartupConfiguration="{487F0B0E-38F5-4118-8352-A580318D592C}|DmAppApi">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Applications/DmAppApi/Controllers/CharacterTokenController.cs" relfile="Controllers/CharacterTokenController.cs" line="89" column="1" />
@@ -8,7 +10,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/CharacterController.cs">
     <Files>
-      <File FileName="Controllers/CharacterController.cs" Line="66" Column="18" />
+      <File FileName="Controllers/CharacterController.cs" Line="40" Column="1" />
       <File FileName="Data/SqlCahracterRepo.cs" />
       <File FileName="Dtos/CharacterReadDto.cs" />
       <File FileName="Utils/Prompts.cs" />
@@ -29,6 +31,8 @@
       <File FileName=".gitignore" />
       <File FileName="Migrations/DMAppContextModelSnapshot.cs" />
       <File FileName="Dtos/CharacterImageDto.cs" />
+      <File FileName="Controllers/CharacterTokenController.cs" />
+      <File FileName="Data/SqlCharacterTokenRepo.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -49,11 +53,6 @@
           </Node>
         </State>
       </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

@@ -17,6 +17,9 @@ namespace DMApp.Models
 
         public CharacterToken? Token { get; set; }
 
+        [Required]
+        public IList<DiscordGuild> Guilds { get; set; } = new List<DiscordGuild>();
+
         public string? Age { get; set; }
 
         public string? Sex { get; set; }

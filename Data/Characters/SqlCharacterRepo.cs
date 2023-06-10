@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DMApp.Dtos;
 using DMApp.Models;
 
 namespace DMApp.Data
@@ -14,18 +15,23 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public Character CreateCharacter(Character character)
+        public Character CreateCharacter(Character character, long guildId)
         {
-            if(character == null)
+            DiscordGuild guild = _context.DiscordGuilds.FirstOrDefault(g => g.GuildId == guildId);
+
+            if (character == null || guild == null)
             {
                 throw new ArgumentNullException(nameof(character));
             }
+
+            character.Guilds.Add(guild);
 
             _context.Characters.Add(character);
             _context.SaveChanges();
 
             return character;
         }
+
 
         public void DeleteCharacter(Character character)
         {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DMApp.Migrations
 {
     [DbContext(typeof(DMAppContext))]
-    [Migration("20230607153345_UpdateTokenIdNullable")]
-    partial class UpdateTokenIdNullable
+    [Migration("20230610173225_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace DMApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CharacterDiscordGuild", b =>
+                {
+                    b.Property<int>("CharactersCharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("GuildsGuildId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("CharactersCharacterId", "GuildsGuildId");
+
+                    b.HasIndex("GuildsGuildId");
+
+                    b.ToTable("CharacterGuild", (string)null);
+                });
 
             modelBuilder.Entity("DMApp.Models.Character", b =>
                 {
@@ -61,6 +76,9 @@ namespace DMApp.Migrations
 
                     b.Property<string>("Race")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sex")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Skin")
@@ -107,12 +125,45 @@ namespace DMApp.Migrations
                     b.ToTable("CharacterTokens");
                 });
 
+            modelBuilder.Entity("DMApp.Models.DiscordGuild", b =>
+                {
+                    b.Property<long>("GuildId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("GuildId"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("GuildId");
+
+                    b.ToTable("DiscordGuilds");
+                });
+
+            modelBuilder.Entity("CharacterDiscordGuild", b =>
+                {
+                    b.HasOne("DMApp.Models.Character", null)
+                        .WithMany()
+                        .HasForeignKey("CharactersCharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                        .WithMany()
+                        .HasForeignKey("GuildsGuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DMApp.Models.Character", b =>
                 {
                     b.HasOne("DMApp.Models.CharacterToken", "Token")
                         .WithMany("Characters")
-                        .HasForeignKey("TokenId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("TokenId");
 
                     b.Navigation("Token");
                 });

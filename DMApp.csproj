@@ -30,8 +30,14 @@
 
   <ItemGroup>
     <None Remove="Migrations\" />
+    <None Remove="Data\Characters\" />
+    <None Remove="Data\CharacterTokens\" />
+    <None Remove="Data\DiscordGuilds\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Data\Characters\" />
+    <Folder Include="Data\CharacterTokens\" />
+    <Folder Include="Data\DiscordGuilds\" />
   </ItemGroup>
 </Project>

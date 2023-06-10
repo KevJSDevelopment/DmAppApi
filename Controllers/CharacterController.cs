@@ -41,12 +41,12 @@ namespace DMApp.Controllers
         }
 
 
-        [HttpPost("/characters/new")]
-        public async Task<ActionResult<Character>> GenerateCharacters([FromBody] CharacterReadDto _characterReadDto, [FromForm] int tokens = 250)
+        [HttpPost("/characters/new/{guildId}")]
+        public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterCreateDto characterCreateDto, [FromQuery] long guildId = 1077311704985239684, [FromForm] int tokens = 250)
         {
-            string properties = JsonConvert.SerializeObject(_characterReadDto);
+            string input = JsonConvert.SerializeObject(characterCreateDto);
 
-            string message = Prompts.CreateCharacter(properties);
+            string message = Prompts.CreateCharacter(input);
             
             try
             {
@@ -64,9 +64,11 @@ namespace DMApp.Controllers
 
                 foreach(ChatChoice choice in chatResponse.Choices)
                 {
-                    Character character = JsonConvert.DeserializeObject<Character>(choice.Message.Content);
+                    CharacterReadDto characterDto = JsonConvert.DeserializeObject<CharacterReadDto>(choice.Message.Content);
+                    Character character = _mapper.Map<Character>(characterDto);
 
-                    character = _repository.CreateCharacter(character);
+                    character = _repository.CreateCharacter(character, guildId);
+
                     if (_repository.SaveChanges())
                     {
                         CharacterReadDto characterReadDto = _mapper.Map<CharacterReadDto>(character);
