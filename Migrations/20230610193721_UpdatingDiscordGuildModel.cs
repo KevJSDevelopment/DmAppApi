@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DMApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class UpdatingDiscordGuildModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,14 +31,16 @@ namespace DMApp.Migrations
                 name: "DiscordGuilds",
                 columns: table => new
                 {
-                    GuildId = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    GuildId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DiscordGuilds", x => x.GuildId);
+                    table.PrimaryKey("PK_DiscordGuilds", x => x.Id);
+                    table.UniqueConstraint("AK_DiscordGuilds_GuildId", x => x.GuildId);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,11 +79,11 @@ namespace DMApp.Migrations
                 columns: table => new
                 {
                     CharactersCharacterId = table.Column<int>(type: "int", nullable: false),
-                    GuildsGuildId = table.Column<long>(type: "bigint", nullable: false)
+                    GuildsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterGuild", x => new { x.CharactersCharacterId, x.GuildsGuildId });
+                    table.PrimaryKey("PK_CharacterGuild", x => new { x.CharactersCharacterId, x.GuildsId });
                     table.ForeignKey(
                         name: "FK_CharacterGuild_Characters_CharactersCharacterId",
                         column: x => x.CharactersCharacterId,
@@ -89,17 +91,17 @@ namespace DMApp.Migrations
                         principalColumn: "CharacterId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CharacterGuild_DiscordGuilds_GuildsGuildId",
-                        column: x => x.GuildsGuildId,
+                        name: "FK_CharacterGuild_DiscordGuilds_GuildsId",
+                        column: x => x.GuildsId,
                         principalTable: "DiscordGuilds",
-                        principalColumn: "GuildId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterGuild_GuildsGuildId",
+                name: "IX_CharacterGuild_GuildsId",
                 table: "CharacterGuild",
-                column: "GuildsGuildId");
+                column: "GuildsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Characters_TokenId",

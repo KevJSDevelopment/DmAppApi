@@ -27,6 +27,7 @@ namespace DMApp
 
             services.AddScoped<ICharacterRepo, SqlCharacterRepo>();
             services.AddScoped<ICharacterTokenRepo, SqlCharacterTokenRepo>();
+            services.AddScoped<IDiscordGuildRepo, SqlDiscordGuildRepo>();
 
             services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 

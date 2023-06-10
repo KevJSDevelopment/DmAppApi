@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DMApp.Migrations
 {
     [DbContext(typeof(DMAppContext))]
-    [Migration("20230610173225_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230610193721_UpdatingDiscordGuildModel")]
+    partial class UpdatingDiscordGuildModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,12 +30,12 @@ namespace DMApp.Migrations
                     b.Property<int>("CharactersCharacterId")
                         .HasColumnType("int");
 
-                    b.Property<long>("GuildsGuildId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("GuildsId")
+                        .HasColumnType("int");
 
-                    b.HasKey("CharactersCharacterId", "GuildsGuildId");
+                    b.HasKey("CharactersCharacterId", "GuildsId");
 
-                    b.HasIndex("GuildsGuildId");
+                    b.HasIndex("GuildsId");
 
                     b.ToTable("CharacterGuild", (string)null);
                 });
@@ -127,19 +127,24 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("DMApp.Models.DiscordGuild", b =>
                 {
-                    b.Property<long>("GuildId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("GuildId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("GuildId");
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("GuildId");
 
                     b.ToTable("DiscordGuilds");
                 });
@@ -154,7 +159,7 @@ namespace DMApp.Migrations
 
                     b.HasOne("DMApp.Models.DiscordGuild", null)
                         .WithMany()
-                        .HasForeignKey("GuildsGuildId")
+                        .HasForeignKey("GuildsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

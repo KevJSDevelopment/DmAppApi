@@ -24,6 +24,9 @@ namespace DMApp.Data
             modelBuilder.Entity<Character>()
                .HasOne(c => c.Token)
                .WithMany(g => g.Characters);
+
+            modelBuilder.Entity<DiscordGuild>()
+                .HasAlternateKey(g => g.GuildId);
         }
     }
 }

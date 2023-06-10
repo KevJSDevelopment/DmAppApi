@@ -77,7 +77,7 @@ namespace DMApp.Controllers
                     else
                     {
                         RequestResponse response = new RequestResponse();
-                        response.Status = 500;
+                        response.Status = 400;
                         response.Message = $"Failed to create character {character.Name}";
 
                         return BadRequest(error: JsonConvert.SerializeObject(response));

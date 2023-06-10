@@ -21,6 +21,14 @@ namespace DMApp.Data
             _mapper = mapper;
         }
 
+        [HttpGet("/guilds/characters/{guildId}")]
+        public ActionResult GetCharactersByGuildId(long guildId)
+        {
+            IList<Character> characters = _repository.GetCharactersByGuildId(guildId);
+
+            return Ok(characters);
+        }
+
         [HttpPost("/guilds/{guildId}")]
         public ActionResult AddGuild([FromQuery] long guildId = 1077311704985239684)
         {

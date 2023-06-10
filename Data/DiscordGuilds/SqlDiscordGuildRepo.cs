@@ -27,11 +27,12 @@ namespace DMApp.Data
             }
 
             _context.DiscordGuilds.Add(guild);
+            _context.SaveChanges();
 
             return guild;
         }
 
-        public void DeleteGuild(int guildId)
+        public void DeleteGuild(long guildId)
         {
             DiscordGuild guild = _context.DiscordGuilds.FirstOrDefault(g => g.GuildId == guildId);
 
@@ -43,7 +44,7 @@ namespace DMApp.Data
             _context.DiscordGuilds.Remove(guild);
         }
 
-        public IList<Character> GetCharactersByGuildId(int guildId)
+        public IList<Character> GetCharactersByGuildId(long guildId)
         {
             return _context.Characters
             .Where(c => c.Guilds.Any(g => g.GuildId == guildId))

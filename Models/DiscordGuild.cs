@@ -7,6 +7,9 @@ namespace DMApp.Models
     public class DiscordGuild
     {
         [Key]
+        public int Id { get; set; }
+
+        [Required]
         public long GuildId { get; set; }
 
         [Required]
