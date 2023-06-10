@@ -21,12 +21,25 @@ namespace DMApp.Data
             _mapper = mapper;
         }
 
-        [HttpPost("/characters/new/{guildId}")]
+        [HttpPost("/guilds/{guildId}")]
         public ActionResult AddGuild([FromQuery] long guildId = 1077311704985239684)
         {
             DiscordGuild guild = _repository.CreateGuild(guildId);
             if (_repository.SaveChanges()) return Ok(guild);
-            else return BadRequest(new { error = "Unable to save character" });
+            else return BadRequest(new { error = $"Unable to save guild: {guildId}" });
+        }
+
+        [HttpDelete("/guilds/{guildId}")]
+        public ActionResult DeleteGuild([FromQuery] long guildId)
+        {
+            _repository.DeleteGuild(guildId);
+
+            if (_repository.SaveChanges()) return Ok(new {
+                    status = 200,
+                    message = $"Guild successfully deleted: {guildId}"
+                }
+            );
+            else return BadRequest(new { error = $"Unable to delete guild: {guildId}" });
         }
     }
 }
