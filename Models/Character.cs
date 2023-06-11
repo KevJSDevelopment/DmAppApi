@@ -6,38 +6,75 @@ namespace DMApp.Models
 {
     public class Character
     {
-        [Key] public int CharacterId { get; set; }
-        [Required] public string? Name { get; set; }
+        [Key]
+        public int CharacterId { get; set; }
 
-        [Required] public string? Class { get; set; }
+        [Required]
+        public string? Name { get; set; }
 
-        [Required] public string? Race { get; set; }
+        [Required]
+        public string? Class { get; set; }
+
+        [Required]
+        public string? Race { get; set; }
 
         public int? TokenId { get; set; }
-
         public CharacterToken? Token { get; set; }
 
+        // Discord Server information
         [Required]
         public IList<DiscordGuild> Guilds { get; set; } = new List<DiscordGuild>();
 
-        public string? Age { get; set; }
+        // Relationships & Organizations
+        [Required]
+        public IList<Character> Allies { get; set; } = new List<Character>();
+        [Required]
+        public IList<Character> Enemies { get; set; } = new List<Character>();
+        [Required]
+        public IList<Organization> Organizations { get; set; } = new List<Organization>();
 
-        public string? Sex { get; set; }
+        //Ability Scores
+        [Required]
+        public int AbilityScoreId { get; set; }
+        [Required]
+        public AbilityScore AbilityScores { get; set; } = new AbilityScore();
 
-        public string? Height { get; set; }
+        //Skills
+        [Required]
+        public int? SkillSetId { get; set; }
+        [Required]
+        public SkillSet SkillsList { get; set; } = new SkillSet();
 
-        public string? Weight { get; set; }
+        //SavingThrows
+        [Required]
+        public int? SavingThrowsId { get; set; }
+        [Required]
+        public SavingThrows SavingThrows { get; set; } = new SavingThrows();
 
-        public string? Eyes { get; set; }
+        // Background Information
+        [Required]
+        public int BackgroundInfoId { get; set; }
+        [Required]
+        public BackgroundInfo Background { get; set; }
 
-        public string? Skin { get; set; }
+        // Levels & stats
+        public int Level { get; set; } = 1;
+        public int ExperiencePoints { get; set; } = 0;
+        public int ArmorClass { get; set; } = 10;
+        public int CurrentHitPoints { get; set; } = 10;
+        public int MaxHitPoints { get; set; } = 10;
+        public int TemporaryHitPoints { get; set; } = 0;
+        public int Speed { get; set; } = 15;
+        public int ProficiencyBonus { get; set; } = 0;
 
-        public string? Hair { get; set; }
+        public IList<Feature> Features { get; set; } = new List<Feature>();
+        public IList<Trait> Traits { get; set; } = new List<Trait>();
 
-        public string? Background { get; set; }
+        public IList<Item> Items { get; set; } = new List<Item>();
+        public IList<Spell> Spells { get; set; } = new List<Spell>();
+
 
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
-
         public DateTime UpdatedOn { get; set; } = DateTime.UtcNow;
     }
 }
