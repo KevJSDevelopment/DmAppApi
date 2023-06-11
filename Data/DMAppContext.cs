@@ -93,22 +93,22 @@ namespace DMApp.Data
 
             modelBuilder.Entity<Character>()
                 .HasOne(c => c.AbilityScores)
-                .WithOne()
+                .WithOne(a => a.Character)
                 .HasForeignKey<AbilityScore>(a => a.CharacterId);
 
             modelBuilder.Entity<Character>()
                 .HasOne(c => c.SkillsList)
-                .WithOne()
+                .WithOne(s => s.Character)
                 .HasForeignKey<SkillSet>(s => s.CharacterId);
 
             modelBuilder.Entity<Character>()
                 .HasOne(c => c.SavingThrows)
-                .WithOne()
+                .WithOne(st => st.Character)
                 .HasForeignKey<SavingThrows>(s => s.CharacterId);
 
             modelBuilder.Entity<Character>()
                 .HasOne(c => c.Background)
-                .WithOne()
+                .WithOne(b => b.Character)
                 .HasForeignKey<BackgroundInfo>(b => b.CharacterId);
 
             modelBuilder.Entity<Character>()
@@ -116,14 +116,14 @@ namespace DMApp.Data
                 .WithMany(f => f.Characters)
                 .UsingEntity<Dictionary<string, object>>(
                     "CharacterFeature",
-                    j => j.HasOne<Feature>().WithMany().HasForeignKey("FeatureId"),
+                    j => j.HasOne<Feature>().WithMany().HasForeignKey("FeatureId").OnDelete(DeleteBehavior.Restrict),
                     j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
                     j => j.HasKey("FeatureId", "CharacterId")
                 );
 
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Traits)
-                .WithMany()
+                .WithMany(t => t.Characters)
                 .UsingEntity<Dictionary<string, object>>(
                     "CharacterTrait",
                     j => j.HasOne<Trait>().WithMany().HasForeignKey("TraitId"),
@@ -132,18 +132,18 @@ namespace DMApp.Data
                 );
 
             modelBuilder.Entity<Character>()
-                .HasMany(c => c.Items)
-                .WithMany()
-                .UsingEntity<Dictionary<string, object>>(
-                    "CharacterItem",
-                    j => j.HasOne<Item>().WithMany().HasForeignKey("ItemId"),
-                    j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
-                    j => j.HasKey("ItemId", "CharacterId")
-                );
+            .HasMany(c => c.Items)
+            .WithMany(i => i.Characters)
+            .UsingEntity<Dictionary<string, object>>(
+                "CharacterItem",
+                j => j.HasOne<Item>().WithMany().HasForeignKey("ItemId"),
+                j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
+                j => j.HasKey("CharacterId", "ItemId")
+            );
 
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Spells)
-                .WithMany()
+                .WithMany(s => s.Characters)
                 .UsingEntity<Dictionary<string, object>>(
                     "CharacterSpell",
                     j => j.HasOne<Spell>().WithMany().HasForeignKey("SpellId"),
@@ -174,8 +174,11 @@ namespace DMApp.Data
 
             // Configure other models/entities
 
+            // CharacterSeedData.SeedData(modelBuilder);
+
             base.OnModelCreating(modelBuilder);
         }
+
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata;
 
 namespace DMApp.Models
 {
@@ -16,7 +17,6 @@ namespace DMApp.Models
         public string Cost { get; set; }
 
         // Other item properties
-
         public IList<Character> Characters { get; set; } = new List<Character>();
     }
 }

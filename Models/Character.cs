@@ -13,10 +13,13 @@ namespace DMApp.Models
         public string? Name { get; set; }
 
         [Required]
-        public string? Class { get; set; }
-
+        public int RaceId { get; set; }
         [Required]
-        public string? Race { get; set; }
+        public CharacterRace Race { get; set; } = new CharacterRace();
+        [Required]
+        public int ClassId { get; set; }
+        [Required]
+        public CharacterClass Class { get; set; } = new CharacterClass();
 
         public int? TokenId { get; set; }
         public CharacterToken? Token { get; set; }
@@ -55,7 +58,7 @@ namespace DMApp.Models
         [Required]
         public int BackgroundInfoId { get; set; }
         [Required]
-        public BackgroundInfo Background { get; set; }
+        public BackgroundInfo Background { get; set; } = new BackgroundInfo();
 
         // Levels & stats
         public int Level { get; set; } = 1;
