@@ -1,25 +1,29 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Discord;
+using Microsoft.Extensions.Hosting;
 
 namespace DMApp.Models
 {
     public class CharacterToken
     {
+        public CharacterToken()
+        {
+            IsPublic = false;
+            Characters = new List<Character>();
+            CreatedOn = DateTime.UtcNow;
+            UpdatedOn = DateTime.UtcNow;
+        }
+
         [Key]
         public int TokenId { get; set; }
-
         public bool IsPublic { get; set; }
-
         public Byte[]? Image { get; set; }
 
-        [Required]
-        public IList<Character>? Characters { get; set; } = new List<Character>();
+        public IList<Character> Characters { get; set; }
 
-        // Additional properties related to the token
-
-        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
-
-        public DateTime UpdatedOn { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
     }
  
 }

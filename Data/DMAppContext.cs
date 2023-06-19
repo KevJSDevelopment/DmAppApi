@@ -11,15 +11,11 @@ namespace DMApp.Data
         }
 
         public DbSet<Character> Characters { get; set; }
-        public DbSet<CharacterClass> Races { get; set; }
-        public DbSet<CharacterRace> Classes { get; set; }
+        public DbSet<CharacterRace> Races { get; set; }
+        public DbSet<CharacterClass> Classes { get; set; }
         public DbSet<CharacterToken> CharacterTokens { get; set; }
         public DbSet<DiscordGuild> DiscordGuilds { get; set; }
         public DbSet<Organization> Organizations { get; set; }
-        public DbSet<AbilityScore> AbilityScores { get; set; }
-        public DbSet<SkillSet> SkillSets { get; set; }
-        public DbSet<SavingThrows> SavingThrows { get; set; }
-        public DbSet<BackgroundInfo> BackgroundInfos { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Trait> Traits { get; set; }
         public DbSet<Item> Items { get; set; }
@@ -46,6 +42,16 @@ namespace DMApp.Data
                 .HasOne(c => c.Token)
                 .WithMany(t => t.Characters)
                 .HasForeignKey(c => c.TokenId);
+
+            modelBuilder.Entity<Character>()
+                .HasOne(c => c.Race)
+                .WithMany(cr => cr.Characters)
+                .HasForeignKey(c => c.RaceId);
+
+            modelBuilder.Entity<Character>()
+                .HasOne(c => c.Class)
+                .WithMany(cc => cc.Characters)
+                .HasForeignKey(c => c.ClassId);
 
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Guilds)
@@ -90,26 +96,6 @@ namespace DMApp.Data
                     j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
                     j => j.HasKey("OrganizationId", "CharacterId")
                 );
-
-            modelBuilder.Entity<Character>()
-                .HasOne(c => c.AbilityScores)
-                .WithOne(a => a.Character)
-                .HasForeignKey<AbilityScore>(a => a.CharacterId);
-
-            modelBuilder.Entity<Character>()
-                .HasOne(c => c.SkillsList)
-                .WithOne(s => s.Character)
-                .HasForeignKey<SkillSet>(s => s.CharacterId);
-
-            modelBuilder.Entity<Character>()
-                .HasOne(c => c.SavingThrows)
-                .WithOne(st => st.Character)
-                .HasForeignKey<SavingThrows>(s => s.CharacterId);
-
-            modelBuilder.Entity<Character>()
-                .HasOne(c => c.Background)
-                .WithOne(b => b.Character)
-                .HasForeignKey<BackgroundInfo>(b => b.CharacterId);
 
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Features)
@@ -168,13 +154,23 @@ namespace DMApp.Data
                 j => j.HasKey("TraitId", "RaceId")
             );
 
+            modelBuilder.Entity<DiscordGuild>()
+            .HasMany(g => g.CharacterClasses)
+            .WithMany(c => c.Guilds)
+            .UsingEntity<Dictionary<string, object>>(
+                "GuildClass",
+                j => j.HasOne<CharacterClass>().WithMany().HasForeignKey("ClassId"),
+                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
+                j => j.HasKey("GuildId", "ClassId")
+            );
 
-            modelBuilder.Entity<CharacterClass>().ToTable("Classes");
-            modelBuilder.Entity<CharacterRace>().ToTable("Races");
+
+            modelBuilder.Entity<CharacterClass>().ToTable("Classes").HasAlternateKey("Name");
+            modelBuilder.Entity<CharacterRace>().ToTable("Races").HasAlternateKey("Name");
 
             // Configure other models/entities
 
-            // CharacterSeedData.SeedData(modelBuilder);
+            //CharacterSeedData.SeedData(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }

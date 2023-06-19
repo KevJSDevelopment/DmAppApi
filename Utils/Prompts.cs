@@ -1,21 +1,23 @@
 ﻿using System;
 using DMApp.Dtos;
+using DMApp.Models;
 using Newtonsoft.Json;
 
 namespace DMApp.Utils
 {
 	public class Prompts
-	{
-		public static string CreateCharacter(string input)
-		{
-			CharacterReadDto characterReadDto = new CharacterReadDto();
+    {
+        public static string CreateCharacter(CharacterCreateDto characterCreateDto)
+        {
+            CharacterReadDto characterReadDto = new CharacterReadDto();
 
+            string values = JsonConvert.SerializeObject(characterCreateDto);
 			string properties = JsonConvert.SerializeObject(characterReadDto);
 
-			return $"Using these input properties: {input}, " +
-				$"create a D&D character and enter values for the character using key value pair formatting using the following keys: {properties}. " +
-				$"Replace values that are 'any' or empty with a value for the given key that makes sense based on the rest of the character properties. " +
-				$"Make sure to write a paragraph or two for the background of the character.";
+			return $"Create a D&D character based on the key/value pairs provided here: {values}. " +
+                $"Using key value pair formatting, generate values for the character to fill in for each of the following key properties: {properties}. " +
+				$"Make sure the end result returns a json string with key value pairs for each of the properties passed in based on the values provided in the first sentence. " +
+                $"Lastly, make sure to write a few paragraphs for the background story of the character.";
 		}
 
         public static string CreateCharacterImage(string properties)

@@ -32,12 +32,20 @@
     <None Remove="Migrations\" />
     <None Remove="Data\Characters\" />
     <None Remove="Data\CharacterTokens\" />
-    <None Remove="Data\DiscordGuilds\" />
+    <None Remove="Data\Classes\" />
+    <None Remove="Data\Races\" />
+    <None Remove="Data\Features\" />
+    <None Remove="Data\Traits\" />
+    <None Remove="Data\Organizations\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="Data\Characters\" />
     <Folder Include="Data\CharacterTokens\" />
-    <Folder Include="Data\DiscordGuilds\" />
+    <Folder Include="Data\Classes\" />
+    <Folder Include="Data\Races\" />
+    <Folder Include="Data\Features\" />
+    <Folder Include="Data\Traits\" />
+    <Folder Include="Data\Organizations\" />
   </ItemGroup>
 </Project>

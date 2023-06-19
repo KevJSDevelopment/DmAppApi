@@ -44,9 +44,7 @@ namespace DMApp.Controllers
         [HttpPost("/characters/new/{guildId}")]
         public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterCreateDto characterCreateDto, [FromQuery] long guildId = 1077311704985239684, [FromForm] int tokens = 250)
         {
-            string input = JsonConvert.SerializeObject(characterCreateDto);
-
-            string message = Prompts.CreateCharacter(input);
+            string message = Prompts.CreateCharacter(characterCreateDto);
             
             try
             {
@@ -60,31 +58,26 @@ namespace DMApp.Controllers
                     }
                 });
 
-                IList<CharacterReadDto> characterReadDtos = new List<CharacterReadDto>();
+                CharacterReadDto characterDto = JsonConvert.DeserializeObject<CharacterReadDto>(chatResponse.Choices[0].Message.Content);
 
-                foreach(ChatChoice choice in chatResponse.Choices)
+                Character character = _mapper.Map<Character>(characterDto);
+
+                character = _repository.CreateCharacter(character, guildId);
+
+                if (_repository.SaveChanges())
                 {
-                    CharacterReadDto characterDto = JsonConvert.DeserializeObject<CharacterReadDto>(choice.Message.Content);
-                    Character character = _mapper.Map<Character>(characterDto);
+                    CharacterReadDto characterReadDto = _mapper.Map<CharacterReadDto>(character);
+                }
+                else
+                {
+                    RequestResponse response = new RequestResponse();
+                    response.Status = 400;
+                    response.Message = $"Failed to create character {character.Name}";
 
-                    character = _repository.CreateCharacter(character, guildId);
-
-                    if (_repository.SaveChanges())
-                    {
-                        CharacterReadDto characterReadDto = _mapper.Map<CharacterReadDto>(character);
-                        characterReadDtos.Add(characterReadDto);
-                    }
-                    else
-                    {
-                        RequestResponse response = new RequestResponse();
-                        response.Status = 400;
-                        response.Message = $"Failed to create character {character.Name}";
-
-                        return BadRequest(error: JsonConvert.SerializeObject(response));
-                    }
+                    return BadRequest(error: JsonConvert.SerializeObject(response));
                 }
 
-                return Ok(characterReadDtos); // Json(new { character });
+                return Ok(characterDto); // Json(new { character });
             }
             catch (Exception ex)
             {

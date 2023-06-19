@@ -1,38 +1,41 @@
 ﻿<Properties StartupConfiguration="{487F0B0E-38F5-4118-8352-A580318D592C}|DmAppApi">
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Applications/DmAppApi/Controllers/CharacterTokenController.cs" relfile="Controllers/CharacterTokenController.cs" line="89" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.DMApp PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/CharacterController.cs">
     <Files>
-      <File FileName="Controllers/CharacterController.cs" Line="40" Column="1" />
-      <File FileName="Data/SqlCahracterRepo.cs" />
+      <File FileName="Controllers/CharacterController.cs" Line="12" Column="17" />
       <File FileName="Dtos/CharacterReadDto.cs" />
       <File FileName="Utils/Prompts.cs" />
       <File FileName="Models/Character.cs" />
       <File FileName="appsettings.json" />
       <File FileName="Properties/launchSettings.json" />
       <File FileName="Data/DMAppContext.cs" />
-      <File FileName="Data/ICharacterRepo.cs" />
       <File FileName="Profiles/CharacterProfile.cs" />
       <File FileName="Models/ErrorViewModel.cs" />
       <File FileName="Models/CharacterToken.cs" />
-      <File FileName="Data/ICharacterTokenRepo.cs" />
       <File FileName="Utils/RequestResponse.cs" />
       <File FileName="Utils/FileHelper.cs" />
       <File FileName="Program.cs" />
       <File FileName="Startup.cs" />
       <File FileName="Views/User/Index.cshtml" />
       <File FileName=".gitignore" />
-      <File FileName="Migrations/DMAppContextModelSnapshot.cs" />
       <File FileName="Dtos/CharacterImageDto.cs" />
       <File FileName="Controllers/CharacterTokenController.cs" />
-      <File FileName="Data/SqlCharacterTokenRepo.cs" />
+      <File FileName="Data/DiscordGuilds/IDiscordGuildrepo.cs" />
+      <File FileName="Data/DiscordGuilds/SqlDiscordGuildRepo.cs" />
+      <File FileName="Controllers/DiscordGuildController.cs" />
+      <File FileName="Models/SavingThrows.cs" />
+      <File FileName="Models/Spell.cs" />
+      <File FileName="Models/Item.cs" />
+      <File FileName="Models/BackgroundInfo.cs" />
+      <File FileName="Models/Organization.cs" />
+      <File FileName="Models/Trait.cs" />
+      <File FileName="Models/CharacterClass.cs" />
+      <File FileName="Models/CharacterRace.cs" />
+      <File FileName="Utils/TokenSelection.cs" />
+      <File FileName="Data/CharacterSeedData.cs" />
+      <File FileName="Migrations/DMAppContextModelSnapshot.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -42,12 +45,6 @@
               <Node name="Controllers" expanded="True">
                 <Node name="CharacterController.cs" selected="True" />
               </Node>
-              <Node name="Data" expanded="True" />
-              <Node name="Dtos" expanded="True" />
-              <Node name="Migrations" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Profiles" expanded="True" />
-              <Node name="Properties" expanded="True" />
               <Node name="Utils" expanded="True" />
             </Node>
           </Node>
@@ -55,4 +52,11 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Applications/DmAppApi/Controllers/CharacterTokenController.cs" relfile="Controllers/CharacterTokenController.cs" line="89" column="1" />
+      <Breakpoint file="/Applications/DmAppApi/Data/DiscordGuilds/SqlDiscordGuildRepo.cs" relfile="Data/DiscordGuilds/SqlDiscordGuildRepo.cs" line="23" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>
