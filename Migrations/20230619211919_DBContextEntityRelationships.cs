@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DMApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class DBContextEntityRelationships : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,9 @@ namespace DMApp.Migrations
                     CharacterClassId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,7 +66,9 @@ namespace DMApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cost = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Cost = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +98,9 @@ namespace DMApp.Migrations
                     CharacterRaceId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,7 +115,9 @@ namespace DMApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SpellLevel = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,7 +131,9 @@ namespace DMApp.Migrations
                     TraitId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -138,7 +148,9 @@ namespace DMApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClassId = table.Column<int>(type: "int", nullable: false)
+                    ClassId = table.Column<int>(type: "int", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -147,7 +159,78 @@ namespace DMApp.Migrations
                         name: "FK_Features_Classes_ClassId",
                         column: x => x.ClassId,
                         principalTable: "Classes",
+                        principalColumn: "CharacterClassId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GuildClass",
+                columns: table => new
+                {
+                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    ClassId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GuildClass", x => new { x.GuildId, x.ClassId });
+                    table.ForeignKey(
+                        name: "FK_GuildClass_Classes_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Classes",
                         principalColumn: "CharacterClassId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GuildClass_DiscordGuilds_GuildId",
+                        column: x => x.GuildId,
+                        principalTable: "DiscordGuilds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GuildItem",
+                columns: table => new
+                {
+                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    ItemId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GuildItem", x => new { x.GuildId, x.ItemId });
+                    table.ForeignKey(
+                        name: "FK_GuildItem_DiscordGuilds_GuildId",
+                        column: x => x.GuildId,
+                        principalTable: "DiscordGuilds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GuildItem_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "ItemId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GuildOrganization",
+                columns: table => new
+                {
+                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    OrganizationId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GuildOrganization", x => new { x.GuildId, x.OrganizationId });
+                    table.ForeignKey(
+                        name: "FK_GuildOrganization_DiscordGuilds_GuildId",
+                        column: x => x.GuildId,
+                        principalTable: "DiscordGuilds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GuildOrganization_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organizations",
+                        principalColumn: "OrganizationId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -161,10 +244,54 @@ namespace DMApp.Migrations
                     RaceId = table.Column<int>(type: "int", nullable: false),
                     ClassId = table.Column<int>(type: "int", nullable: false),
                     TokenId = table.Column<int>(type: "int", nullable: true),
-                    AbilityScoreId = table.Column<int>(type: "int", nullable: false),
-                    SkillSetId = table.Column<int>(type: "int", nullable: false),
-                    SavingThrowsId = table.Column<int>(type: "int", nullable: false),
-                    BackgroundInfoId = table.Column<int>(type: "int", nullable: false),
+                    Strength = table.Column<int>(type: "int", nullable: false),
+                    Dexterity = table.Column<int>(type: "int", nullable: false),
+                    Constitution = table.Column<int>(type: "int", nullable: false),
+                    Intelligence = table.Column<int>(type: "int", nullable: false),
+                    Wisdom = table.Column<int>(type: "int", nullable: false),
+                    Charisma = table.Column<int>(type: "int", nullable: false),
+                    Acrobatics = table.Column<int>(type: "int", nullable: false),
+                    IsAcrobaticsProficient = table.Column<bool>(type: "bit", nullable: false),
+                    AnimalHandling = table.Column<int>(type: "int", nullable: false),
+                    IsAnimalHandlingProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Arcana = table.Column<int>(type: "int", nullable: false),
+                    IsArcanaProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Athletics = table.Column<int>(type: "int", nullable: false),
+                    IsAthleticsProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Deception = table.Column<int>(type: "int", nullable: false),
+                    IsDeceptionProficient = table.Column<bool>(type: "bit", nullable: false),
+                    History = table.Column<int>(type: "int", nullable: false),
+                    IsHistoryProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Insight = table.Column<int>(type: "int", nullable: false),
+                    IsInsightProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Intimidation = table.Column<int>(type: "int", nullable: false),
+                    IsIntimidationProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Investigation = table.Column<int>(type: "int", nullable: false),
+                    IsInvestigationProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Medicine = table.Column<int>(type: "int", nullable: false),
+                    IsMedicineProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Nature = table.Column<int>(type: "int", nullable: false),
+                    IsNatureProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Perception = table.Column<int>(type: "int", nullable: false),
+                    IsPerceptionProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Performance = table.Column<int>(type: "int", nullable: false),
+                    IsPerformanceProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Persuasion = table.Column<int>(type: "int", nullable: false),
+                    IsPersuasionProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Religion = table.Column<int>(type: "int", nullable: false),
+                    IsReligionProficient = table.Column<bool>(type: "bit", nullable: false),
+                    SleightOfHand = table.Column<int>(type: "int", nullable: false),
+                    IsSleightOfHandProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Stealth = table.Column<int>(type: "int", nullable: false),
+                    IsStealthProficient = table.Column<bool>(type: "bit", nullable: false),
+                    Survival = table.Column<int>(type: "int", nullable: false),
+                    IsSurvivalProficient = table.Column<bool>(type: "bit", nullable: false),
+                    StrengthSavingThrow = table.Column<int>(type: "int", nullable: false),
+                    DexteritySavingThrow = table.Column<int>(type: "int", nullable: false),
+                    ConstitutionSavingThrow = table.Column<int>(type: "int", nullable: false),
+                    IntelligenceSavingThrow = table.Column<int>(type: "int", nullable: false),
+                    WisdomSavingThrow = table.Column<int>(type: "int", nullable: false),
+                    CharismaSavingThrow = table.Column<int>(type: "int", nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false),
                     ExperiencePoints = table.Column<int>(type: "int", nullable: false),
                     ArmorClass = table.Column<int>(type: "int", nullable: false),
@@ -173,6 +300,15 @@ namespace DMApp.Migrations
                     TemporaryHitPoints = table.Column<int>(type: "int", nullable: false),
                     Speed = table.Column<int>(type: "int", nullable: false),
                     ProficiencyBonus = table.Column<int>(type: "int", nullable: false),
+                    Age = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sex = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Height = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Weight = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Eyes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Skin = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Hair = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Background = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Alignment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -195,6 +331,78 @@ namespace DMApp.Migrations
                         column: x => x.RaceId,
                         principalTable: "Races",
                         principalColumn: "CharacterRaceId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GuildRace",
+                columns: table => new
+                {
+                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    RaceId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GuildRace", x => new { x.GuildId, x.RaceId });
+                    table.ForeignKey(
+                        name: "FK_GuildRace_DiscordGuilds_GuildId",
+                        column: x => x.GuildId,
+                        principalTable: "DiscordGuilds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GuildRace_Races_RaceId",
+                        column: x => x.RaceId,
+                        principalTable: "Races",
+                        principalColumn: "CharacterRaceId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GuildSpell",
+                columns: table => new
+                {
+                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    SpellId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GuildSpell", x => new { x.GuildId, x.SpellId });
+                    table.ForeignKey(
+                        name: "FK_GuildSpell_DiscordGuilds_GuildId",
+                        column: x => x.GuildId,
+                        principalTable: "DiscordGuilds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GuildSpell_Spells_SpellId",
+                        column: x => x.SpellId,
+                        principalTable: "Spells",
+                        principalColumn: "SpellId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GuildTrait",
+                columns: table => new
+                {
+                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    TraitId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GuildTrait", x => new { x.GuildId, x.TraitId });
+                    table.ForeignKey(
+                        name: "FK_GuildTrait_DiscordGuilds_GuildId",
+                        column: x => x.GuildId,
+                        principalTable: "DiscordGuilds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GuildTrait_Traits_TraitId",
+                        column: x => x.TraitId,
+                        principalTable: "Traits",
+                        principalColumn: "TraitId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -223,55 +431,26 @@ namespace DMApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbilityScores",
+                name: "GuildFeature",
                 columns: table => new
                 {
-                    AbilityScoreId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CharacterId = table.Column<int>(type: "int", nullable: false),
-                    Strength = table.Column<int>(type: "int", nullable: false),
-                    Dexterity = table.Column<int>(type: "int", nullable: false),
-                    Constitution = table.Column<int>(type: "int", nullable: false),
-                    Intelligence = table.Column<int>(type: "int", nullable: false),
-                    Wisdom = table.Column<int>(type: "int", nullable: false),
-                    Charisma = table.Column<int>(type: "int", nullable: false)
+                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    FeatureId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AbilityScores", x => x.AbilityScoreId);
+                    table.PrimaryKey("PK_GuildFeature", x => new { x.GuildId, x.FeatureId });
                     table.ForeignKey(
-                        name: "FK_AbilityScores_Characters_CharacterId",
-                        column: x => x.CharacterId,
-                        principalTable: "Characters",
-                        principalColumn: "CharacterId",
+                        name: "FK_GuildFeature_DiscordGuilds_GuildId",
+                        column: x => x.GuildId,
+                        principalTable: "DiscordGuilds",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BackgroundInfos",
-                columns: table => new
-                {
-                    BackgroundInfoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CharacterId = table.Column<int>(type: "int", nullable: false),
-                    Age = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Sex = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Height = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Weight = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Eyes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Skin = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Hair = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Background = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Alignment = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BackgroundInfos", x => x.BackgroundInfoId);
                     table.ForeignKey(
-                        name: "FK_BackgroundInfos_Characters_CharacterId",
-                        column: x => x.CharacterId,
-                        principalTable: "Characters",
-                        principalColumn: "CharacterId",
+                        name: "FK_GuildFeature_Features_FeatureId",
+                        column: x => x.FeatureId,
+                        principalTable: "Features",
+                        principalColumn: "FeatureId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -466,98 +645,6 @@ namespace DMApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "SavingThrows",
-                columns: table => new
-                {
-                    SavingThrowsId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CharacterId = table.Column<int>(type: "int", nullable: false),
-                    Strength = table.Column<int>(type: "int", nullable: false),
-                    Dexterity = table.Column<int>(type: "int", nullable: false),
-                    Constitution = table.Column<int>(type: "int", nullable: false),
-                    Intelligence = table.Column<int>(type: "int", nullable: false),
-                    Wisdom = table.Column<int>(type: "int", nullable: false),
-                    Charisma = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SavingThrows", x => x.SavingThrowsId);
-                    table.ForeignKey(
-                        name: "FK_SavingThrows_Characters_CharacterId",
-                        column: x => x.CharacterId,
-                        principalTable: "Characters",
-                        principalColumn: "CharacterId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SkillSets",
-                columns: table => new
-                {
-                    SkillSetId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CharacterId = table.Column<int>(type: "int", nullable: false),
-                    Acrobatics = table.Column<int>(type: "int", nullable: false),
-                    IsAcrobaticsProficient = table.Column<bool>(type: "bit", nullable: false),
-                    AnimalHandling = table.Column<int>(type: "int", nullable: false),
-                    IsAnimalHandlingProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Arcana = table.Column<int>(type: "int", nullable: false),
-                    IsArcanaProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Athletics = table.Column<int>(type: "int", nullable: false),
-                    IsAthleticsProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Deception = table.Column<int>(type: "int", nullable: false),
-                    IsDeceptionProficient = table.Column<bool>(type: "bit", nullable: false),
-                    History = table.Column<int>(type: "int", nullable: false),
-                    IsHistoryProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Insight = table.Column<int>(type: "int", nullable: false),
-                    IsInsightProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Intimidation = table.Column<int>(type: "int", nullable: false),
-                    IsIntimidationProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Investigation = table.Column<int>(type: "int", nullable: false),
-                    IsInvestigationProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Medicine = table.Column<int>(type: "int", nullable: false),
-                    IsMedicineProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Nature = table.Column<int>(type: "int", nullable: false),
-                    IsNatureProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Perception = table.Column<int>(type: "int", nullable: false),
-                    IsPerceptionProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Performance = table.Column<int>(type: "int", nullable: false),
-                    IsPerformanceProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Persuasion = table.Column<int>(type: "int", nullable: false),
-                    IsPersuasionProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Religion = table.Column<int>(type: "int", nullable: false),
-                    IsReligionProficient = table.Column<bool>(type: "bit", nullable: false),
-                    SleightOfHand = table.Column<int>(type: "int", nullable: false),
-                    IsSleightOfHandProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Stealth = table.Column<int>(type: "int", nullable: false),
-                    IsStealthProficient = table.Column<bool>(type: "bit", nullable: false),
-                    Survival = table.Column<int>(type: "int", nullable: false),
-                    IsSurvivalProficient = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SkillSets", x => x.SkillSetId);
-                    table.ForeignKey(
-                        name: "FK_SkillSets_Characters_CharacterId",
-                        column: x => x.CharacterId,
-                        principalTable: "Characters",
-                        principalColumn: "CharacterId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AbilityScores_CharacterId",
-                table: "AbilityScores",
-                column: "CharacterId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BackgroundInfos_CharacterId",
-                table: "BackgroundInfos",
-                column: "CharacterId",
-                unique: true);
-
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterAlly_CharacterId",
                 table: "CharacterAlly",
@@ -619,32 +706,49 @@ namespace DMApp.Migrations
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RacialTraits_RaceId",
-                table: "RacialTraits",
+                name: "IX_GuildClass_ClassId",
+                table: "GuildClass",
+                column: "ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GuildFeature_FeatureId",
+                table: "GuildFeature",
+                column: "FeatureId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GuildItem_ItemId",
+                table: "GuildItem",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GuildOrganization_OrganizationId",
+                table: "GuildOrganization",
+                column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GuildRace_RaceId",
+                table: "GuildRace",
                 column: "RaceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SavingThrows_CharacterId",
-                table: "SavingThrows",
-                column: "CharacterId",
-                unique: true);
+                name: "IX_GuildSpell_SpellId",
+                table: "GuildSpell",
+                column: "SpellId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SkillSets_CharacterId",
-                table: "SkillSets",
-                column: "CharacterId",
-                unique: true);
+                name: "IX_GuildTrait_TraitId",
+                table: "GuildTrait",
+                column: "TraitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RacialTraits_RaceId",
+                table: "RacialTraits",
+                column: "RaceId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AbilityScores");
-
-            migrationBuilder.DropTable(
-                name: "BackgroundInfos");
-
             migrationBuilder.DropTable(
                 name: "CharacterAlly");
 
@@ -670,19 +774,34 @@ namespace DMApp.Migrations
                 name: "CharacterTrait");
 
             migrationBuilder.DropTable(
+                name: "GuildClass");
+
+            migrationBuilder.DropTable(
+                name: "GuildFeature");
+
+            migrationBuilder.DropTable(
+                name: "GuildItem");
+
+            migrationBuilder.DropTable(
+                name: "GuildOrganization");
+
+            migrationBuilder.DropTable(
+                name: "GuildRace");
+
+            migrationBuilder.DropTable(
+                name: "GuildSpell");
+
+            migrationBuilder.DropTable(
+                name: "GuildTrait");
+
+            migrationBuilder.DropTable(
                 name: "RacialTraits");
 
             migrationBuilder.DropTable(
-                name: "SavingThrows");
-
-            migrationBuilder.DropTable(
-                name: "SkillSets");
+                name: "Characters");
 
             migrationBuilder.DropTable(
                 name: "Features");
-
-            migrationBuilder.DropTable(
-                name: "DiscordGuilds");
 
             migrationBuilder.DropTable(
                 name: "Items");
@@ -694,19 +813,19 @@ namespace DMApp.Migrations
                 name: "Spells");
 
             migrationBuilder.DropTable(
-                name: "Traits");
+                name: "DiscordGuilds");
 
             migrationBuilder.DropTable(
-                name: "Characters");
+                name: "Traits");
 
             migrationBuilder.DropTable(
                 name: "CharacterTokens");
 
             migrationBuilder.DropTable(
-                name: "Classes");
+                name: "Races");
 
             migrationBuilder.DropTable(
-                name: "Races");
+                name: "Classes");
         }
     }
 }

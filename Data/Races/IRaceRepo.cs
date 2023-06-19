@@ -3,7 +3,7 @@ using DMApp.Models;
 
 namespace DMApp.Data
 {
-    public interface ICharacterRaceRepo
+    public interface IRaceRepo
     {
         bool SaveChanges();
         IList<CharacterRace> GetCharacterRacesByGuildId(long guildId);

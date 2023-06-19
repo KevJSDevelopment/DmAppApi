@@ -9,23 +9,25 @@ using OpenAI_API.Chat;
 using OpenAI_API.Models;
 using DMApp.Utils;
 using Newtonsoft.Json;
-using RestSharp;
-using Discord.Net.Rest;
+using System.Diagnostics;
 
 namespace DMApp.Controllers
 {
     public class CharacterController : Controller
     {
-        private readonly ICharacterRepo _repository;
+        private readonly ICharacterRepo _characterRepo;
+        private readonly IClassRepo _classRepo;
+        private readonly IRaceRepo _raceRepo;
         private readonly IMapper _mapper;
         private readonly OpenAIAPI _api;
-        private readonly string? _neural_love_token;
 
-        public CharacterController(ICharacterRepo repository, IMapper mapper)
+        public CharacterController(ICharacterRepo characterRepo, IClassRepo classRepo, IRaceRepo raceRepo, IMapper mapper)
         {
             string? openai_key = Environment.GetEnvironmentVariable("OpenAI_Key");
             string? openai_org = Environment.GetEnvironmentVariable("OpenAi_Organization");
-            _repository = repository;
+            _characterRepo = characterRepo;
+            _classRepo = classRepo;
+            _raceRepo = raceRepo;
             _mapper = mapper;
             _api = new OpenAIAPI(new APIAuthentication(openai_key, openai_org));
         }
@@ -33,7 +35,7 @@ namespace DMApp.Controllers
         [HttpGet("/characters/{characterId}")]
         public ActionResult GetCharacterById(int characterId)
         {
-            Character character = _repository.GetCharacterById(characterId);
+            Character character = _characterRepo.GetCharacterById(characterId);
 
             CharacterReadDto characterReadDto = _mapper.Map<CharacterReadDto>(character);
 
@@ -62,9 +64,9 @@ namespace DMApp.Controllers
 
                 Character character = _mapper.Map<Character>(characterDto);
 
-                character = _repository.CreateCharacter(character, guildId);
+                character = _characterRepo.CreateCharacter(character, guildId);
 
-                if (_repository.SaveChanges())
+                if (_characterRepo.SaveChanges())
                 {
                     CharacterReadDto characterReadDto = _mapper.Map<CharacterReadDto>(character);
                 }
@@ -89,7 +91,7 @@ namespace DMApp.Controllers
         [HttpPatch("/characters/{characterId}")] // update this
         public ActionResult SaveCharacterImage(int characterId, int tokenId)
         {
-            Character character = _repository.GetCharacterById(characterId);
+            Character character = _characterRepo.GetCharacterById(characterId);
 
             return Ok(character);
         }
@@ -97,7 +99,7 @@ namespace DMApp.Controllers
         [HttpGet("/characters/characterPDF/{characterId}")]
         public async Task<ActionResult> GetCharacterSheet(int characterId)
         {
-            Character character = _repository.GetCharacterById(characterId);
+            Character character = _characterRepo.GetCharacterById(characterId);
 
             CharacterReadDto characterReadDto = _mapper.Map<CharacterReadDto>(character);
 
@@ -109,13 +111,13 @@ namespace DMApp.Controllers
         [HttpDelete("/characters/{characterId}")]
         public ActionResult DeleteCharacter(int characterId)
         {
-            Character character = _repository.GetCharacterById(characterId);
+            Character character = _characterRepo.GetCharacterById(characterId);
             string name = character.Name;
 
-            _repository.DeleteCharacter(character);
+            _characterRepo.DeleteCharacter(character);
 
             RequestResponse response = new RequestResponse();
-            if(_repository.SaveChanges())
+            if(_characterRepo.SaveChanges())
             {
                 response.Status = 200;
                 response.Message = $"{name} was deleted";

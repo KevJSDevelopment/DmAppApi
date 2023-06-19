@@ -1,4 +1,5 @@
-﻿using DMApp.Models;
+﻿using System.Diagnostics;
+using DMApp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DMApp.Data
@@ -21,22 +22,18 @@ namespace DMApp.Data
         public DbSet<Item> Items { get; set; }
         public DbSet<Spell> Spells { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Character>()
-        //       .HasMany(c => c.Guilds)
-        //       .WithMany(g => g.Characters)
-        //       .UsingEntity(j => j.ToTable("CharacterGuild"));
-
-        //    modelBuilder.Entity<Character>()
-        //       .HasOne(c => c.Token)
-        //       .WithMany(g => g.Characters);
-
-        //    modelBuilder.Entity<DiscordGuild>()
-        //        .HasAlternateKey(g => g.GuildId);
-        //}
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            ConfigureCharacter(modelBuilder);
+            ConfigureCharacterClass(modelBuilder);
+            ConfigureCharacterRace(modelBuilder);
+            ConfigureDiscordGuild(modelBuilder);
+            // Configure other entities...
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        private void ConfigureCharacter(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Character>()
                 .HasOne(c => c.Token)
@@ -136,24 +133,36 @@ namespace DMApp.Data
                     j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
                     j => j.HasKey("SpellId", "CharacterId")
                 );
+            // Configure other relationships and constraints for the Character entity
+        }
 
-            // Configure the remaining models/entities
-
+        private void ConfigureCharacterClass(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<CharacterClass>()
-            .HasMany(c => c.Features)
-            .WithOne(f => f.Class)
-            .HasForeignKey(f => f.ClassId);
+                .HasMany(c => c.Features)
+                .WithOne(f => f.Class)
+                .HasForeignKey(f => f.ClassId);
 
+            // Configure other relationships and constraints for the CharacterClass entity
+        }
+
+        private void ConfigureCharacterRace(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<CharacterRace>()
-            .HasMany(r => r.Traits)
-            .WithMany(t => t.Races)
-            .UsingEntity<Dictionary<string, object>>(
-                "RacialTraits",
-                j => j.HasOne<Trait>().WithMany().HasForeignKey("TraitId"),
-                j => j.HasOne<CharacterRace>().WithMany().HasForeignKey("RaceId"),
-                j => j.HasKey("TraitId", "RaceId")
-            );
+                .HasMany(r => r.Traits)
+                .WithMany(t => t.Races)
+                .UsingEntity<Dictionary<string, object>>(
+                    "RacialTraits",
+                    j => j.HasOne<Trait>().WithMany().HasForeignKey("TraitId"),
+                    j => j.HasOne<CharacterRace>().WithMany().HasForeignKey("RaceId"),
+                    j => j.HasKey("TraitId", "RaceId")
+                );
 
+            // Configure other relationships and constraints for the CharacterRace entity
+        }
+
+        private void ConfigureDiscordGuild(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<DiscordGuild>()
             .HasMany(g => g.CharacterClasses)
             .WithMany(c => c.Guilds)
@@ -164,17 +173,68 @@ namespace DMApp.Data
                 j => j.HasKey("GuildId", "ClassId")
             );
 
+            modelBuilder.Entity<DiscordGuild>()
+            .HasMany(g => g.CharacterRaces)
+            .WithMany(c => c.Guilds)
+            .UsingEntity<Dictionary<string, object>>(
+                "GuildRace",
+                j => j.HasOne<CharacterRace>().WithMany().HasForeignKey("RaceId"),
+                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
+                j => j.HasKey("GuildId", "RaceId")
+            );
 
-            modelBuilder.Entity<CharacterClass>().ToTable("Classes").HasAlternateKey("Name");
-            modelBuilder.Entity<CharacterRace>().ToTable("Races").HasAlternateKey("Name");
+            modelBuilder.Entity<DiscordGuild>()
+            .HasMany(g => g.Features)
+            .WithMany(c => c.Guilds)
+            .UsingEntity<Dictionary<string, object>>(
+                "GuildFeature",
+                j => j.HasOne<Feature>().WithMany().HasForeignKey("FeatureId"),
+                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
+                j => j.HasKey("GuildId", "FeatureId")
+            );
 
-            // Configure other models/entities
 
-            //CharacterSeedData.SeedData(modelBuilder);
+            modelBuilder.Entity<DiscordGuild>()
+            .HasMany(g => g.Traits)
+            .WithMany(c => c.Guilds)
+            .UsingEntity<Dictionary<string, object>>(
+                "GuildTrait",
+                j => j.HasOne<Trait>().WithMany().HasForeignKey("TraitId"),
+                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
+                j => j.HasKey("GuildId", "TraitId")
+            );
 
-            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<DiscordGuild>()
+            .HasMany(g => g.Organizations)
+            .WithMany(c => c.Guilds)
+            .UsingEntity<Dictionary<string, object>>(
+                "GuildOrganization",
+                j => j.HasOne<Organization>().WithMany().HasForeignKey("OrganizationId"),
+                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
+                j => j.HasKey("GuildId", "OrganizationId")
+            );
+
+            modelBuilder.Entity<DiscordGuild>()
+            .HasMany(g => g.Items)
+            .WithMany(c => c.Guilds)
+            .UsingEntity<Dictionary<string, object>>(
+                "GuildItem",
+                j => j.HasOne<Item>().WithMany().HasForeignKey("ItemId"),
+                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
+                j => j.HasKey("GuildId", "ItemId")
+            );
+
+
+            modelBuilder.Entity<DiscordGuild>()
+            .HasMany(g => g.Spells)
+            .WithMany(c => c.Guilds)
+            .UsingEntity<Dictionary<string, object>>(
+                "GuildSpell",
+                j => j.HasOne<Spell>().WithMany().HasForeignKey("SpellId"),
+                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
+                j => j.HasKey("GuildId", "SpellId")
+            );
         }
-
-
     }
 }

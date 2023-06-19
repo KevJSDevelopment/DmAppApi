@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace DMApp.Data
 {
-    public class SqlCharacterRaceRepo : ICharacterRaceRepo
+    public class SqlCharacterRaceRepo : IRaceRepo
     {
         private readonly DMAppContext _context;
 

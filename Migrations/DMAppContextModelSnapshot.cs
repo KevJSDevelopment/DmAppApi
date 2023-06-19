@@ -117,21 +117,6 @@ namespace DMApp.Migrations
                     b.ToTable("CharacterOrganization");
                 });
 
-            modelBuilder.Entity("CharacterRaceDiscordGuild", b =>
-                {
-                    b.Property<int>("CharacterRacesCharacterRaceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GuildsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CharacterRacesCharacterRaceId", "GuildsId");
-
-                    b.HasIndex("GuildsId");
-
-                    b.ToTable("CharacterRaceDiscordGuild");
-                });
-
             modelBuilder.Entity("CharacterSpell", b =>
                 {
                     b.Property<int>("SpellId")
@@ -412,16 +397,14 @@ namespace DMApp.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("CharacterClassId");
 
-                    b.HasAlternateKey("Name");
-
-                    b.ToTable("Classes", (string)null);
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("DMApp.Models.CharacterRace", b =>
@@ -441,16 +424,14 @@ namespace DMApp.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("CharacterRaceId");
 
-                    b.HasAlternateKey("Name");
-
-                    b.ToTable("Races", (string)null);
+                    b.ToTable("Races");
                 });
 
             modelBuilder.Entity("DMApp.Models.CharacterToken", b =>
@@ -647,81 +628,6 @@ namespace DMApp.Migrations
                     b.ToTable("Traits");
                 });
 
-            modelBuilder.Entity("DiscordGuildFeature", b =>
-                {
-                    b.Property<int>("FeaturesFeatureId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GuildsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FeaturesFeatureId", "GuildsId");
-
-                    b.HasIndex("GuildsId");
-
-                    b.ToTable("DiscordGuildFeature");
-                });
-
-            modelBuilder.Entity("DiscordGuildItem", b =>
-                {
-                    b.Property<int>("GuildsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemsItemId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GuildsId", "ItemsItemId");
-
-                    b.HasIndex("ItemsItemId");
-
-                    b.ToTable("DiscordGuildItem");
-                });
-
-            modelBuilder.Entity("DiscordGuildOrganization", b =>
-                {
-                    b.Property<int>("GuildsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrganizationsOrganizationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GuildsId", "OrganizationsOrganizationId");
-
-                    b.HasIndex("OrganizationsOrganizationId");
-
-                    b.ToTable("DiscordGuildOrganization");
-                });
-
-            modelBuilder.Entity("DiscordGuildSpell", b =>
-                {
-                    b.Property<int>("GuildsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpellsSpellId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GuildsId", "SpellsSpellId");
-
-                    b.HasIndex("SpellsSpellId");
-
-                    b.ToTable("DiscordGuildSpell");
-                });
-
-            modelBuilder.Entity("DiscordGuildTrait", b =>
-                {
-                    b.Property<int>("GuildsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TraitsTraitId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GuildsId", "TraitsTraitId");
-
-                    b.HasIndex("TraitsTraitId");
-
-                    b.ToTable("DiscordGuildTrait");
-                });
-
             modelBuilder.Entity("GuildClass", b =>
                 {
                     b.Property<int>("GuildId")
@@ -735,6 +641,96 @@ namespace DMApp.Migrations
                     b.HasIndex("ClassId");
 
                     b.ToTable("GuildClass");
+                });
+
+            modelBuilder.Entity("GuildFeature", b =>
+                {
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FeatureId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GuildId", "FeatureId");
+
+                    b.HasIndex("FeatureId");
+
+                    b.ToTable("GuildFeature");
+                });
+
+            modelBuilder.Entity("GuildItem", b =>
+                {
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GuildId", "ItemId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("GuildItem");
+                });
+
+            modelBuilder.Entity("GuildOrganization", b =>
+                {
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GuildId", "OrganizationId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("GuildOrganization");
+                });
+
+            modelBuilder.Entity("GuildRace", b =>
+                {
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RaceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GuildId", "RaceId");
+
+                    b.HasIndex("RaceId");
+
+                    b.ToTable("GuildRace");
+                });
+
+            modelBuilder.Entity("GuildSpell", b =>
+                {
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpellId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GuildId", "SpellId");
+
+                    b.HasIndex("SpellId");
+
+                    b.ToTable("GuildSpell");
+                });
+
+            modelBuilder.Entity("GuildTrait", b =>
+                {
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TraitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GuildId", "TraitId");
+
+                    b.HasIndex("TraitId");
+
+                    b.ToTable("GuildTrait");
                 });
 
             modelBuilder.Entity("RacialTraits", b =>
@@ -842,21 +838,6 @@ namespace DMApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CharacterRaceDiscordGuild", b =>
-                {
-                    b.HasOne("DMApp.Models.CharacterRace", null)
-                        .WithMany()
-                        .HasForeignKey("CharacterRacesCharacterRaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
-                        .WithMany()
-                        .HasForeignKey("GuildsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CharacterSpell", b =>
                 {
                     b.HasOne("DMApp.Models.Character", null)
@@ -921,81 +902,6 @@ namespace DMApp.Migrations
                     b.Navigation("Class");
                 });
 
-            modelBuilder.Entity("DiscordGuildFeature", b =>
-                {
-                    b.HasOne("DMApp.Models.Feature", null)
-                        .WithMany()
-                        .HasForeignKey("FeaturesFeatureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
-                        .WithMany()
-                        .HasForeignKey("GuildsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DiscordGuildItem", b =>
-                {
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
-                        .WithMany()
-                        .HasForeignKey("GuildsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DMApp.Models.Item", null)
-                        .WithMany()
-                        .HasForeignKey("ItemsItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DiscordGuildOrganization", b =>
-                {
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
-                        .WithMany()
-                        .HasForeignKey("GuildsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DMApp.Models.Organization", null)
-                        .WithMany()
-                        .HasForeignKey("OrganizationsOrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DiscordGuildSpell", b =>
-                {
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
-                        .WithMany()
-                        .HasForeignKey("GuildsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DMApp.Models.Spell", null)
-                        .WithMany()
-                        .HasForeignKey("SpellsSpellId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DiscordGuildTrait", b =>
-                {
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
-                        .WithMany()
-                        .HasForeignKey("GuildsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DMApp.Models.Trait", null)
-                        .WithMany()
-                        .HasForeignKey("TraitsTraitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("GuildClass", b =>
                 {
                     b.HasOne("DMApp.Models.CharacterClass", null)
@@ -1007,6 +913,96 @@ namespace DMApp.Migrations
                     b.HasOne("DMApp.Models.DiscordGuild", null)
                         .WithMany()
                         .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GuildFeature", b =>
+                {
+                    b.HasOne("DMApp.Models.Feature", null)
+                        .WithMany()
+                        .HasForeignKey("FeatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                        .WithMany()
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GuildItem", b =>
+                {
+                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                        .WithMany()
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Item", null)
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GuildOrganization", b =>
+                {
+                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                        .WithMany()
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Organization", null)
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GuildRace", b =>
+                {
+                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                        .WithMany()
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.CharacterRace", null)
+                        .WithMany()
+                        .HasForeignKey("RaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GuildSpell", b =>
+                {
+                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                        .WithMany()
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Spell", null)
+                        .WithMany()
+                        .HasForeignKey("SpellId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GuildTrait", b =>
+                {
+                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                        .WithMany()
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Trait", null)
+                        .WithMany()
+                        .HasForeignKey("TraitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
