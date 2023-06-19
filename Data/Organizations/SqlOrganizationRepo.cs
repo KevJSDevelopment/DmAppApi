@@ -17,19 +17,17 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public Organization CreateOrganization(int organizationId)
+        public Organization CreateOrganization(Organization organization)
         {
-            Organization Organization = new Organization();
-            Organization.OrganizationId = organizationId;
-            if (Organization == null)
+            if (organization == null)
             {
-                throw new ArgumentNullException(nameof(Organization));
+                throw new ArgumentNullException(nameof(organization));
             }
 
-            _context.Organizations.Add(Organization);
+            _context.Organizations.Add(organization);
             _context.SaveChanges();
 
-            return Organization;
+            return organization;
         }
 
         public void DeleteOrganization(int organizationId)

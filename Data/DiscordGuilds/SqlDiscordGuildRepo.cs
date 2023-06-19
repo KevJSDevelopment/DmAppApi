@@ -17,6 +17,11 @@ namespace DMApp.Data
             _context = context;
         }
 
+        public DiscordGuild GetGuildByGuildId(long guildId)
+        {
+            return _context.DiscordGuilds.FirstOrDefault(g => g.GuildId == guildId);
+        }
+
         public DiscordGuild CreateGuild(long guildId)
         {
             DiscordGuild guild = new DiscordGuild();

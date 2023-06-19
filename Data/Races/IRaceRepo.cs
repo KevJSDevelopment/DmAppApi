@@ -7,7 +7,7 @@ namespace DMApp.Data
     {
         bool SaveChanges();
         IList<CharacterRace> GetCharacterRacesByGuildId(long guildId);
-        CharacterRace CreateCharacterRace(int characterRaceId);
+        CharacterRace CreateCharacterRace(CharacterRace characterRace);
         void DeleteCharacterRace(int characterRaceId);
     }
 }

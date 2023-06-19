@@ -9,7 +9,6 @@ using OpenAI_API.Chat;
 using OpenAI_API.Models;
 using DMApp.Utils;
 using Newtonsoft.Json;
-using System.Diagnostics;
 
 namespace DMApp.Controllers
 {

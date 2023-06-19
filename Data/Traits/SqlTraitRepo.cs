@@ -17,19 +17,17 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public Trait CreateTrait(int TraitId)
+        public Trait CreateTrait(Trait trait)
         {
-            Trait Trait = new Trait();
-            Trait.TraitId = TraitId;
-            if (Trait == null)
+            if (trait == null)
             {
-                throw new ArgumentNullException(nameof(Trait));
+                throw new ArgumentNullException(nameof(trait));
             }
 
-            _context.Traits.Add(Trait);
+            _context.Traits.Add(trait);
             _context.SaveChanges();
 
-            return Trait;
+            return trait;
         }
 
         public void DeleteTrait(int TraitId)

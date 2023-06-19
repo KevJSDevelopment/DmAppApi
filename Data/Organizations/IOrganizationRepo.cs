@@ -7,7 +7,7 @@ namespace DMApp.Data
     {
         bool SaveChanges();
         IList<Organization> GetOrganizationsByGuildId(long guildId);
-        Organization CreateOrganization(int organizationId);
+        Organization CreateOrganization(Organization organization);
         void DeleteOrganization(int organizationId);
     }
 }

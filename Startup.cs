@@ -28,6 +28,11 @@ namespace DMApp
             services.AddScoped<ICharacterRepo, SqlCharacterRepo>();
             services.AddScoped<ICharacterTokenRepo, SqlCharacterTokenRepo>();
             services.AddScoped<IDiscordGuildRepo, SqlDiscordGuildRepo>();
+            services.AddScoped<IClassRepo, SqlClassRepo>();
+            services.AddScoped<IRaceRepo, SqlCharacterRaceRepo>();
+            services.AddScoped<IFeatureRepo, SqlFeatureRepo>();
+            services.AddScoped<ITraitRepo, SqlTraitRepo>();
+            services.AddScoped<IOrganizationRepo, SqlOrganizationRepo>();
 
             services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 

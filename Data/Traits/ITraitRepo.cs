@@ -7,7 +7,7 @@ namespace DMApp.Data
     {
         bool SaveChanges();
         IList<Trait> GetTraitsByGuildId(long guildId);
-        Trait CreateTrait(int TraitId);
+        Trait CreateTrait(Trait trait);
         void DeleteTrait(int TraitId);
     }
 }

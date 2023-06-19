@@ -37,6 +37,9 @@
     <None Remove="Data\Features\" />
     <None Remove="Data\Traits\" />
     <None Remove="Data\Organizations\" />
+    <None Remove="Dtos\CharacterDtos\" />
+    <None Remove="Dtos\RaceDtos\" />
+    <None Remove="Dtos\ClassDtos\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
@@ -47,5 +50,8 @@
     <Folder Include="Data\Features\" />
     <Folder Include="Data\Traits\" />
     <Folder Include="Data\Organizations\" />
+    <Folder Include="Dtos\CharacterDtos\" />
+    <Folder Include="Dtos\RaceDtos\" />
+    <Folder Include="Dtos\ClassDtos\" />
   </ItemGroup>
 </Project>

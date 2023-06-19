@@ -17,19 +17,17 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public CharacterRace CreateCharacterRace(int characterRaceId)
+        public CharacterRace CreateCharacterRace(CharacterRace characterRace)
         {
-            CharacterRace CharacterRace = new CharacterRace();
-            CharacterRace.CharacterRaceId = characterRaceId;
-            if (CharacterRace == null)
+            if (characterRace == null)
             {
-                throw new ArgumentNullException(nameof(CharacterRace));
+                throw new ArgumentNullException(nameof(characterRace));
             }
 
-            _context.Races.Add(CharacterRace);
+            _context.Races.Add(characterRace);
             _context.SaveChanges();
 
-            return CharacterRace;
+            return characterRace;
         }
 
         public void DeleteCharacterRace(int characterRaceId)

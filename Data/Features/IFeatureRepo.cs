@@ -7,7 +7,7 @@ namespace DMApp.Data
     {
         bool SaveChanges();
         IList<Feature> GetFeaturesByGuildId(long guildId);
-        Feature CreateFeature(int featureId);
+        Feature CreateFeature(Feature feature);
         void DeleteFeature(int featureId);
     }
 }

@@ -17,10 +17,8 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public Feature CreateFeature(int featureId)
+        public Feature CreateFeature(Feature feature)
         {
-            Feature feature = new Feature();
-            feature.FeatureId = featureId;
             if (feature == null)
             {
                 throw new ArgumentNullException(nameof(feature));

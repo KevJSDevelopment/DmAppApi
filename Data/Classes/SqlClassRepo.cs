@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DMApp.Dtos;
 using DMApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,19 +18,17 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public CharacterClass CreateClass(int @classId)
+        public CharacterClass CreateClass(CharacterClass characterClass)
         {
-            CharacterClass @class = new CharacterClass();
-            @class.CharacterClassId = @classId;
-            if (@class == null)
+            if (characterClass == null)
             {
-                throw new ArgumentNullException(nameof(@class));
+                throw new ArgumentNullException(nameof(characterClass));
             }
 
-            _context.Classes.Add(@class);
+            _context.Classes.Add(characterClass);
             _context.SaveChanges();
 
-            return @class;
+            return characterClass;
         }
 
         public void DeleteClass(int @classId)

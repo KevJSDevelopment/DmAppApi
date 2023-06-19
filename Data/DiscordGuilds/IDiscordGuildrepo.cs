@@ -8,6 +8,7 @@ namespace DMApp.Data
         bool SaveChanges();
         IList<Character> GetCharactersByGuildId(long guildId);
         DiscordGuild CreateGuild(long guildId);
+        DiscordGuild GetGuildByGuildId(long guildId);
         void DeleteGuild(long guildId);
     }
 }
