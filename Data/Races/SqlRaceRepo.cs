@@ -50,6 +50,7 @@ namespace DMApp.Data
 
         public IList<CharacterRace> GetCharacterRacesByGuildId(long guildId)
         {
+            // this needs updates, not returning classes where guild id
             return _context.Races.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
         }
 

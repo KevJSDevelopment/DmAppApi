@@ -22,7 +22,7 @@ namespace DMApp.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("/CharacterClass/{guildId}")]
+        [HttpGet("/character-class/{guildId}")]
         public ActionResult<IList<CharacterClass>> GetClassesByGuildId(long guildId = 1077311704985239684)
         {
             IList<CharacterClass> characterClasses = _classRepo.GetClassesByGuildId(guildId);
@@ -31,7 +31,7 @@ namespace DMApp.Controllers
             return Ok(characterClassDtos);
         }
 
-        [HttpPost("/CharacterClass/{guildId}")]
+        [HttpPost("/character-class/{guildId}")]
         public ActionResult CreateCharacterClass([FromBody] CharacterClassDto characterClassDto, long guildId = 1077311704985239684)
         {
             CharacterClass characterClass = _mapper.Map<CharacterClass>(characterClassDto);
