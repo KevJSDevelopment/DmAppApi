@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Reflection.Metadata;
 using DMApp.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DMApp.Data
 {
@@ -163,6 +165,13 @@ namespace DMApp.Data
 
         private void ConfigureDiscordGuild(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DiscordGuild>()
+            .HasKey(g => g.GuildId);
+
+            modelBuilder.Entity<DiscordGuild>()
+            .Property(g => g.GuildId)
+            .ValueGeneratedNever();
+
             modelBuilder.Entity<DiscordGuild>()
             .HasMany(g => g.CharacterClasses)
             .WithMany(c => c.Guilds)

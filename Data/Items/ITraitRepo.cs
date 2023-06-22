@@ -3,10 +3,10 @@ using DMApp.Models;
 
 namespace DMApp.Data
 {
-    public interface ITraitRepo
+    public interface IItemRepo
     {
         bool SaveChanges();
-        Trait CreateTrait(Trait trait);
-        void DeleteTrait(int TraitId);
+        Item CreateItem(Item item);
+        void DeleteItem(int itemId);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DMApp.Dtos;
 using DMApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,12 +25,15 @@ namespace DMApp.Data
 
         public DiscordGuild CreateGuild(long guildId)
         {
-            DiscordGuild guild = new DiscordGuild();
-            guild.GuildId = guildId;
-            if (guild == null)
+            if (guildId == 0)
             {
-                throw new ArgumentNullException(nameof(guild));
+                throw new ArgumentException("Invalid guildId");
             }
+
+            DiscordGuild guild = new DiscordGuild
+            {
+                GuildId = guildId
+            };
 
             _context.DiscordGuilds.Add(guild);
             _context.SaveChanges();
@@ -56,9 +60,49 @@ namespace DMApp.Data
             .ToList();
         }
 
+        public IList<CharacterRace> GetCharacterRacesByGuildId(long guildId)
+        {   
+            return _context.Races
+            .Where(r => r.Guilds.Any(g => g.GuildId == guildId))
+            .ToList();
+        }
+
+        public IList<CharacterClass> GetCharacterClassesByGuildId(long guildId)
+        {
+            return _context.Classes
+            .Where(c => c.Guilds.Any(g => g.GuildId == guildId))
+            .ToList();
+        }
+
+        public IList<Feature> GetFeaturesByGuildId(long guildId)
+        {
+            return _context.Features.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
+        }
+
+        public IList<Trait> GetTraitsByGuildId(long guildId)
+        {
+            return _context.Traits.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
+        }
+
+        public IList<Organization> GetOrganizationsByGuildId(long guildId)
+        {
+            return _context.Organizations.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
+        }
+
+        public IList<Item> GetItemsByGuildId(long guildId)
+        {
+            return _context.Items.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
+        }
+
+        public IList<Spell> GetSpellsByGuildId(long guildId)
+        {
+            return _context.Spells.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
+        }
+
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);
         }
+
     }
 }

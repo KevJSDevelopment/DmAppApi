@@ -47,12 +47,6 @@ namespace DMApp.Data
             return _context.Traits.FirstOrDefault(c => c.TraitId == TraitId);
         }
 
-
-        public IList<Trait> GetTraitsByGuildId(long guildId)
-        {
-            return _context.Traits.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
-        }
-
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);

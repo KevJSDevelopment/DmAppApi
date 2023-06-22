@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using DMApp.Models;
-using AutoMapper;
+﻿using AutoMapper;
 using DMApp.Data;
-using DMApp.Dtos;
-using DMApp.HelperClasses;
-using DMApp.Utils;
-using Newtonsoft.Json;
+using DMApp.Dtos.CharacterSheetPropertyDto;
+using DMApp.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DMApp.Controllers
 {
-	public class CharacterClassConroller : Controller
+    public class CharacterClassConroller : Controller
 	{
         private readonly IClassRepo _classRepo;
         private readonly IDiscordGuildRepo _guildRepo;
@@ -22,17 +19,8 @@ namespace DMApp.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("/character-class/{guildId}")]
-        public ActionResult<IList<CharacterClass>> GetClassesByGuildId(long guildId = 1077311704985239684)
-        {
-            IList<CharacterClass> characterClasses = _classRepo.GetClassesByGuildId(guildId);
-            IList<CharacterClassDto> characterClassDtos = _mapper.Map<IList<CharacterClassDto>>(characterClasses);
-
-            return Ok(characterClassDtos);
-        }
-
         [HttpPost("/character-class/{guildId}")]
-        public ActionResult CreateCharacterClass([FromBody] CharacterClassDto characterClassDto, long guildId = 1077311704985239684)
+        public ActionResult CreateCharacterClass([FromBody] CharacterSheetPropertyDto characterClassDto, long guildId = 1077311704985239684)
         {
             CharacterClass characterClass = _mapper.Map<CharacterClass>(characterClassDto);
             DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);

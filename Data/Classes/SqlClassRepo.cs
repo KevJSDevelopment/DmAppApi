@@ -43,16 +43,9 @@ namespace DMApp.Data
             _context.Classes.Remove(@class);
         }
 
-        public CharacterClass GetClassById(long @classId)
+        public CharacterClass GetClassById(int @classId)
         {
             return _context.Classes.FirstOrDefault(c => c.CharacterClassId == @classId);
-        }
-
-
-        public IList<CharacterClass> GetClassesByGuildId(long guildId)
-        {
-            // this needs updates, not returning classes where guild id
-            return _context.Classes.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
         }
 
         public bool SaveChanges()

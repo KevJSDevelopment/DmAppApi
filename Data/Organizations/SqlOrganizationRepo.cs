@@ -47,12 +47,6 @@ namespace DMApp.Data
             return _context.Organizations.FirstOrDefault(c => c.OrganizationId == organizationId);
         }
 
-
-        public IList<Organization> GetOrganizationsByGuildId(long guildId)
-        {
-            return _context.Organizations.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
-        }
-
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);

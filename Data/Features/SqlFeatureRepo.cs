@@ -47,12 +47,6 @@ namespace DMApp.Data
             return _context.Features.FirstOrDefault(c => c.FeatureId == featureId);
         }
 
-
-        public IList<Feature> GetFeaturesByGuildId(long guildId)
-        {
-            return _context.Features.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
-        }
-
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);

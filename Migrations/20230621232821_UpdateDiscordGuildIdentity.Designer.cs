@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DMApp.Migrations
 {
     [DbContext(typeof(DMAppContext))]
-    [Migration("20230619211919_DBContextEntityRelationships")]
-    partial class DBContextEntityRelationships
+    [Migration("20230621232821_UpdateDiscordGuildIdentity")]
+    partial class UpdateDiscordGuildIdentity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,8 +72,8 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("CharacterGuild", b =>
                 {
-                    b.Property<int>("GuildId")
-                        .HasColumnType("int");
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("CharacterId")
                         .HasColumnType("int");
@@ -464,22 +464,16 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("DMApp.Models.DiscordGuild", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("GuildId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("GuildId");
 
                     b.ToTable("DiscordGuilds");
                 });
@@ -633,8 +627,8 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("GuildClass", b =>
                 {
-                    b.Property<int>("GuildId")
-                        .HasColumnType("int");
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("ClassId")
                         .HasColumnType("int");
@@ -648,8 +642,8 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("GuildFeature", b =>
                 {
-                    b.Property<int>("GuildId")
-                        .HasColumnType("int");
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("FeatureId")
                         .HasColumnType("int");
@@ -663,8 +657,8 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("GuildItem", b =>
                 {
-                    b.Property<int>("GuildId")
-                        .HasColumnType("int");
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
@@ -678,8 +672,8 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("GuildOrganization", b =>
                 {
-                    b.Property<int>("GuildId")
-                        .HasColumnType("int");
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("int");
@@ -693,8 +687,8 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("GuildRace", b =>
                 {
-                    b.Property<int>("GuildId")
-                        .HasColumnType("int");
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("RaceId")
                         .HasColumnType("int");
@@ -708,8 +702,8 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("GuildSpell", b =>
                 {
-                    b.Property<int>("GuildId")
-                        .HasColumnType("int");
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("SpellId")
                         .HasColumnType("int");
@@ -723,8 +717,8 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("GuildTrait", b =>
                 {
-                    b.Property<int>("GuildId")
-                        .HasColumnType("int");
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("TraitId")
                         .HasColumnType("int");

@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using DMApp.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 
 namespace DMApp.Data
 {
@@ -45,13 +39,6 @@ namespace DMApp.Data
         public CharacterRace GetCharacterRaceById(long CharacterRaceId)
         {
             return _context.Races.FirstOrDefault(c => c.CharacterRaceId == CharacterRaceId);
-        }
-
-
-        public IList<CharacterRace> GetCharacterRacesByGuildId(long guildId)
-        {
-            // this needs updates, not returning classes where guild id
-            return _context.Races.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
         }
 
         public bool SaveChanges()

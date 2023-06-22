@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DMApp.Migrations
 {
     /// <inheritdoc />
-    public partial class DBContextEntityRelationships : Migration
+    public partial class UpdateDiscordGuildIdentity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,15 +47,13 @@ namespace DMApp.Migrations
                 name: "DiscordGuilds",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     GuildId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DiscordGuilds", x => x.Id);
+                    table.PrimaryKey("PK_DiscordGuilds", x => x.GuildId);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,7 +164,7 @@ namespace DMApp.Migrations
                 name: "GuildClass",
                 columns: table => new
                 {
-                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    GuildId = table.Column<long>(type: "bigint", nullable: false),
                     ClassId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -182,7 +180,7 @@ namespace DMApp.Migrations
                         name: "FK_GuildClass_DiscordGuilds_GuildId",
                         column: x => x.GuildId,
                         principalTable: "DiscordGuilds",
-                        principalColumn: "Id",
+                        principalColumn: "GuildId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -190,7 +188,7 @@ namespace DMApp.Migrations
                 name: "GuildItem",
                 columns: table => new
                 {
-                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    GuildId = table.Column<long>(type: "bigint", nullable: false),
                     ItemId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -200,7 +198,7 @@ namespace DMApp.Migrations
                         name: "FK_GuildItem_DiscordGuilds_GuildId",
                         column: x => x.GuildId,
                         principalTable: "DiscordGuilds",
-                        principalColumn: "Id",
+                        principalColumn: "GuildId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GuildItem_Items_ItemId",
@@ -214,7 +212,7 @@ namespace DMApp.Migrations
                 name: "GuildOrganization",
                 columns: table => new
                 {
-                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    GuildId = table.Column<long>(type: "bigint", nullable: false),
                     OrganizationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -224,7 +222,7 @@ namespace DMApp.Migrations
                         name: "FK_GuildOrganization_DiscordGuilds_GuildId",
                         column: x => x.GuildId,
                         principalTable: "DiscordGuilds",
-                        principalColumn: "Id",
+                        principalColumn: "GuildId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GuildOrganization_Organizations_OrganizationId",
@@ -338,7 +336,7 @@ namespace DMApp.Migrations
                 name: "GuildRace",
                 columns: table => new
                 {
-                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    GuildId = table.Column<long>(type: "bigint", nullable: false),
                     RaceId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -348,7 +346,7 @@ namespace DMApp.Migrations
                         name: "FK_GuildRace_DiscordGuilds_GuildId",
                         column: x => x.GuildId,
                         principalTable: "DiscordGuilds",
-                        principalColumn: "Id",
+                        principalColumn: "GuildId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GuildRace_Races_RaceId",
@@ -362,7 +360,7 @@ namespace DMApp.Migrations
                 name: "GuildSpell",
                 columns: table => new
                 {
-                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    GuildId = table.Column<long>(type: "bigint", nullable: false),
                     SpellId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -372,7 +370,7 @@ namespace DMApp.Migrations
                         name: "FK_GuildSpell_DiscordGuilds_GuildId",
                         column: x => x.GuildId,
                         principalTable: "DiscordGuilds",
-                        principalColumn: "Id",
+                        principalColumn: "GuildId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GuildSpell_Spells_SpellId",
@@ -386,7 +384,7 @@ namespace DMApp.Migrations
                 name: "GuildTrait",
                 columns: table => new
                 {
-                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    GuildId = table.Column<long>(type: "bigint", nullable: false),
                     TraitId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -396,7 +394,7 @@ namespace DMApp.Migrations
                         name: "FK_GuildTrait_DiscordGuilds_GuildId",
                         column: x => x.GuildId,
                         principalTable: "DiscordGuilds",
-                        principalColumn: "Id",
+                        principalColumn: "GuildId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GuildTrait_Traits_TraitId",
@@ -434,7 +432,7 @@ namespace DMApp.Migrations
                 name: "GuildFeature",
                 columns: table => new
                 {
-                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    GuildId = table.Column<long>(type: "bigint", nullable: false),
                     FeatureId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -444,7 +442,7 @@ namespace DMApp.Migrations
                         name: "FK_GuildFeature_DiscordGuilds_GuildId",
                         column: x => x.GuildId,
                         principalTable: "DiscordGuilds",
-                        principalColumn: "Id",
+                        principalColumn: "GuildId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GuildFeature_Features_FeatureId",
@@ -528,7 +526,7 @@ namespace DMApp.Migrations
                 name: "CharacterGuild",
                 columns: table => new
                 {
-                    GuildId = table.Column<int>(type: "int", nullable: false),
+                    GuildId = table.Column<long>(type: "bigint", nullable: false),
                     CharacterId = table.Column<int>(type: "int", nullable: false),
                     JoinedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
@@ -545,7 +543,7 @@ namespace DMApp.Migrations
                         name: "FK_CharacterGuild_DiscordGuilds_GuildId",
                         column: x => x.GuildId,
                         principalTable: "DiscordGuilds",
-                        principalColumn: "Id",
+                        principalColumn: "GuildId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

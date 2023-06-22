@@ -3,10 +3,10 @@ using DMApp.Models;
 
 namespace DMApp.Data
 {
-    public interface ITraitRepo
+    public interface ISpellRepo
     {
         bool SaveChanges();
-        Trait CreateTrait(Trait trait);
-        void DeleteTrait(int TraitId);
+        Spell CreateSpell(Spell spell);
+        void DeleteSpell(int spellId);
     }
 }

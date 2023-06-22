@@ -17,9 +17,7 @@ namespace DMApp.Models
             Organizations = new List<Organization>();
             Spells = new List<Spell>();
         }
-        [Key]
-        public int Id { get; set; }
-        [Required]
+
         public long GuildId { get; set; }
 
         public IList<Character> Characters { get; set; } 
