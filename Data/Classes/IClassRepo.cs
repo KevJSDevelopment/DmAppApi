@@ -7,6 +7,8 @@ namespace DMApp.Data
     {
         bool SaveChanges();
         CharacterClass CreateClass(CharacterClass characterClass);
+        CharacterClass GetCharacterClassById(int id);
+        CharacterClass GetCharacterClassByName(string name);
         void DeleteClass(int classId);
     }
 }

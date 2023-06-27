@@ -16,11 +16,8 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        [Key]
         public int FeatureId { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
         public string Description { get; set; }
 
         public int? ClassId { get; set; }

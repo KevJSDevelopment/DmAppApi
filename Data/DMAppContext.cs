@@ -26,17 +26,35 @@ namespace DMApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Feature>()
+                .HasKey(f => f.FeatureId);
+            modelBuilder.Entity<Trait>()
+                .HasKey(t => t.TraitId);
+            modelBuilder.Entity<Item>()
+                .HasKey(i => i.ItemId);
+            modelBuilder.Entity<Spell>()
+                .HasKey(s => s.SpellId);
+            modelBuilder.Entity<CharacterToken>()
+                .HasKey(ct => ct.TokenId);
+            modelBuilder.Entity<Organization>()
+                .HasKey(o => o.OrganizationId);
+
             ConfigureCharacter(modelBuilder);
             ConfigureCharacterClass(modelBuilder);
             ConfigureCharacterRace(modelBuilder);
             ConfigureDiscordGuild(modelBuilder);
             // Configure other entities...
 
+            CharacterSeedData.SeedData(modelBuilder);
+
             base.OnModelCreating(modelBuilder);
         }
 
         private void ConfigureCharacter(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Character>()
+                .HasKey(c => c.CharacterId);
+
             modelBuilder.Entity<Character>()
                 .HasOne(c => c.Token)
                 .WithMany(t => t.Characters)
@@ -141,6 +159,9 @@ namespace DMApp.Data
         private void ConfigureCharacterClass(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CharacterClass>()
+              .HasKey(c => c.CharacterClassId);
+
+            modelBuilder.Entity<CharacterClass>()
                 .HasMany(c => c.Features)
                 .WithOne(f => f.Class)
                 .HasForeignKey(f => f.ClassId);
@@ -151,14 +172,12 @@ namespace DMApp.Data
         private void ConfigureCharacterRace(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CharacterRace>()
+                .HasKey(c => c.CharacterRaceId);
+
+            modelBuilder.Entity<CharacterRace>()
                 .HasMany(r => r.Traits)
-                .WithMany(t => t.Races)
-                .UsingEntity<Dictionary<string, object>>(
-                    "RacialTraits",
-                    j => j.HasOne<Trait>().WithMany().HasForeignKey("TraitId"),
-                    j => j.HasOne<CharacterRace>().WithMany().HasForeignKey("RaceId"),
-                    j => j.HasKey("TraitId", "RaceId")
-                );
+                .WithOne(t => t.Race)
+                .HasForeignKey(t => t.RaceId);
 
             // Configure other relationships and constraints for the CharacterRace entity
         }

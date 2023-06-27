@@ -24,6 +24,11 @@ namespace DMApp.Data
             return characterRace;
         }
 
+        public CharacterRace GetCharacterRaceById(int id)
+        {
+            return _context.Races.FirstOrDefault(r => r.CharacterRaceId == id);
+        }
+
         public void DeleteCharacterRace(int characterRaceId)
         {
             CharacterRace CharacterRace = _context.Races.FirstOrDefault(c => c.CharacterRaceId == characterRaceId);
@@ -38,7 +43,12 @@ namespace DMApp.Data
 
         public CharacterRace GetCharacterRaceById(long CharacterRaceId)
         {
-            return _context.Races.FirstOrDefault(c => c.CharacterRaceId == CharacterRaceId);
+            return _context.Races.FirstOrDefault(r => r.CharacterRaceId == CharacterRaceId);
+        }
+
+        public CharacterRace GetCharacterRaceByName(string name)
+        {
+            return _context.Races.FirstOrDefault(r => r.Name == name);
         }
 
         public bool SaveChanges()

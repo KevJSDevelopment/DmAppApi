@@ -4,6 +4,7 @@ using DMApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DMApp.Migrations
 {
     [DbContext(typeof(DMAppContext))]
-    partial class DMAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230625174218_UpdateSeedData")]
+    partial class UpdateSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,13 +120,13 @@ namespace DMApp.Migrations
                         {
                             GuildId = 1077311704985239684L,
                             CharacterId = 1,
-                            JoinedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(4000)
+                            JoinedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(690)
                         },
                         new
                         {
                             GuildId = 1077311704985239684L,
                             CharacterId = 2,
-                            JoinedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(4000)
+                            JoinedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(690)
                         });
                 });
 
@@ -237,11 +240,11 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("DMApp.Models.Character", b =>
                 {
-                    b.Property<int?>("CharacterId")
+                    b.Property<int>("CharacterId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("CharacterId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CharacterId"));
 
                     b.Property<int>("Acrobatics")
                         .HasColumnType("int");
@@ -273,7 +276,7 @@ namespace DMApp.Migrations
                     b.Property<int>("CharismaSavingThrow")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ClassId")
+                    b.Property<int>("ClassId")
                         .HasColumnType("int");
 
                     b.Property<int>("Constitution")
@@ -391,6 +394,7 @@ namespace DMApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Nature")
@@ -408,7 +412,7 @@ namespace DMApp.Migrations
                     b.Property<int>("ProficiencyBonus")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RaceId")
+                    b.Property<int>("RaceId")
                         .HasColumnType("int");
 
                     b.Property<int>("Religion")
@@ -483,7 +487,7 @@ namespace DMApp.Migrations
                             ClassId = 1,
                             Constitution = 10,
                             ConstitutionSavingThrow = 0,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3960),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(650),
                             CurrentHitPoints = 10,
                             Deception = 0,
                             Dexterity = 10,
@@ -536,7 +540,7 @@ namespace DMApp.Migrations
                             StrengthSavingThrow = 0,
                             Survival = 0,
                             TemporaryHitPoints = 0,
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3960),
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(650),
                             Weight = "",
                             Wisdom = 10,
                             WisdomSavingThrow = 0
@@ -557,7 +561,7 @@ namespace DMApp.Migrations
                             ClassId = 2,
                             Constitution = 10,
                             ConstitutionSavingThrow = 0,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3960),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(650),
                             CurrentHitPoints = 10,
                             Deception = 0,
                             Dexterity = 10,
@@ -610,7 +614,7 @@ namespace DMApp.Migrations
                             StrengthSavingThrow = 0,
                             Survival = 0,
                             TemporaryHitPoints = 0,
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3960),
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(650),
                             Weight = "",
                             Wisdom = 10,
                             WisdomSavingThrow = 0
@@ -629,9 +633,11 @@ namespace DMApp.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedOn")
@@ -645,98 +651,98 @@ namespace DMApp.Migrations
                         new
                         {
                             CharacterClassId = 1,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3420),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 192, DateTimeKind.Utc).AddTicks(9990),
                             Description = "A fierce warrior of primitive background who taps into their rage to unleash devastating attacks.",
                             Name = "Barbarian",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3420)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 192, DateTimeKind.Utc).AddTicks(9990)
                         },
                         new
                         {
                             CharacterClassId = 2,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3420),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
                             Description = "A spellcaster who uses their performances to weave magic and inspire allies or hinder foes.",
                             Name = "Bard",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3420)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc)
                         },
                         new
                         {
                             CharacterClassId = 3,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3430),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
                             Description = "A holy warrior who channels divine power to heal allies, smite enemies, and protect the faith.",
                             Name = "Cleric",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3430)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc)
                         },
                         new
                         {
                             CharacterClassId = 4,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3430),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
                             Description = "A spellcaster who draws power from nature and can transform into animals, commanding natural forces.",
                             Name = "Druid",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3430)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc)
                         },
                         new
                         {
                             CharacterClassId = 5,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3430),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
                             Description = "A versatile warrior skilled in combat maneuvers and capable of taking on a variety of roles.",
                             Name = "Fighter",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3430)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc)
                         },
                         new
                         {
                             CharacterClassId = 6,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3430),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
                             Description = "A disciplined warrior who has honed their body into a deadly weapon and gained mastery over ki.",
                             Name = "Monk",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3430)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc)
                         },
                         new
                         {
                             CharacterClassId = 7,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3430),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
                             Description = "A holy knight dedicated to upholding justice and righteousness, channeling divine power in combat.",
                             Name = "Paladin",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3430)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
                         },
                         new
                         {
                             CharacterClassId = 8,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3440),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10),
                             Description = "A skilled hunter and tracker who excels at ranged combat and navigating the wilderness.",
                             Name = "Ranger",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3440)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
                         },
                         new
                         {
                             CharacterClassId = 9,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3440),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10),
                             Description = "A stealthy scoundrel who specializes in deception, agility, and exploiting their foes' weaknesses.",
                             Name = "Rogue",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3440)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
                         },
                         new
                         {
                             CharacterClassId = 10,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3440),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10),
                             Description = "A spellcaster with innate magical abilities, able to shape and cast spells through force of personality.",
                             Name = "Sorcerer",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3440)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
                         },
                         new
                         {
                             CharacterClassId = 11,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3440),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10),
                             Description = "A spellcaster who makes a pact with a powerful entity, gaining magical abilities in exchange for service.",
                             Name = "Warlock",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3440)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
                         },
                         new
                         {
                             CharacterClassId = 12,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3440),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10),
                             Description = "A scholarly magic-user who studies arcane knowledge and casts spells through careful study and preparation.",
                             Name = "Wizard",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3440)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
                         });
                 });
 
@@ -752,9 +758,11 @@ namespace DMApp.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedOn")
@@ -768,74 +776,74 @@ namespace DMApp.Migrations
                         new
                         {
                             CharacterRaceId = 1,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3640),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(360),
                             Description = "A humanoid creature with draconic ancestry, possessing dragon-like features and abilities.",
                             Name = "Dragonborn",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3640)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(360)
                         },
                         new
                         {
                             CharacterRaceId = 2,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3640),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370),
                             Description = "A stout and tough humanoid known for their resilience, craftsmanship, and strong sense of tradition.",
                             Name = "Dwarf",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3640)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370)
                         },
                         new
                         {
                             CharacterRaceId = 3,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3650),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370),
                             Description = "A graceful and long-lived humanoid race with a deep connection to magic and the natural world.",
                             Name = "Elf",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3650)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370)
                         },
                         new
                         {
                             CharacterRaceId = 4,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3650),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370),
                             Description = "A small and inventive humanoid known for their curiosity, ingenuity, and love of tinkering.",
                             Name = "Gnome",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3650)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370)
                         },
                         new
                         {
                             CharacterRaceId = 5,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3650),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370),
                             Description = "A mixed heritage humanoid with both human and elven ancestry, combining the best traits of both races.",
                             Name = "Half-Elf",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3650)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370)
                         },
                         new
                         {
                             CharacterRaceId = 6,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3650),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370),
                             Description = "A powerful and intimidating humanoid born from the union of orc and human parents, known for their strength and resilience.",
                             Name = "Half-Orc",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3650)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370)
                         },
                         new
                         {
                             CharacterRaceId = 7,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3650),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380),
                             Description = "A small and nimble humanoid known for their luck, agility, and ability to avoid danger.",
                             Name = "Halfling",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3650)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380)
                         },
                         new
                         {
                             CharacterRaceId = 8,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3660),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380),
                             Description = "A versatile and adaptable humanoid race, known for their ambition, diversity, and capacity for greatness.",
                             Name = "Human",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3660)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380)
                         },
                         new
                         {
                             CharacterRaceId = 9,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3670),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380),
                             Description = "A humanoid with infernal bloodline, often bearing demonic traits and possessing a connection to the Fiend.",
                             Name = "Tiefling",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3670)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380)
                         });
                 });
 
@@ -883,8 +891,8 @@ namespace DMApp.Migrations
                         new
                         {
                             GuildId = 1077311704985239684L,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3690),
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3690)
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(400),
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(400)
                         });
                 });
 
@@ -924,217 +932,217 @@ namespace DMApp.Migrations
                         {
                             FeatureId = 1,
                             ClassId = 1,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3760),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470),
                             Description = "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action.",
                             Name = "Rage",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3760)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470)
                         },
                         new
                         {
                             FeatureId = 2,
                             ClassId = 1,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3760),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470),
                             Description = "While you are not wearing any armor, your AC equals 10 + your Dexterity modifier + your Constitution modifier.",
                             Name = "Unarmored Defense",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3760)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470)
                         },
                         new
                         {
                             FeatureId = 3,
                             ClassId = 2,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470),
                             Description = "You can inspire others through stirring words or music. As a bonus action, you can choose one creature within 60 feet.",
                             Name = "Bardic Inspiration",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470)
                         },
                         new
                         {
                             FeatureId = 4,
                             ClassId = 2,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480),
                             Description = "You have learned to untangle and reshape the fabric of reality in harmony with your wishes and music.",
                             Name = "Spellcasting",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480)
                         },
                         new
                         {
                             FeatureId = 5,
                             ClassId = 3,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480),
                             Description = "Choose a divine domain, such as Life or Tempest, that grants you domain spells and other features.",
                             Name = "Divine Domain",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480)
                         },
                         new
                         {
                             FeatureId = 6,
                             ClassId = 3,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480),
                             Description = "At 2nd level, you gain the ability to channel divine energy directly from your deity.",
                             Name = "Channel Divinity",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480)
                         },
                         new
                         {
                             FeatureId = 7,
                             ClassId = 4,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480),
                             Description = "You know Druidic, the secret language of druids. You can speak the language and use it to leave hidden messages.",
                             Name = "Druidic",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480)
                         },
                         new
                         {
                             FeatureId = 8,
                             ClassId = 4,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480),
                             Description = "Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will.",
                             Name = "Spellcasting",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3770)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480)
                         },
                         new
                         {
                             FeatureId = 9,
                             ClassId = 5,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3780),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490),
                             Description = "You adopt a particular style of fighting as your specialty. Choose one of the following options.",
                             Name = "Fighting Style",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3780)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490)
                         },
                         new
                         {
                             FeatureId = 10,
                             ClassId = 5,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3780),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490),
                             Description = "You have a limited well of stamina that you can draw on to protect yourself from harm.",
                             Name = "Second Wind",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3780)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490)
                         },
                         new
                         {
                             FeatureId = 11,
                             ClassId = 6,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3780),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490),
                             Description = "While you are wearing no armor and not wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier.",
                             Name = "Unarmored Defense",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3780)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490)
                         },
                         new
                         {
                             FeatureId = 12,
                             ClassId = 6,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3780),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490),
                             Description = "Your practice of martial arts gives you mastery of combat styles that use unarmed strikes and monk weapons.",
                             Name = "Martial Arts",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3780)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490)
                         },
                         new
                         {
                             FeatureId = 13,
                             ClassId = 7,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3780),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490),
                             Description = "The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears.",
                             Name = "Divine Sense",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3780)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490)
                         },
                         new
                         {
                             FeatureId = 14,
                             ClassId = 7,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
                             Description = "Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest.",
                             Name = "Lay on Hands",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500)
                         },
                         new
                         {
                             FeatureId = 15,
                             ClassId = 8,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
                             Description = "Beginning at 1st level, you have significant experience studying, tracking, hunting, and even talking to a certain type of enemy.",
                             Name = "Favored Enemy",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500)
                         },
                         new
                         {
                             FeatureId = 16,
                             ClassId = 8,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
                             Description = "You are a master of navigating the natural world and have a deep understanding of the terrain.",
                             Name = "Natural Explorer",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500)
                         },
                         new
                         {
                             FeatureId = 17,
                             ClassId = 9,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
                             Description = "Beginning at 1st level, you know how to strike subtly and exploit a foe's distraction.",
                             Name = "Sneak Attack",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500)
                         },
                         new
                         {
                             FeatureId = 18,
                             ClassId = 9,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
                             Description = "During your rogue training, you learned thieves' cant, a secret mix of dialect, jargon, and code that allows you to hide messages.",
                             Name = "Thieves' Cant",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500)
                         },
                         new
                         {
                             FeatureId = 19,
                             ClassId = 10,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
                             Description = "Choose a sorcerous origin, which describes the source of your innate magical power.",
                             Name = "Sorcerous Origin",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3790)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510)
                         },
                         new
                         {
                             FeatureId = 20,
                             ClassId = 10,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3800),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510),
                             Description = "An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic.",
                             Name = "Spellcasting",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3800)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510)
                         },
                         new
                         {
                             FeatureId = 21,
                             ClassId = 11,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3800),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510),
                             Description = "At 1st level, you have struck a bargain with an otherworldly being of your choice.",
                             Name = "Otherworldly Patron",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3800)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510)
                         },
                         new
                         {
                             FeatureId = 22,
                             ClassId = 11,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3800),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510),
                             Description = "Your arcane research and the magic bestowed on you by your patron have given you facility with spells.",
                             Name = "Pact Magic",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3800)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510)
                         },
                         new
                         {
                             FeatureId = 23,
                             ClassId = 12,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3800),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(520),
                             Description = "As a student of arcane magic, you have a spellbook containing spells that show the first glimmerings of your true power.",
                             Name = "Spellcasting",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3800)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(520)
                         },
                         new
                         {
                             FeatureId = 24,
                             ClassId = 12,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3800),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(520),
                             Description = "You have learned to regain some of your magical energy by studying your spellbook.",
                             Name = "Arcane Recovery",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3800)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(520)
                         });
                 });
 
@@ -1147,15 +1155,18 @@ namespace DMApp.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"));
 
                     b.Property<int?>("Cost")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedOn")
@@ -1170,19 +1181,19 @@ namespace DMApp.Migrations
                         {
                             ItemId = 1,
                             Cost = 75,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3880),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(580),
                             Description = "It aint good, but it aint bad either",
                             Name = "Chain mail",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3880)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(580)
                         },
                         new
                         {
                             ItemId = 2,
-                            Cost = 20,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3880),
-                            Description = "A short bow",
-                            Name = "Short bow",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3880)
+                            Cost = 0,
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(590),
+                            Description = "",
+                            Name = "",
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(590)
                         });
                 });
 
@@ -1216,58 +1227,58 @@ namespace DMApp.Migrations
                         new
                         {
                             OrganizationId = 1,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3720),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430),
                             Description = "A secret organization dedicated to preserving knowledge, maintaining balance, and fighting evil in all its forms.",
                             Name = "Harper's Guild",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3720)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430)
                         },
                         new
                         {
                             OrganizationId = 2,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3720),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430),
                             Description = "A militant order that seeks to protect the innocent, enforce justice, and eradicate evil from the world.",
                             Name = "Order of the Gauntlet",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3720)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430)
                         },
                         new
                         {
                             OrganizationId = 3,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3730),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430),
                             Description = "A society of druids and other nature-focused individuals who strive to protect the natural world and maintain the balance of nature.",
                             Name = "Emerald Enclave",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3730)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430)
                         },
                         new
                         {
                             OrganizationId = 4,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3730),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440),
                             Description = "A political alliance of powerful city-states and influential leaders who work together to maintain stability and ensure the safety of their respective regions.",
                             Name = "Lords' Alliance",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3730)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440)
                         },
                         new
                         {
                             OrganizationId = 5,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3730),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440),
                             Description = "A secretive and powerful mercenary organization that operates in the shadows, pursuing wealth, power, and influence through any means necessary.",
                             Name = "Zhentarim",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3730)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440)
                         },
                         new
                         {
                             OrganizationId = 6,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3730),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440),
                             Description = "A scattered network of spies and informants who work to promote good, gather information, and thwart the plans of evil organizations.",
                             Name = "Harpers",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3730)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440)
                         },
                         new
                         {
                             OrganizationId = 7,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3730),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440),
                             Description = "A fanatical cult that seeks to raise and control dragons, believing that they are the key to ultimate power and world domination.",
                             Name = "Cult of the Dragon",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3730)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440)
                         });
                 });
 
@@ -1304,20 +1315,20 @@ namespace DMApp.Migrations
                         new
                         {
                             SpellId = 1,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3910),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(600),
                             Description = "",
                             Name = "Spell 1",
                             SpellLevel = 0,
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3910)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(600)
                         },
                         new
                         {
                             SpellId = 2,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3910),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(600),
                             Description = "",
                             Name = "Spell 2",
                             SpellLevel = 0,
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3910)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(610)
                         });
                 });
 
@@ -1340,15 +1351,10 @@ namespace DMApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RaceId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("TraitId");
-
-                    b.HasIndex("RaceId");
 
                     b.ToTable("Traits");
 
@@ -1356,90 +1362,90 @@ namespace DMApp.Migrations
                         new
                         {
                             TraitId = 1,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3840),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(550),
                             Description = "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table.",
                             Name = "Draconic Ancestry",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3840)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(550)
                         },
                         new
                         {
                             TraitId = 2,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3840),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(550),
                             Description = "You can use your action to exhale destructive energy.",
                             Name = "Breath Weapon",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3840)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(550)
                         },
                         new
                         {
                             TraitId = 3,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3840),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
                             Description = "Accustomed to life underground, you have superior vision in dark and dim conditions.",
                             Name = "Darkvision",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3840)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560)
                         },
                         new
                         {
                             TraitId = 4,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3840),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
                             Description = "You have advantage on saving throws against poison and resistance against poison damage.",
                             Name = "Dwarven Resilience",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3840)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560)
                         },
                         new
                         {
                             TraitId = 5,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3860),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
                             Description = "You have advantage on saving throws against being charmed, and magic can't put you to sleep.",
                             Name = "Fey Ancestry",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3860)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560)
                         },
                         new
                         {
                             TraitId = 6,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3860),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
                             Description = "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.",
                             Name = "Gnome Cunning",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3860)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560)
                         },
                         new
                         {
                             TraitId = 7,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3860),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
                             Description = "Your Charisma score increases by 2, and two other ability scores of your choice increase by 1.",
                             Name = "Ability Score Increase",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3860)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560)
                         },
                         new
                         {
                             TraitId = 8,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3860),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
                             Description = "When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead.",
                             Name = "Relentless Endurance",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3860)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570)
                         },
                         new
                         {
                             TraitId = 9,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3870),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570),
                             Description = "When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.",
                             Name = "Lucky",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3870)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570)
                         },
                         new
                         {
                             TraitId = 10,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3870),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570),
                             Description = "You have advantage on saving throws against being frightened.",
                             Name = "Brave",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3870)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570)
                         },
                         new
                         {
                             TraitId = 11,
-                            CreatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3870),
+                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570),
                             Description = "You have resistance to fire damage.",
                             Name = "Hellish Resistance",
-                            UpdatedOn = new DateTime(2023, 6, 27, 13, 39, 13, 194, DateTimeKind.Utc).AddTicks(3870)
+                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570)
                         });
                 });
 
@@ -1546,6 +1552,21 @@ namespace DMApp.Migrations
                     b.HasIndex("TraitId");
 
                     b.ToTable("GuildTrait");
+                });
+
+            modelBuilder.Entity("RacialTraits", b =>
+                {
+                    b.Property<int>("TraitId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RaceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TraitId", "RaceId");
+
+                    b.HasIndex("RaceId");
+
+                    b.ToTable("RacialTraits");
                 });
 
             modelBuilder.Entity("CharacterAlly", b =>
@@ -1672,11 +1693,15 @@ namespace DMApp.Migrations
                 {
                     b.HasOne("DMApp.Models.CharacterClass", "Class")
                         .WithMany("Characters")
-                        .HasForeignKey("ClassId");
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DMApp.Models.CharacterRace", "Race")
                         .WithMany("Characters")
-                        .HasForeignKey("RaceId");
+                        .HasForeignKey("RaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DMApp.Models.CharacterToken", "Token")
                         .WithMany("Characters")
@@ -1696,15 +1721,6 @@ namespace DMApp.Migrations
                         .HasForeignKey("ClassId");
 
                     b.Navigation("Class");
-                });
-
-            modelBuilder.Entity("DMApp.Models.Trait", b =>
-                {
-                    b.HasOne("DMApp.Models.CharacterRace", "Race")
-                        .WithMany("Traits")
-                        .HasForeignKey("RaceId");
-
-                    b.Navigation("Race");
                 });
 
             modelBuilder.Entity("GuildClass", b =>
@@ -1812,6 +1828,21 @@ namespace DMApp.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RacialTraits", b =>
+                {
+                    b.HasOne("DMApp.Models.CharacterRace", null)
+                        .WithMany()
+                        .HasForeignKey("RaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Trait", null)
+                        .WithMany()
+                        .HasForeignKey("TraitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DMApp.Models.CharacterClass", b =>
                 {
                     b.Navigation("Characters");
@@ -1822,8 +1853,6 @@ namespace DMApp.Migrations
             modelBuilder.Entity("DMApp.Models.CharacterRace", b =>
                 {
                     b.Navigation("Characters");
-
-                    b.Navigation("Traits");
                 });
 
             modelBuilder.Entity("DMApp.Models.CharacterToken", b =>

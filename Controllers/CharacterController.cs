@@ -43,47 +43,58 @@ namespace DMApp.Controllers
 
 
         [HttpPost("/characters/new/{guildId}")]
-        public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterCreateDto characterCreateDto, [FromQuery] long guildId = 1077311704985239684, [FromForm] int tokens = 250)
+        public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterInitiateDto characterInitiateDto, long guildId = 1077311704985239684, int tokens = 250)
         {
-            string message = Prompts.CreateCharacter(characterCreateDto);
-            
-            try
+            string message = Prompts.CreateCharacter(characterInitiateDto, tokens);
+
+            ChatResult chatResponse;
+
+            List<ChatMessage> conversation = new List<ChatMessage>
             {
-                ChatResult chatResponse = await _api.Chat.CreateChatCompletionAsync(new ChatRequest()
-                {
-                    Model = Model.ChatGPTTurbo,
-                    Temperature = 0.1,
-                    MaxTokens = tokens,
-                    Messages = new ChatMessage[] {
-                        new ChatMessage(ChatMessageRole.User, message)
-                    }
-                });
+                new ChatMessage(ChatMessageRole.User, message)
+            };
 
-                CharacterReadDto characterDto = JsonConvert.DeserializeObject<CharacterReadDto>(chatResponse.Choices[0].Message.Content);
+            CharacterReadDto characterReadGPTDto = new CharacterReadDto();
 
-                Character character = _mapper.Map<Character>(characterDto);
+            chatResponse = await _api.Chat.CreateChatCompletionAsync(new ChatRequest()
+            {
+                Model = Model.ChatGPTTurbo,
+                Temperature = 0.1,
+                MaxTokens = tokens,
+                Messages = conversation.ToArray()
+            });
 
-                character = _characterRepo.CreateCharacter(character, guildId);
+            characterReadGPTDto = JsonConvert.DeserializeObject<CharacterReadDto>(chatResponse.Choices[0].Message.Content);
 
-                if (_characterRepo.SaveChanges())
-                {
-                    CharacterReadDto characterReadDto = _mapper.Map<CharacterReadDto>(character);
-                }
-                else
-                {
-                    RequestResponse response = new RequestResponse();
-                    response.Status = 400;
-                    response.Message = $"Failed to create character {character.Name}";
+            CharacterCreateDto characterCreatedDto = _mapper.Map<CharacterCreateDto>(characterReadGPTDto);
+            CharacterClass characterClass = _classRepo.GetCharacterClassByName(characterReadGPTDto.Class);
+            CharacterRace characterRace = _raceRepo.GetCharacterRaceByName(characterReadGPTDto.Race);
+            Character character = _mapper.Map<Character>(characterCreatedDto);
 
-                    return BadRequest(error: JsonConvert.SerializeObject(response));
-                }
-
-                return Ok(characterDto); // Json(new { character });
+            if (characterClass != null) {
+                character.Class = characterClass;
+                character.ClassId = characterClass.CharacterClassId;
             }
-            catch (Exception ex)
+
+            if (characterRace != null)
             {
-                Console.WriteLine(ex.Message);
-                return Json(new { error = ex.Message });
+                character.Race = characterRace;
+                character.RaceId = characterRace.CharacterRaceId;
+            }
+
+            character = _characterRepo.CreateCharacter(character, guildId);
+
+            if (_characterRepo.SaveChanges())
+            {
+                return Ok(characterReadGPTDto);
+            }
+            else
+            {
+                RequestResponse response = new RequestResponse();
+                response.Status = 400;
+                response.Message = $"Failed to create character {character.Name}";
+
+                return BadRequest(error: JsonConvert.SerializeObject(response));
             }
         }
 

@@ -15,7 +15,6 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        [Key]
         public int TokenId { get; set; }
         public bool IsPublic { get; set; }
         public Byte[]? Image { get; set; }

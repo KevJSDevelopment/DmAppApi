@@ -31,6 +31,16 @@ namespace DMApp.Data
             return characterClass;
         }
 
+        public CharacterClass GetCharacterClassById(int id)
+        {
+            return _context.Classes.FirstOrDefault(c => c.CharacterClassId == id);
+        }
+
+        public CharacterClass GetCharacterClassByName(string name)
+        {
+            return _context.Classes.FirstOrDefault(c => c.Name == name);
+        }
+
         public void DeleteClass(int @classId)
         {
             CharacterClass @class = _context.Classes.FirstOrDefault(c => c.CharacterClassId == @classId);

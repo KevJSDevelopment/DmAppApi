@@ -18,13 +18,9 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        [Key]
         public int ItemId { get; set; }
-        [Required]
         public string? Name { get; set; }
-        [Required]
         public string? Description { get; set; }
-        [Required]
         public int? Cost { get; set; }
 
         // Other item properties

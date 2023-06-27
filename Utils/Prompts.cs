@@ -7,17 +7,17 @@ namespace DMApp.Utils
 {
 	public class Prompts
     {
-        public static string CreateCharacter(CharacterCreateDto characterCreateDto)
+        public static string CreateCharacter(CharacterInitiateDto characterInitiateDto, int tokens)
         {
             CharacterReadDto characterReadDto = new CharacterReadDto();
 
-            string values = JsonConvert.SerializeObject(characterCreateDto);
+            string values = JsonConvert.SerializeObject(characterInitiateDto);
 			string properties = JsonConvert.SerializeObject(characterReadDto);
 
-			return $"Create a D&D character based on the key/value pairs provided here: {values}. " +
-                $"Using key value pair formatting, generate values for the character to fill in for each of the following key properties: {properties}. " +
-				$"Make sure the end result returns a json string with key value pairs for each of the properties passed in based on the values provided in the first sentence. " +
-                $"Lastly, make sure to write a few paragraphs for the background story of the character.";
+			return $"Create a D&D character based on the following key value pair entries: {values}. " +
+                $"Fill out additional values for the character for each of the following key properties: {properties}. " +
+				$"Make sure the end result uses {tokens} tokens or less and only contains a json string with key value pairs for each of the key properties passed in but fill in all the values with values that would describe the character created. " +
+                $"Lastly, make sure to write between a few sentences and a couple paragraphs in the Background key to tell a detailed story of the characters background. Do not go over the token limit";
 		}
 
         public static string CreateCharacterImage(string properties)

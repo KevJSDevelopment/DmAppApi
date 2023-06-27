@@ -97,16 +97,14 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        [Key]
-        public int CharacterId { get; set; }
-        [Required]
+        public int? CharacterId { get; set; }
         public string? Name { get; set; }
 
-        public int RaceId { get; set; }
-        public CharacterRace Race { get; set; }
+        public int? RaceId { get; set; }
+        public CharacterRace? Race { get; set; }
 
-        public int ClassId { get; set; }
-        public CharacterClass Class { get; set; }
+        public int? ClassId { get; set; }
+        public CharacterClass? Class { get; set; }
 
         public int? TokenId { get; set; }
         public CharacterToken? Token { get; set; }

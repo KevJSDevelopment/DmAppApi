@@ -7,6 +7,8 @@ namespace DMApp.Data
     {
         bool SaveChanges();
         CharacterRace CreateCharacterRace(CharacterRace characterRace);
+        CharacterRace GetCharacterRaceById(int id);
+        CharacterRace GetCharacterRaceByName(string name);
         void DeleteCharacterRace(int characterRaceId);
     }
 }

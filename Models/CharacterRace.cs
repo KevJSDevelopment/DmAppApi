@@ -18,11 +18,8 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        [Key]
         public int CharacterRaceId { get; set; }
-        [Required]
         public string? Name { get; set; }
-        [Required]
         public string? Description { get; set; }
 
         public IList<Character> Characters { get; set; }
