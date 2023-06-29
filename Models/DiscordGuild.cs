@@ -9,6 +9,7 @@ namespace DMApp.Models
         public DiscordGuild()
         {
             Characters = new List<Character>();
+            Campaigns = new List<Campaign>();
             CharacterClasses = new List<CharacterClass>();
             CharacterRaces = new List<CharacterRace>();
             Items = new List<Item>();
@@ -20,7 +21,8 @@ namespace DMApp.Models
 
         public long GuildId { get; set; }
 
-        public IList<Character> Characters { get; set; } 
+        public IList<Character> Characters { get; set; }
+        public IList<Campaign> Campaigns { get; set; }
         public IList<CharacterClass> CharacterClasses { get; set; }
         public IList<CharacterRace> CharacterRaces { get; set; }
         public IList<Item> Items { get; set; }

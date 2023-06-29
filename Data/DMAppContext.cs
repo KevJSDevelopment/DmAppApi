@@ -14,6 +14,9 @@ namespace DMApp.Data
         }
 
         public DbSet<Character> Characters { get; set; }
+        public DbSet<Campaign> Campaigns { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<Voice> Voices { get; set; }
         public DbSet<CharacterRace> Races { get; set; }
         public DbSet<CharacterClass> Classes { get; set; }
         public DbSet<CharacterToken> CharacterTokens { get; set; }
@@ -38,6 +41,13 @@ namespace DMApp.Data
                 .HasKey(ct => ct.TokenId);
             modelBuilder.Entity<Organization>()
                 .HasKey(o => o.OrganizationId);
+            modelBuilder.Entity<Campaign>()
+                .HasKey(c => c.Id);
+            modelBuilder.Entity<Session>()
+                .HasKey(s => s.Id);
+
+            modelBuilder.Entity<Voice>()
+                .HasKey(v => v.Id);
 
             ConfigureCharacter(modelBuilder);
             ConfigureCharacterClass(modelBuilder);
@@ -59,6 +69,11 @@ namespace DMApp.Data
                 .HasOne(c => c.Token)
                 .WithMany(t => t.Characters)
                 .HasForeignKey(c => c.TokenId);
+
+            modelBuilder.Entity<Character>()
+                .HasOne(c => c.CharacterVoice)
+                .WithMany(v => v.Characters)
+                .HasForeignKey(c => c.VoiceId);
 
             modelBuilder.Entity<Character>()
                 .HasOne(c => c.Race)
@@ -263,6 +278,17 @@ namespace DMApp.Data
                 j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
                 j => j.HasKey("GuildId", "SpellId")
             );
+
+            modelBuilder.Entity<DiscordGuild>()
+            .HasMany(g => g.Campaigns)
+            .WithOne(c => c.Guild);
+        }
+
+        private void ConfigureSession(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Session>()
+                .HasOne(s => s.campaign);
+
         }
     }
 }

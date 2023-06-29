@@ -1,61 +1,34 @@
 ﻿<Properties StartupConfiguration="{487F0B0E-38F5-4118-8352-A580318D592C}|DmAppApi">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.DMApp PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Applications/DmAppApi/Controllers/CharacterTokenController.cs" relfile="Controllers/CharacterTokenController.cs" line="89" column="1" />
-      <Breakpoint file="/Applications/DmAppApi/Controllers/CharacterRaceConroller.cs" relfile="Controllers/CharacterRaceConroller.cs" line="25" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workbench ActiveDocument="Data/CharacterSeedData.cs">
     <Files>
-      <File FileName="Controllers/CharacterController.cs" Line="46" Column="164" />
-      <File FileName="Models/Character.cs" Line="9" Column="27" />
-      <File FileName="Models/CharacterClass.cs" Line="26" Column="23" />
-      <File FileName="Models/CharacterRace.cs" Line="22" Column="1" />
-      <File FileName="Data/DMAppContext.cs" Line="55" Column="12" />
-      <File FileName="Utils/Prompts.cs" Line="21" Column="4" />
-      <File FileName="Data/DiscordGuilds/IDiscordGuildrepo.cs" Line="17" Column="55" />
-      <File FileName="Data/Classes/IDiscordGuildrepo.cs" Line="8" Column="28" />
-      <File FileName="Data/Classes/SqlDiscordGuildRepo.cs" Line="44" Column="10" />
-      <File FileName="Models/DiscordGuild.cs" Line="20" Column="1" />
-      <File FileName="Models/Spell.cs" Line="20" Column="41" />
-      <File FileName="Models/Trait.cs" Line="9" Column="9" />
-      <File FileName="Models/Item.cs" Line="10" Column="1" />
-      <File FileName="Models/Feature.cs" Line="27" Column="31" />
-      <File FileName="Models/CharacterToken.cs" Line="25" Column="1" />
-      <File FileName="Dtos/CharacterReadDto.cs" Line="5" Column="17" />
-      <File FileName="Dtos/CharacterCreateDto.cs" Line="1" Column="1" />
-      <File FileName="Models/ErrorViewModel.cs" Line="1" Column="1" />
-      <File FileName="Models/Organization.cs" Line="29" Column="1" />
+      <File FileName="Controllers/CharacterController.cs" />
+      <File FileName="Models/Character.cs" />
+      <File FileName="Models/CharacterClass.cs" />
+      <File FileName="Models/CharacterRace.cs" />
+      <File FileName="Data/DMAppContext.cs" />
+      <File FileName="Utils/Prompts.cs" />
+      <File FileName="Data/DiscordGuilds/IDiscordGuildrepo.cs" />
+      <File FileName="Models/DiscordGuild.cs" />
+      <File FileName="Models/Spell.cs" />
+      <File FileName="Models/Trait.cs" />
+      <File FileName="Models/Item.cs" />
+      <File FileName="Models/Feature.cs" />
+      <File FileName="Models/CharacterToken.cs" />
+      <File FileName="Models/ErrorViewModel.cs" />
+      <File FileName="Models/Organization.cs" />
       <File FileName="Data/CharacterSeedData.cs" Line="193" Column="6" />
-      <File FileName="Data/DiscordGuilds/SqlDiscordGuildRepo.cs" Line="96" Column="1" />
-      <File FileName="Data/Features/IClassRepo.cs" Line="8" Column="28" />
-      <File FileName="Data/Features/SqlClassRepo.cs" Line="48" Column="10" />
-      <File FileName="Data/Organizations/IFeatureRepo.cs" Line="8" Column="28" />
-      <File FileName="Data/Organizations/SqlFeatureRepo.cs" Line="49" Column="1" />
-      <File FileName="Data/Races/IFeatureRepo.cs" Line="8" Column="28" />
-      <File FileName="Data/Races/SqlFeatureRepo.cs" Line="42" Column="10" />
-      <File FileName="Data/Traits/IFeatureRepo.cs" Line="8" Column="28" />
-      <File FileName="Data/Traits/SqlFeatureRepo.cs" Line="48" Column="10" />
-      <File FileName="Utils/TokenSelection.cs" Line="27" Column="1" />
-      <File FileName="Controllers/DiscordGuildController.cs" Line="28" Column="112" />
-      <File FileName="Controllers/CharacterTokenController.cs" Line="1" Column="1" />
-      <File FileName="Controllers/CharacterRaceConroller.cs" Line="34" Column="1" />
-      <File FileName="Dtos/CharacterImageDto.cs" Line="1" Column="1" />
-      <File FileName="Dtos/ClassDtos/CharacterRaceDto.cs" Line="11" Column="1" />
-      <File FileName="Profiles/CharacterProfile.cs" Line="1" Column="1" />
-      <File FileName="Profiles/CharacterProfile (copy).cs" Line="26" Column="10" />
-      <File FileName="Startup.cs" Line="34" Column="60" />
-      <File FileName="appsettings.Development.json" Line="1" Column="1" />
-      <File FileName="appsettings.json" Line="1" Column="1" />
-      <File FileName="Controllers/CharacterClassController.cs" Line="25" Column="92" />
-      <File FileName="Dtos/CharacterSheetPropertyDto/EmptyClass.cs" Line="12" Column="2" />
-      <File FileName="Data/Items/ITraitRepo.cs" Line="9" Column="36" />
-      <File FileName="Data/Items/SqlTraitRepo.cs" Line="51" Column="10" />
-      <File FileName="Data/Spells/ITraitRepo.cs" Line="10" Column="37" />
-      <File FileName="Data/Spells/SqlTraitRepo.cs" Line="40" Column="14" />
+      <File FileName="Data/DiscordGuilds/SqlDiscordGuildRepo.cs" />
+      <File FileName="Utils/TokenSelection.cs" />
+      <File FileName="Controllers/DiscordGuildController.cs" />
+      <File FileName="Controllers/CharacterTokenController.cs" />
+      <File FileName="Controllers/CharacterRaceConroller.cs" />
+      <File FileName="Profiles/CharacterProfile.cs" />
+      <File FileName="Startup.cs" />
+      <File FileName="appsettings.Development.json" />
+      <File FileName="appsettings.json" />
+      <File FileName="Controllers/CharacterClassController.cs" />
+      <File FileName="Data/Items/ITraitRepo.cs" />
+      <File FileName="Data/Items/SqlTraitRepo.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -63,14 +36,24 @@
           <Node name="DMApp" expanded="True">
             <Node name="DMApp" expanded="True">
               <Node name="Controllers" expanded="True" />
-              <Node name="Data" expanded="True" />
+              <Node name="Data" expanded="True">
+                <Node name="CharacterSeedData.cs" selected="True" />
+              </Node>
               <Node name="Migrations" expanded="True" />
-              <Node name="Models" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.DMApp PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Applications/DmAppApi/Controllers/CharacterTokenController.cs" relfile="Controllers/CharacterTokenController.cs" line="89" column="1" />
+      <Breakpoint file="/Applications/DmAppApi/Controllers/CharacterRaceConroller.cs" relfile="Controllers/CharacterRaceConroller.cs" line="25" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

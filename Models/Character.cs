@@ -109,6 +109,9 @@ namespace DMApp.Models
         public int? TokenId { get; set; }
         public CharacterToken? Token { get; set; }
 
+        public int? VoiceId { get; set; }
+        public Voice? CharacterVoice { get; set; }
+
         // Discord Server information
         public IList<DiscordGuild> Guilds { get; set; } 
 
