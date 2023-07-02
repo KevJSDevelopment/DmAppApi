@@ -12,7 +12,7 @@ namespace DMApp.Models
 
 		public int? Id { get; set; }
 
-		public Blob VoiceBlob { get; set; }
+		public byte[]? VoiceBlob { get; set; }
 
 		public IList<Character> Characters { get; set; }
 

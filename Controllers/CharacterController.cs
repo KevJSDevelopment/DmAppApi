@@ -17,16 +17,18 @@ namespace DMApp.Controllers
         private readonly ICharacterRepo _characterRepo;
         private readonly IClassRepo _classRepo;
         private readonly IRaceRepo _raceRepo;
+        private readonly IDiscordGuildRepo _guildRepo;
         private readonly IMapper _mapper;
         private readonly OpenAIAPI _api;
 
-        public CharacterController(ICharacterRepo characterRepo, IClassRepo classRepo, IRaceRepo raceRepo, IMapper mapper)
+        public CharacterController(ICharacterRepo characterRepo, IClassRepo classRepo, IRaceRepo raceRepo, IDiscordGuildRepo guildRepo, IMapper mapper)
         {
             string? openai_key = Environment.GetEnvironmentVariable("OpenAI_Key");
             string? openai_org = Environment.GetEnvironmentVariable("OpenAi_Organization");
             _characterRepo = characterRepo;
             _classRepo = classRepo;
             _raceRepo = raceRepo;
+            _guildRepo = guildRepo;
             _mapper = mapper;
             _api = new OpenAIAPI(new APIAuthentication(openai_key, openai_org));
         }
@@ -69,6 +71,42 @@ namespace DMApp.Controllers
             CharacterCreateDto characterCreatedDto = _mapper.Map<CharacterCreateDto>(characterReadGPTDto);
             CharacterClass characterClass = _classRepo.GetCharacterClassByName(characterReadGPTDto.Class);
             CharacterRace characterRace = _raceRepo.GetCharacterRaceByName(characterReadGPTDto.Race);
+            DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
+
+            if (characterClass == null)
+            {
+                characterClass = new CharacterClass { Name = characterReadGPTDto.Class, Description = "" };
+                // Create the character class
+                characterClass = _classRepo.CreateClass(characterClass);
+
+                // Add the guild to the character class
+                characterClass.Guilds.Add(guild);
+
+                // Add the character class to the guild
+                guild.CharacterClasses.Add(characterClass);
+
+                // Update the guild in the database
+                _guildRepo.UpdateGuild(guild);
+
+            }
+
+            if (characterRace == null)
+            {
+                characterRace = new CharacterRace { Name = characterReadGPTDto.Race, Description = "" };
+                // Create the character class
+                characterRace = _raceRepo.CreateCharacterRace(characterRace);
+
+                // Add the guild to the character class
+                characterRace.Guilds.Add(guild);
+
+                // Add the character class to the guild
+                guild.CharacterRaces.Add(characterRace);
+
+                // Update the guild in the database
+                _guildRepo.UpdateGuild(guild);
+
+            }
+
             Character character = _mapper.Map<Character>(characterCreatedDto);
 
             if (characterClass != null) {

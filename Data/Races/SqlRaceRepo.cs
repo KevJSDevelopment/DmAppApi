@@ -18,6 +18,8 @@ namespace DMApp.Data
                 throw new ArgumentNullException(nameof(characterRace));
             }
 
+            characterRace.CharacterRaceId = 0;
+
             _context.Races.Add(characterRace);
             _context.SaveChanges();
 
@@ -39,11 +41,6 @@ namespace DMApp.Data
             }
 
             _context.Races.Remove(CharacterRace);
-        }
-
-        public CharacterRace GetCharacterRaceById(long CharacterRaceId)
-        {
-            return _context.Races.FirstOrDefault(r => r.CharacterRaceId == CharacterRaceId);
         }
 
         public CharacterRace GetCharacterRaceByName(string name)

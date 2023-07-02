@@ -25,6 +25,8 @@ namespace DMApp.Data
                 throw new ArgumentNullException(nameof(characterClass));
             }
 
+            characterClass.CharacterClassId = 0;
+
             _context.Classes.Add(characterClass);
             _context.SaveChanges();
 

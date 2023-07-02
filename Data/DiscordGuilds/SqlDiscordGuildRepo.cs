@@ -23,6 +23,14 @@ namespace DMApp.Data
             return _context.DiscordGuilds.FirstOrDefault(g => g.GuildId == guildId);
         }
 
+        public DiscordGuild UpdateGuild(DiscordGuild guild)
+        {
+            _context.DiscordGuilds.Update(guild);
+            _context.SaveChanges(); // Save changes to the database
+            return guild; // Return the updated guild
+        }
+
+
         public DiscordGuild CreateGuild(long guildId)
         {
             if (guildId == 0)

@@ -11,14 +11,17 @@ namespace DMApp.Utils
         {
             CharacterReadDto characterReadDto = new CharacterReadDto();
 
-            string values = JsonConvert.SerializeObject(characterInitiateDto);
-			string properties = JsonConvert.SerializeObject(characterReadDto);
+            string properties = JsonConvert.SerializeObject(characterReadDto, Formatting.Indented);
+            string values = JsonConvert.SerializeObject(characterInitiateDto, Formatting.Indented);
 
-			return $"Create a D&D character based on the following key value pair entries: {values}. " +
-                $"Fill out additional values for the character for each of the following key properties: {properties}. " +
-				$"Make sure the end result uses {tokens} tokens or less and only contains a json string with key value pairs for each of the key properties passed in but fill in all the values with values that would describe the character created. " +
-                $"Lastly, make sure to write between a few sentences and a couple paragraphs in the Background key to tell a detailed story of the characters background. Do not go over the token limit";
-		}
+
+            return $"Create a D&D character and fill out each of the following properties, making sure none of the values are null or empty:\n\n{properties}\n\n" +
+                $"Provide values for each of the key properties listed above to complete the character's details while using and adding to the following starting details: {values}. \n\n" +
+                $"Ensure the response is a JSON string with filled-out key/value pairs, representing the character's information.\n\n" +
+                $"Example Output:\n\n{{\n  \"Property1\": \"Value1\",\n  \"Property2\": \"Value2\",\n  \"Property3\": \"Value3\"\n}}\n\n" +
+                $"Please stay within the given token limit of {tokens} and ensure the response adheres to the specified format.";
+        }
+
 
         public static string CreateCharacterImage(string properties)
         {
