@@ -145,108 +145,109 @@ public static class CharacterSeedData
         };
         modelBuilder.Entity<Character>().HasData(characters);
 
-        modelBuilder.Entity("CharacterGuild")
-         .HasData(
-             new
-             {
-                 GuildId = 1077311704985239684,
-                 CharacterId = 1,
-                 JoinedOn = DateTime.UtcNow
-             },
-             new
-             {
-                 GuildId = 1077311704985239684,
-                 CharacterId = 2,
-                 JoinedOn = DateTime.UtcNow
-             }
-         );
-
-        modelBuilder.Entity("CharacterAlly")
+        modelBuilder.Entity<CharacterAlly>()
             .HasData(
-                new
+                new CharacterAlly
                 {
                     CharacterId = characters[0].CharacterId,
-                    AllyId = characters[1].CharacterId
+                    AllyId = characters[1].CharacterId,
                 }
             );
 
-        modelBuilder.Entity("CharacterEnemy")
+        modelBuilder.Entity<GuildCharacter>()
             .HasData(
-                new
+                new GuildCharacter
+                {
+                    GuildId = 1077311704985239684,
+                    CharacterId = characters[0].CharacterId,
+                    JoinedOn = DateTime.UtcNow
+                },
+                new GuildCharacter
+                {
+                    GuildId = 1077311704985239684,
+                    CharacterId = characters[1].CharacterId,
+                    JoinedOn = DateTime.UtcNow
+                }
+            );
+
+        modelBuilder.Entity<CharacterEnemy>()
+            .HasData(
+                new CharacterEnemy
                 {
                     CharacterId = characters[0].CharacterId,
                     EnemyId = characters[1].CharacterId
                 }
             );
 
-        modelBuilder.Entity("CharacterOrganization")
+        modelBuilder.Entity<CharacterOrganization>()
             .HasData(
-                new
+                new CharacterOrganization
                 {
                     CharacterId = characters[0].CharacterId,
                     OrganizationId = 1
                 },
-                new
+                new CharacterOrganization
                 {
                     CharacterId = characters[1].CharacterId,
                     OrganizationId = 2
                 }
             );
 
-        modelBuilder.Entity("CharacterFeature")
+        modelBuilder.Entity<CharacterFeature>()
             .HasData(
-                new
+                new CharacterFeature
                 {
                     CharacterId = characters[0].CharacterId,
                     FeatureId = 2
                 },
-                new
+                new CharacterFeature
                 {
                     CharacterId = characters[1].CharacterId,
                     FeatureId = 3
                 }
             );
 
-        modelBuilder.Entity("CharacterTrait")
+        modelBuilder.Entity<CharacterTrait>()
             .HasData(
-                new
+                new CharacterTrait
                 {
                     CharacterId = characters[0].CharacterId,
                     TraitId = 1
                 },
-                new
+                new CharacterTrait
                 {
                     CharacterId = characters[1].CharacterId,
                     TraitId = 4
                 }
             );
 
-        modelBuilder.Entity("CharacterItem")
+        modelBuilder.Entity<CharacterItem>()
             .HasData(
-                new
+                new CharacterItem
                 {
-                    CharacterId = 1,
+                    CharacterId = characters[0].CharacterId,
                     ItemId = items[0].ItemId
                 },
-                new
+                new CharacterItem
                 {
-                    CharacterId = 2,
+                    CharacterId = characters[1].CharacterId,
                     ItemId = items[1].ItemId
                 }
             );
 
-        modelBuilder.Entity("CharacterSpell")
+        modelBuilder.Entity<CharacterSpell>()
             .HasData(
-                new
+                new CharacterSpell
                 {
-                    CharacterId = 1,
+                    CharacterId = characters[0].CharacterId,
                     SpellId = spells[0].SpellId
                 },
-                new
+                new CharacterSpell
                 {
-                    CharacterId = 2,
+                    CharacterId = characters[1].CharacterId,
                     SpellId = spells[1].SpellId
                 }
             );
+
     }
 }

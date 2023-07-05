@@ -11,6 +11,7 @@ namespace DMApp.Profiles
         { 
             CreateMap<Character, CharacterReadDto>();
             CreateMap<Character, CharacterImageDto>();
+            CreateMap<Character, CharacterCreateDto>();
             CreateMap<CharacterReadDto, CharacterImageDto>();
             CreateMap<CharacterReadDto, CharacterCreateDto>();
             CreateMap<CharacterCreateDto, Character>();

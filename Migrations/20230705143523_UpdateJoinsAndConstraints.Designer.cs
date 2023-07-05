@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DMApp.Migrations
 {
     [DbContext(typeof(DMAppContext))]
-    [Migration("20230625174218_UpdateSeedData")]
-    partial class UpdateSeedData
+    [Migration("20230705143523_UpdateJoinsAndConstraints")]
+    partial class UpdateJoinsAndConstraints
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,226 +25,37 @@ namespace DMApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CharacterAlly", b =>
+            modelBuilder.Entity("DMApp.Models.Campaign", b =>
                 {
-                    b.Property<int>("AllyId")
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
-                    b.HasKey("AllyId", "CharacterId");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("CharacterId");
-
-                    b.ToTable("CharacterAlly");
-
-                    b.HasData(
-                        new
-                        {
-                            AllyId = 2,
-                            CharacterId = 1
-                        });
-                });
-
-            modelBuilder.Entity("CharacterEnemy", b =>
-                {
-                    b.Property<int>("EnemyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EnemyId", "CharacterId");
-
-                    b.HasIndex("CharacterId");
-
-                    b.ToTable("CharacterEnemy");
-
-                    b.HasData(
-                        new
-                        {
-                            EnemyId = 2,
-                            CharacterId = 1
-                        });
-                });
-
-            modelBuilder.Entity("CharacterFeature", b =>
-                {
-                    b.Property<int>("FeatureId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FeatureId", "CharacterId");
-
-                    b.HasIndex("CharacterId");
-
-                    b.ToTable("CharacterFeature");
-
-                    b.HasData(
-                        new
-                        {
-                            FeatureId = 2,
-                            CharacterId = 1
-                        },
-                        new
-                        {
-                            FeatureId = 3,
-                            CharacterId = 2
-                        });
-                });
-
-            modelBuilder.Entity("CharacterGuild", b =>
-                {
-                    b.Property<long>("GuildId")
+                    b.Property<long?>("GuildId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("JoinedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                    b.HasKey("Id");
 
-                    b.HasKey("GuildId", "CharacterId");
+                    b.HasIndex("GuildId");
 
-                    b.HasIndex("CharacterId");
-
-                    b.ToTable("CharacterGuild");
-
-                    b.HasData(
-                        new
-                        {
-                            GuildId = 1077311704985239684L,
-                            CharacterId = 1,
-                            JoinedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(690)
-                        },
-                        new
-                        {
-                            GuildId = 1077311704985239684L,
-                            CharacterId = 2,
-                            JoinedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(690)
-                        });
-                });
-
-            modelBuilder.Entity("CharacterItem", b =>
-                {
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CharacterId", "ItemId");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("CharacterItem");
-
-                    b.HasData(
-                        new
-                        {
-                            CharacterId = 1,
-                            ItemId = 1
-                        },
-                        new
-                        {
-                            CharacterId = 2,
-                            ItemId = 2
-                        });
-                });
-
-            modelBuilder.Entity("CharacterOrganization", b =>
-                {
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrganizationId", "CharacterId");
-
-                    b.HasIndex("CharacterId");
-
-                    b.ToTable("CharacterOrganization");
-
-                    b.HasData(
-                        new
-                        {
-                            OrganizationId = 1,
-                            CharacterId = 1
-                        },
-                        new
-                        {
-                            OrganizationId = 2,
-                            CharacterId = 2
-                        });
-                });
-
-            modelBuilder.Entity("CharacterSpell", b =>
-                {
-                    b.Property<int>("SpellId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SpellId", "CharacterId");
-
-                    b.HasIndex("CharacterId");
-
-                    b.ToTable("CharacterSpell");
-
-                    b.HasData(
-                        new
-                        {
-                            SpellId = 1,
-                            CharacterId = 1
-                        },
-                        new
-                        {
-                            SpellId = 2,
-                            CharacterId = 2
-                        });
-                });
-
-            modelBuilder.Entity("CharacterTrait", b =>
-                {
-                    b.Property<int>("TraitId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TraitId", "CharacterId");
-
-                    b.HasIndex("CharacterId");
-
-                    b.ToTable("CharacterTrait");
-
-                    b.HasData(
-                        new
-                        {
-                            TraitId = 1,
-                            CharacterId = 1
-                        },
-                        new
-                        {
-                            TraitId = 4,
-                            CharacterId = 2
-                        });
+                    b.ToTable("Campaigns");
                 });
 
             modelBuilder.Entity("DMApp.Models.Character", b =>
                 {
-                    b.Property<int>("CharacterId")
+                    b.Property<int?>("CharacterId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CharacterId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("CharacterId"));
 
                     b.Property<int>("Acrobatics")
                         .HasColumnType("int");
@@ -270,13 +81,16 @@ namespace DMApp.Migrations
                     b.Property<string>("Background")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CampaignId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Charisma")
                         .HasColumnType("int");
 
                     b.Property<int>("CharismaSavingThrow")
                         .HasColumnType("int");
 
-                    b.Property<int>("ClassId")
+                    b.Property<int?>("ClassId")
                         .HasColumnType("int");
 
                     b.Property<int>("Constitution")
@@ -394,7 +208,6 @@ namespace DMApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Nature")
@@ -412,7 +225,7 @@ namespace DMApp.Migrations
                     b.Property<int>("ProficiencyBonus")
                         .HasColumnType("int");
 
-                    b.Property<int>("RaceId")
+                    b.Property<int?>("RaceId")
                         .HasColumnType("int");
 
                     b.Property<int>("Religion")
@@ -451,6 +264,9 @@ namespace DMApp.Migrations
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("VoiceId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Weight")
                         .HasColumnType("nvarchar(max)");
 
@@ -462,11 +278,15 @@ namespace DMApp.Migrations
 
                     b.HasKey("CharacterId");
 
+                    b.HasIndex("CampaignId");
+
                     b.HasIndex("ClassId");
 
                     b.HasIndex("RaceId");
 
                     b.HasIndex("TokenId");
+
+                    b.HasIndex("VoiceId");
 
                     b.ToTable("Characters");
 
@@ -487,7 +307,7 @@ namespace DMApp.Migrations
                             ClassId = 1,
                             Constitution = 10,
                             ConstitutionSavingThrow = 0,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(650),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9960),
                             CurrentHitPoints = 10,
                             Deception = 0,
                             Dexterity = 10,
@@ -540,7 +360,7 @@ namespace DMApp.Migrations
                             StrengthSavingThrow = 0,
                             Survival = 0,
                             TemporaryHitPoints = 0,
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(650),
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9960),
                             Weight = "",
                             Wisdom = 10,
                             WisdomSavingThrow = 0
@@ -561,7 +381,7 @@ namespace DMApp.Migrations
                             ClassId = 2,
                             Constitution = 10,
                             ConstitutionSavingThrow = 0,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(650),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9970),
                             CurrentHitPoints = 10,
                             Deception = 0,
                             Dexterity = 10,
@@ -614,30 +434,50 @@ namespace DMApp.Migrations
                             StrengthSavingThrow = 0,
                             Survival = 0,
                             TemporaryHitPoints = 0,
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(650),
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9970),
                             Weight = "",
                             Wisdom = 10,
                             WisdomSavingThrow = 0
                         });
                 });
 
+            modelBuilder.Entity("DMApp.Models.CharacterAlly", b =>
+                {
+                    b.Property<int?>("AllyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AllyId", "CharacterId");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("CharacterAlly");
+
+                    b.HasData(
+                        new
+                        {
+                            AllyId = 2,
+                            CharacterId = 1
+                        });
+                });
+
             modelBuilder.Entity("DMApp.Models.CharacterClass", b =>
                 {
-                    b.Property<int>("CharacterClassId")
+                    b.Property<int?>("CharacterClassId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CharacterClassId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("CharacterClassId"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedOn")
@@ -651,118 +491,219 @@ namespace DMApp.Migrations
                         new
                         {
                             CharacterClassId = 1,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 192, DateTimeKind.Utc).AddTicks(9990),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9360),
                             Description = "A fierce warrior of primitive background who taps into their rage to unleash devastating attacks.",
                             Name = "Barbarian",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 192, DateTimeKind.Utc).AddTicks(9990)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9360)
                         },
                         new
                         {
                             CharacterClassId = 2,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9370),
                             Description = "A spellcaster who uses their performances to weave magic and inspire allies or hinder foes.",
                             Name = "Bard",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9370)
                         },
                         new
                         {
                             CharacterClassId = 3,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9370),
                             Description = "A holy warrior who channels divine power to heal allies, smite enemies, and protect the faith.",
                             Name = "Cleric",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9370)
                         },
                         new
                         {
                             CharacterClassId = 4,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9370),
                             Description = "A spellcaster who draws power from nature and can transform into animals, commanding natural forces.",
                             Name = "Druid",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9370)
                         },
                         new
                         {
                             CharacterClassId = 5,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9370),
                             Description = "A versatile warrior skilled in combat maneuvers and capable of taking on a variety of roles.",
                             Name = "Fighter",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9370)
                         },
                         new
                         {
                             CharacterClassId = 6,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9380),
                             Description = "A disciplined warrior who has honed their body into a deadly weapon and gained mastery over ki.",
                             Name = "Monk",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9380)
                         },
                         new
                         {
                             CharacterClassId = 7,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9380),
                             Description = "A holy knight dedicated to upholding justice and righteousness, channeling divine power in combat.",
                             Name = "Paladin",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9380)
                         },
                         new
                         {
                             CharacterClassId = 8,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9380),
                             Description = "A skilled hunter and tracker who excels at ranged combat and navigating the wilderness.",
                             Name = "Ranger",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9380)
                         },
                         new
                         {
                             CharacterClassId = 9,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9380),
                             Description = "A stealthy scoundrel who specializes in deception, agility, and exploiting their foes' weaknesses.",
                             Name = "Rogue",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9380)
                         },
                         new
                         {
                             CharacterClassId = 10,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9380),
                             Description = "A spellcaster with innate magical abilities, able to shape and cast spells through force of personality.",
                             Name = "Sorcerer",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9380)
                         },
                         new
                         {
                             CharacterClassId = 11,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9390),
                             Description = "A spellcaster who makes a pact with a powerful entity, gaining magical abilities in exchange for service.",
                             Name = "Warlock",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9390)
                         },
                         new
                         {
                             CharacterClassId = 12,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9390),
                             Description = "A scholarly magic-user who studies arcane knowledge and casts spells through careful study and preparation.",
                             Name = "Wizard",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(10)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9390)
+                        });
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterEnemy", b =>
+                {
+                    b.Property<int?>("EnemyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EnemyId", "CharacterId");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("CharacterEnemy");
+
+                    b.HasData(
+                        new
+                        {
+                            EnemyId = 2,
+                            CharacterId = 1
+                        });
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterFeature", b =>
+                {
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FeatureId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterId", "FeatureId");
+
+                    b.HasIndex("FeatureId");
+
+                    b.ToTable("CharacterFeature");
+
+                    b.HasData(
+                        new
+                        {
+                            CharacterId = 1,
+                            FeatureId = 2
+                        },
+                        new
+                        {
+                            CharacterId = 2,
+                            FeatureId = 3
+                        });
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterItem", b =>
+                {
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterId", "ItemId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("CharacterItem");
+
+                    b.HasData(
+                        new
+                        {
+                            CharacterId = 1,
+                            ItemId = 1
+                        },
+                        new
+                        {
+                            CharacterId = 2,
+                            ItemId = 2
+                        });
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterOrganization", b =>
+                {
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterId", "OrganizationId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("CharacterOrganization");
+
+                    b.HasData(
+                        new
+                        {
+                            CharacterId = 1,
+                            OrganizationId = 1
+                        },
+                        new
+                        {
+                            CharacterId = 2,
+                            OrganizationId = 2
                         });
                 });
 
             modelBuilder.Entity("DMApp.Models.CharacterRace", b =>
                 {
-                    b.Property<int>("CharacterRaceId")
+                    b.Property<int?>("CharacterRaceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CharacterRaceId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("CharacterRaceId"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedOn")
@@ -776,84 +717,111 @@ namespace DMApp.Migrations
                         new
                         {
                             CharacterRaceId = 1,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(360),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9610),
                             Description = "A humanoid creature with draconic ancestry, possessing dragon-like features and abilities.",
                             Name = "Dragonborn",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(360)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9620)
                         },
                         new
                         {
                             CharacterRaceId = 2,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9620),
                             Description = "A stout and tough humanoid known for their resilience, craftsmanship, and strong sense of tradition.",
                             Name = "Dwarf",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9620)
                         },
                         new
                         {
                             CharacterRaceId = 3,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9620),
                             Description = "A graceful and long-lived humanoid race with a deep connection to magic and the natural world.",
                             Name = "Elf",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9620)
                         },
                         new
                         {
                             CharacterRaceId = 4,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9620),
                             Description = "A small and inventive humanoid known for their curiosity, ingenuity, and love of tinkering.",
                             Name = "Gnome",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9620)
                         },
                         new
                         {
                             CharacterRaceId = 5,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9620),
                             Description = "A mixed heritage humanoid with both human and elven ancestry, combining the best traits of both races.",
                             Name = "Half-Elf",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9620)
                         },
                         new
                         {
                             CharacterRaceId = 6,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9630),
                             Description = "A powerful and intimidating humanoid born from the union of orc and human parents, known for their strength and resilience.",
                             Name = "Half-Orc",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(370)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9630)
                         },
                         new
                         {
                             CharacterRaceId = 7,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9630),
                             Description = "A small and nimble humanoid known for their luck, agility, and ability to avoid danger.",
                             Name = "Halfling",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9630)
                         },
                         new
                         {
                             CharacterRaceId = 8,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9630),
                             Description = "A versatile and adaptable humanoid race, known for their ambition, diversity, and capacity for greatness.",
                             Name = "Human",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9630)
                         },
                         new
                         {
                             CharacterRaceId = 9,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9630),
                             Description = "A humanoid with infernal bloodline, often bearing demonic traits and possessing a connection to the Fiend.",
                             Name = "Tiefling",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(380)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9630)
+                        });
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterSpell", b =>
+                {
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SpellId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterId", "SpellId");
+
+                    b.HasIndex("SpellId");
+
+                    b.ToTable("CharacterSpell");
+
+                    b.HasData(
+                        new
+                        {
+                            CharacterId = 1,
+                            SpellId = 1
+                        },
+                        new
+                        {
+                            CharacterId = 2,
+                            SpellId = 2
                         });
                 });
 
             modelBuilder.Entity("DMApp.Models.CharacterToken", b =>
                 {
-                    b.Property<int>("TokenId")
+                    b.Property<int?>("TokenId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TokenId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TokenId"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -861,7 +829,7 @@ namespace DMApp.Migrations
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<bool>("IsPublic")
+                    b.Property<bool?>("IsPublic")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("UpdatedOn")
@@ -870,6 +838,33 @@ namespace DMApp.Migrations
                     b.HasKey("TokenId");
 
                     b.ToTable("CharacterTokens");
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterTrait", b =>
+                {
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TraitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterId", "TraitId");
+
+                    b.HasIndex("TraitId");
+
+                    b.ToTable("CharacterTrait");
+
+                    b.HasData(
+                        new
+                        {
+                            CharacterId = 1,
+                            TraitId = 1
+                        },
+                        new
+                        {
+                            CharacterId = 2,
+                            TraitId = 4
+                        });
                 });
 
             modelBuilder.Entity("DMApp.Models.DiscordGuild", b =>
@@ -891,18 +886,18 @@ namespace DMApp.Migrations
                         new
                         {
                             GuildId = 1077311704985239684L,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(400),
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(400)
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9650),
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9650)
                         });
                 });
 
             modelBuilder.Entity("DMApp.Models.Feature", b =>
                 {
-                    b.Property<int>("FeatureId")
+                    b.Property<int?>("FeatureId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FeatureId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("FeatureId"));
 
                     b.Property<int?>("ClassId")
                         .HasColumnType("int");
@@ -911,11 +906,9 @@ namespace DMApp.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedOn")
@@ -932,554 +925,270 @@ namespace DMApp.Migrations
                         {
                             FeatureId = 1,
                             ClassId = 1,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9740),
                             Description = "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action.",
                             Name = "Rage",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9740)
                         },
                         new
                         {
                             FeatureId = 2,
                             ClassId = 1,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9750),
                             Description = "While you are not wearing any armor, your AC equals 10 + your Dexterity modifier + your Constitution modifier.",
                             Name = "Unarmored Defense",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9750)
                         },
                         new
                         {
                             FeatureId = 3,
                             ClassId = 2,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9750),
                             Description = "You can inspire others through stirring words or music. As a bonus action, you can choose one creature within 60 feet.",
                             Name = "Bardic Inspiration",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(470)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9750)
                         },
                         new
                         {
                             FeatureId = 4,
                             ClassId = 2,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9750),
                             Description = "You have learned to untangle and reshape the fabric of reality in harmony with your wishes and music.",
                             Name = "Spellcasting",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9750)
                         },
                         new
                         {
                             FeatureId = 5,
                             ClassId = 3,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9750),
                             Description = "Choose a divine domain, such as Life or Tempest, that grants you domain spells and other features.",
                             Name = "Divine Domain",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9750)
                         },
                         new
                         {
                             FeatureId = 6,
                             ClassId = 3,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9760),
                             Description = "At 2nd level, you gain the ability to channel divine energy directly from your deity.",
                             Name = "Channel Divinity",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9760)
                         },
                         new
                         {
                             FeatureId = 7,
                             ClassId = 4,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9760),
                             Description = "You know Druidic, the secret language of druids. You can speak the language and use it to leave hidden messages.",
                             Name = "Druidic",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9760)
                         },
                         new
                         {
                             FeatureId = 8,
                             ClassId = 4,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9760),
                             Description = "Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will.",
                             Name = "Spellcasting",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(480)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9760)
                         },
                         new
                         {
                             FeatureId = 9,
                             ClassId = 5,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9760),
                             Description = "You adopt a particular style of fighting as your specialty. Choose one of the following options.",
                             Name = "Fighting Style",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9760)
                         },
                         new
                         {
                             FeatureId = 10,
                             ClassId = 5,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9770),
                             Description = "You have a limited well of stamina that you can draw on to protect yourself from harm.",
                             Name = "Second Wind",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9770)
                         },
                         new
                         {
                             FeatureId = 11,
                             ClassId = 6,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9770),
                             Description = "While you are wearing no armor and not wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier.",
                             Name = "Unarmored Defense",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9770)
                         },
                         new
                         {
                             FeatureId = 12,
                             ClassId = 6,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9770),
                             Description = "Your practice of martial arts gives you mastery of combat styles that use unarmed strikes and monk weapons.",
                             Name = "Martial Arts",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9770)
                         },
                         new
                         {
                             FeatureId = 13,
                             ClassId = 7,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9770),
                             Description = "The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears.",
                             Name = "Divine Sense",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(490)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9770)
                         },
                         new
                         {
                             FeatureId = 14,
                             ClassId = 7,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9770),
                             Description = "Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest.",
                             Name = "Lay on Hands",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9770)
                         },
                         new
                         {
                             FeatureId = 15,
                             ClassId = 8,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780),
                             Description = "Beginning at 1st level, you have significant experience studying, tracking, hunting, and even talking to a certain type of enemy.",
                             Name = "Favored Enemy",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780)
                         },
                         new
                         {
                             FeatureId = 16,
                             ClassId = 8,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780),
                             Description = "You are a master of navigating the natural world and have a deep understanding of the terrain.",
                             Name = "Natural Explorer",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780)
                         },
                         new
                         {
                             FeatureId = 17,
                             ClassId = 9,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780),
                             Description = "Beginning at 1st level, you know how to strike subtly and exploit a foe's distraction.",
                             Name = "Sneak Attack",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780)
                         },
                         new
                         {
                             FeatureId = 18,
                             ClassId = 9,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780),
                             Description = "During your rogue training, you learned thieves' cant, a secret mix of dialect, jargon, and code that allows you to hide messages.",
                             Name = "Thieves' Cant",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780)
                         },
                         new
                         {
                             FeatureId = 19,
                             ClassId = 10,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(500),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780),
                             Description = "Choose a sorcerous origin, which describes the source of your innate magical power.",
                             Name = "Sorcerous Origin",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780)
                         },
                         new
                         {
                             FeatureId = 20,
                             ClassId = 10,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780),
                             Description = "An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic.",
                             Name = "Spellcasting",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9780)
                         },
                         new
                         {
                             FeatureId = 21,
                             ClassId = 11,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9790),
                             Description = "At 1st level, you have struck a bargain with an otherworldly being of your choice.",
                             Name = "Otherworldly Patron",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9790)
                         },
                         new
                         {
                             FeatureId = 22,
                             ClassId = 11,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9790),
                             Description = "Your arcane research and the magic bestowed on you by your patron have given you facility with spells.",
                             Name = "Pact Magic",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(510)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9790)
                         },
                         new
                         {
                             FeatureId = 23,
                             ClassId = 12,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(520),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9790),
                             Description = "As a student of arcane magic, you have a spellbook containing spells that show the first glimmerings of your true power.",
                             Name = "Spellcasting",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(520)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9790)
                         },
                         new
                         {
                             FeatureId = 24,
                             ClassId = 12,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(520),
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9790),
                             Description = "You have learned to regain some of your magical energy by studying your spellbook.",
                             Name = "Arcane Recovery",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(520)
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9790)
                         });
                 });
 
-            modelBuilder.Entity("DMApp.Models.Item", b =>
+            modelBuilder.Entity("DMApp.Models.GuildCharacter", b =>
                 {
-                    b.Property<int>("ItemId")
+                    b.Property<long?>("GuildId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("JoinedOn")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"));
+                    b.HasKey("GuildId", "CharacterId");
 
-                    b.Property<int?>("Cost")
-                        .IsRequired()
-                        .HasColumnType("int");
+                    b.HasIndex("CharacterId");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ItemId");
-
-                    b.ToTable("Items");
+                    b.ToTable("GuildCharacter");
 
                     b.HasData(
                         new
                         {
-                            ItemId = 1,
-                            Cost = 75,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(580),
-                            Description = "It aint good, but it aint bad either",
-                            Name = "Chain mail",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(580)
+                            GuildId = 1077311704985239684L,
+                            CharacterId = 1,
+                            JoinedOn = new DateTime(2023, 7, 5, 14, 35, 22, 943, DateTimeKind.Utc).AddTicks(30)
                         },
                         new
                         {
-                            ItemId = 2,
-                            Cost = 0,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(590),
-                            Description = "",
-                            Name = "",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(590)
+                            GuildId = 1077311704985239684L,
+                            CharacterId = 2,
+                            JoinedOn = new DateTime(2023, 7, 5, 14, 35, 22, 943, DateTimeKind.Utc).AddTicks(30)
                         });
                 });
 
-            modelBuilder.Entity("DMApp.Models.Organization", b =>
-                {
-                    b.Property<int>("OrganizationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrganizationId"));
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("OrganizationId");
-
-                    b.ToTable("Organizations");
-
-                    b.HasData(
-                        new
-                        {
-                            OrganizationId = 1,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430),
-                            Description = "A secret organization dedicated to preserving knowledge, maintaining balance, and fighting evil in all its forms.",
-                            Name = "Harper's Guild",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430)
-                        },
-                        new
-                        {
-                            OrganizationId = 2,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430),
-                            Description = "A militant order that seeks to protect the innocent, enforce justice, and eradicate evil from the world.",
-                            Name = "Order of the Gauntlet",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430)
-                        },
-                        new
-                        {
-                            OrganizationId = 3,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430),
-                            Description = "A society of druids and other nature-focused individuals who strive to protect the natural world and maintain the balance of nature.",
-                            Name = "Emerald Enclave",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(430)
-                        },
-                        new
-                        {
-                            OrganizationId = 4,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440),
-                            Description = "A political alliance of powerful city-states and influential leaders who work together to maintain stability and ensure the safety of their respective regions.",
-                            Name = "Lords' Alliance",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440)
-                        },
-                        new
-                        {
-                            OrganizationId = 5,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440),
-                            Description = "A secretive and powerful mercenary organization that operates in the shadows, pursuing wealth, power, and influence through any means necessary.",
-                            Name = "Zhentarim",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440)
-                        },
-                        new
-                        {
-                            OrganizationId = 6,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440),
-                            Description = "A scattered network of spies and informants who work to promote good, gather information, and thwart the plans of evil organizations.",
-                            Name = "Harpers",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440)
-                        },
-                        new
-                        {
-                            OrganizationId = 7,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440),
-                            Description = "A fanatical cult that seeks to raise and control dragons, believing that they are the key to ultimate power and world domination.",
-                            Name = "Cult of the Dragon",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(440)
-                        });
-                });
-
-            modelBuilder.Entity("DMApp.Models.Spell", b =>
-                {
-                    b.Property<int>("SpellId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpellId"));
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SpellLevel")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("SpellId");
-
-                    b.ToTable("Spells");
-
-                    b.HasData(
-                        new
-                        {
-                            SpellId = 1,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(600),
-                            Description = "",
-                            Name = "Spell 1",
-                            SpellLevel = 0,
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(600)
-                        },
-                        new
-                        {
-                            SpellId = 2,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(600),
-                            Description = "",
-                            Name = "Spell 2",
-                            SpellLevel = 0,
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(610)
-                        });
-                });
-
-            modelBuilder.Entity("DMApp.Models.Trait", b =>
-                {
-                    b.Property<int>("TraitId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TraitId"));
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("TraitId");
-
-                    b.ToTable("Traits");
-
-                    b.HasData(
-                        new
-                        {
-                            TraitId = 1,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(550),
-                            Description = "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table.",
-                            Name = "Draconic Ancestry",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(550)
-                        },
-                        new
-                        {
-                            TraitId = 2,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(550),
-                            Description = "You can use your action to exhale destructive energy.",
-                            Name = "Breath Weapon",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(550)
-                        },
-                        new
-                        {
-                            TraitId = 3,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
-                            Description = "Accustomed to life underground, you have superior vision in dark and dim conditions.",
-                            Name = "Darkvision",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560)
-                        },
-                        new
-                        {
-                            TraitId = 4,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
-                            Description = "You have advantage on saving throws against poison and resistance against poison damage.",
-                            Name = "Dwarven Resilience",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560)
-                        },
-                        new
-                        {
-                            TraitId = 5,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
-                            Description = "You have advantage on saving throws against being charmed, and magic can't put you to sleep.",
-                            Name = "Fey Ancestry",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560)
-                        },
-                        new
-                        {
-                            TraitId = 6,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
-                            Description = "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.",
-                            Name = "Gnome Cunning",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560)
-                        },
-                        new
-                        {
-                            TraitId = 7,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
-                            Description = "Your Charisma score increases by 2, and two other ability scores of your choice increase by 1.",
-                            Name = "Ability Score Increase",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560)
-                        },
-                        new
-                        {
-                            TraitId = 8,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(560),
-                            Description = "When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead.",
-                            Name = "Relentless Endurance",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570)
-                        },
-                        new
-                        {
-                            TraitId = 9,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570),
-                            Description = "When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.",
-                            Name = "Lucky",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570)
-                        },
-                        new
-                        {
-                            TraitId = 10,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570),
-                            Description = "You have advantage on saving throws against being frightened.",
-                            Name = "Brave",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570)
-                        },
-                        new
-                        {
-                            TraitId = 11,
-                            CreatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570),
-                            Description = "You have resistance to fire damage.",
-                            Name = "Hellish Resistance",
-                            UpdatedOn = new DateTime(2023, 6, 25, 17, 42, 18, 193, DateTimeKind.Utc).AddTicks(570)
-                        });
-                });
-
-            modelBuilder.Entity("GuildClass", b =>
+            modelBuilder.Entity("DMApp.Models.GuildClass", b =>
                 {
                     b.Property<long>("GuildId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("ClassId")
+                    b.Property<int>("CharacterClassId")
                         .HasColumnType("int");
 
-                    b.HasKey("GuildId", "ClassId");
+                    b.HasKey("GuildId", "CharacterClassId");
 
-                    b.HasIndex("ClassId");
+                    b.HasIndex("CharacterClassId");
 
                     b.ToTable("GuildClass");
                 });
 
-            modelBuilder.Entity("GuildFeature", b =>
-                {
-                    b.Property<long>("GuildId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("FeatureId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GuildId", "FeatureId");
-
-                    b.HasIndex("FeatureId");
-
-                    b.ToTable("GuildFeature");
-                });
-
-            modelBuilder.Entity("GuildItem", b =>
+            modelBuilder.Entity("DMApp.Models.GuildItem", b =>
                 {
                     b.Property<long>("GuildId")
                         .HasColumnType("bigint");
@@ -1494,7 +1203,7 @@ namespace DMApp.Migrations
                     b.ToTable("GuildItem");
                 });
 
-            modelBuilder.Entity("GuildOrganization", b =>
+            modelBuilder.Entity("DMApp.Models.GuildOrganization", b =>
                 {
                     b.Property<long>("GuildId")
                         .HasColumnType("bigint");
@@ -1509,22 +1218,22 @@ namespace DMApp.Migrations
                     b.ToTable("GuildOrganization");
                 });
 
-            modelBuilder.Entity("GuildRace", b =>
+            modelBuilder.Entity("DMApp.Models.GuildRace", b =>
                 {
                     b.Property<long>("GuildId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("RaceId")
+                    b.Property<int>("CharacterRaceId")
                         .HasColumnType("int");
 
-                    b.HasKey("GuildId", "RaceId");
+                    b.HasKey("GuildId", "CharacterRaceId");
 
-                    b.HasIndex("RaceId");
+                    b.HasIndex("CharacterRaceId");
 
                     b.ToTable("GuildRace");
                 });
 
-            modelBuilder.Entity("GuildSpell", b =>
+            modelBuilder.Entity("DMApp.Models.GuildSpell", b =>
                 {
                     b.Property<long>("GuildId")
                         .HasColumnType("bigint");
@@ -1539,179 +1248,551 @@ namespace DMApp.Migrations
                     b.ToTable("GuildSpell");
                 });
 
-            modelBuilder.Entity("GuildTrait", b =>
+            modelBuilder.Entity("DMApp.Models.Item", b =>
                 {
-                    b.Property<long>("GuildId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("TraitId")
+                    b.Property<int?>("ItemId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.HasKey("GuildId", "TraitId");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ItemId"));
 
-                    b.HasIndex("TraitId");
+                    b.Property<int?>("Cost")
+                        .HasColumnType("int");
 
-                    b.ToTable("GuildTrait");
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ItemId");
+
+                    b.ToTable("Items");
+
+                    b.HasData(
+                        new
+                        {
+                            ItemId = 1,
+                            Cost = 75,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9870),
+                            Description = "It aint good, but it aint bad either",
+                            Name = "Chain mail",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9870)
+                        },
+                        new
+                        {
+                            ItemId = 2,
+                            Cost = 20,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9880),
+                            Description = "A short bow",
+                            Name = "Short bow",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9880)
+                        });
                 });
 
-            modelBuilder.Entity("RacialTraits", b =>
+            modelBuilder.Entity("DMApp.Models.Organization", b =>
                 {
-                    b.Property<int>("TraitId")
+                    b.Property<int?>("OrganizationId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("RaceId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("OrganizationId"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("OrganizationId");
+
+                    b.ToTable("Organizations");
+
+                    b.HasData(
+                        new
+                        {
+                            OrganizationId = 1,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9710),
+                            Description = "A secret organization dedicated to preserving knowledge, maintaining balance, and fighting evil in all its forms.",
+                            Name = "Harper's Guild",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9710)
+                        },
+                        new
+                        {
+                            OrganizationId = 2,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9710),
+                            Description = "A militant order that seeks to protect the innocent, enforce justice, and eradicate evil from the world.",
+                            Name = "Order of the Gauntlet",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9710)
+                        },
+                        new
+                        {
+                            OrganizationId = 3,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9710),
+                            Description = "A society of druids and other nature-focused individuals who strive to protect the natural world and maintain the balance of nature.",
+                            Name = "Emerald Enclave",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9710)
+                        },
+                        new
+                        {
+                            OrganizationId = 4,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9710),
+                            Description = "A political alliance of powerful city-states and influential leaders who work together to maintain stability and ensure the safety of their respective regions.",
+                            Name = "Lords' Alliance",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9710)
+                        },
+                        new
+                        {
+                            OrganizationId = 5,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9710),
+                            Description = "A secretive and powerful mercenary organization that operates in the shadows, pursuing wealth, power, and influence through any means necessary.",
+                            Name = "Zhentarim",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9710)
+                        },
+                        new
+                        {
+                            OrganizationId = 6,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9720),
+                            Description = "A scattered network of spies and informants who work to promote good, gather information, and thwart the plans of evil organizations.",
+                            Name = "Harpers",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9720)
+                        },
+                        new
+                        {
+                            OrganizationId = 7,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9720),
+                            Description = "A fanatical cult that seeks to raise and control dragons, believing that they are the key to ultimate power and world domination.",
+                            Name = "Cult of the Dragon",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9720)
+                        });
+                });
+
+            modelBuilder.Entity("DMApp.Models.Session", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.HasKey("TraitId", "RaceId");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SessionNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("campaignId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("campaignId");
+
+                    b.ToTable("Sessions");
+                });
+
+            modelBuilder.Entity("DMApp.Models.Spell", b =>
+                {
+                    b.Property<int?>("SpellId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("SpellId"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SpellLevel")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("SpellId");
+
+                    b.ToTable("Spells");
+
+                    b.HasData(
+                        new
+                        {
+                            SpellId = 1,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9900),
+                            Description = "",
+                            Name = "Spell 1",
+                            SpellLevel = 0,
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9900)
+                        },
+                        new
+                        {
+                            SpellId = 2,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9900),
+                            Description = "",
+                            Name = "Spell 2",
+                            SpellLevel = 0,
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9900)
+                        });
+                });
+
+            modelBuilder.Entity("DMApp.Models.Trait", b =>
+                {
+                    b.Property<int?>("TraitId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TraitId"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RaceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("TraitId");
 
                     b.HasIndex("RaceId");
 
-                    b.ToTable("RacialTraits");
+                    b.ToTable("Traits");
+
+                    b.HasData(
+                        new
+                        {
+                            TraitId = 1,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9830),
+                            Description = "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table.",
+                            Name = "Draconic Ancestry",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9840)
+                        },
+                        new
+                        {
+                            TraitId = 2,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9840),
+                            Description = "You can use your action to exhale destructive energy.",
+                            Name = "Breath Weapon",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9840)
+                        },
+                        new
+                        {
+                            TraitId = 3,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9840),
+                            Description = "Accustomed to life underground, you have superior vision in dark and dim conditions.",
+                            Name = "Darkvision",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9840)
+                        },
+                        new
+                        {
+                            TraitId = 4,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9840),
+                            Description = "You have advantage on saving throws against poison and resistance against poison damage.",
+                            Name = "Dwarven Resilience",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9840)
+                        },
+                        new
+                        {
+                            TraitId = 5,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9840),
+                            Description = "You have advantage on saving throws against being charmed, and magic can't put you to sleep.",
+                            Name = "Fey Ancestry",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9840)
+                        },
+                        new
+                        {
+                            TraitId = 6,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850),
+                            Description = "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.",
+                            Name = "Gnome Cunning",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850)
+                        },
+                        new
+                        {
+                            TraitId = 7,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850),
+                            Description = "Your Charisma score increases by 2, and two other ability scores of your choice increase by 1.",
+                            Name = "Ability Score Increase",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850)
+                        },
+                        new
+                        {
+                            TraitId = 8,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850),
+                            Description = "When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead.",
+                            Name = "Relentless Endurance",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850)
+                        },
+                        new
+                        {
+                            TraitId = 9,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850),
+                            Description = "When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.",
+                            Name = "Lucky",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850)
+                        },
+                        new
+                        {
+                            TraitId = 10,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850),
+                            Description = "You have advantage on saving throws against being frightened.",
+                            Name = "Brave",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850)
+                        },
+                        new
+                        {
+                            TraitId = 11,
+                            CreatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850),
+                            Description = "You have resistance to fire damage.",
+                            Name = "Hellish Resistance",
+                            UpdatedOn = new DateTime(2023, 7, 5, 14, 35, 22, 942, DateTimeKind.Utc).AddTicks(9850)
+                        });
                 });
 
-            modelBuilder.Entity("CharacterAlly", b =>
+            modelBuilder.Entity("DMApp.Models.Voice", b =>
                 {
-                    b.HasOne("DMApp.Models.Character", null)
-                        .WithMany()
-                        .HasForeignKey("AllyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.HasOne("DMApp.Models.Character", null)
-                        .WithMany()
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<long?>("GuildId")
+                        .HasColumnType("bigint");
+
+                    b.Property<byte[]>("VoiceBlob")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GuildId");
+
+                    b.ToTable("Voices");
                 });
 
-            modelBuilder.Entity("CharacterEnemy", b =>
+            modelBuilder.Entity("DiscordGuildFeature", b =>
                 {
-                    b.HasOne("DMApp.Models.Character", null)
-                        .WithMany()
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("FeaturesFeatureId")
+                        .HasColumnType("int");
 
-                    b.HasOne("DMApp.Models.Character", null)
-                        .WithMany()
-                        .HasForeignKey("EnemyId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                    b.Property<long>("GuildsGuildId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("FeaturesFeatureId", "GuildsGuildId");
+
+                    b.HasIndex("GuildsGuildId");
+
+                    b.ToTable("DiscordGuildFeature");
                 });
 
-            modelBuilder.Entity("CharacterFeature", b =>
+            modelBuilder.Entity("DiscordGuildTrait", b =>
                 {
-                    b.HasOne("DMApp.Models.Character", null)
-                        .WithMany()
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<long>("GuildsGuildId")
+                        .HasColumnType("bigint");
 
-                    b.HasOne("DMApp.Models.Feature", null)
-                        .WithMany()
-                        .HasForeignKey("FeatureId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Property<int>("TraitsTraitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GuildsGuildId", "TraitsTraitId");
+
+                    b.HasIndex("TraitsTraitId");
+
+                    b.ToTable("DiscordGuildTrait");
                 });
 
-            modelBuilder.Entity("CharacterGuild", b =>
+            modelBuilder.Entity("DMApp.Models.Campaign", b =>
                 {
-                    b.HasOne("DMApp.Models.Character", null)
-                        .WithMany()
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("DMApp.Models.DiscordGuild", "Guild")
+                        .WithMany("Campaigns")
+                        .HasForeignKey("GuildId");
 
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
-                        .WithMany()
-                        .HasForeignKey("GuildId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CharacterItem", b =>
-                {
-                    b.HasOne("DMApp.Models.Character", null)
-                        .WithMany()
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DMApp.Models.Item", null)
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CharacterOrganization", b =>
-                {
-                    b.HasOne("DMApp.Models.Character", null)
-                        .WithMany()
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DMApp.Models.Organization", null)
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CharacterSpell", b =>
-                {
-                    b.HasOne("DMApp.Models.Character", null)
-                        .WithMany()
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DMApp.Models.Spell", null)
-                        .WithMany()
-                        .HasForeignKey("SpellId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CharacterTrait", b =>
-                {
-                    b.HasOne("DMApp.Models.Character", null)
-                        .WithMany()
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DMApp.Models.Trait", null)
-                        .WithMany()
-                        .HasForeignKey("TraitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Guild");
                 });
 
             modelBuilder.Entity("DMApp.Models.Character", b =>
                 {
+                    b.HasOne("DMApp.Models.Campaign", null)
+                        .WithMany("Characters")
+                        .HasForeignKey("CampaignId");
+
                     b.HasOne("DMApp.Models.CharacterClass", "Class")
                         .WithMany("Characters")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClassId");
 
                     b.HasOne("DMApp.Models.CharacterRace", "Race")
                         .WithMany("Characters")
-                        .HasForeignKey("RaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RaceId");
 
                     b.HasOne("DMApp.Models.CharacterToken", "Token")
                         .WithMany("Characters")
                         .HasForeignKey("TokenId");
+
+                    b.HasOne("DMApp.Models.Voice", "CharacterVoice")
+                        .WithMany("Characters")
+                        .HasForeignKey("VoiceId");
+
+                    b.Navigation("CharacterVoice");
 
                     b.Navigation("Class");
 
                     b.Navigation("Race");
 
                     b.Navigation("Token");
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterAlly", b =>
+                {
+                    b.HasOne("DMApp.Models.Character", "Ally")
+                        .WithMany()
+                        .HasForeignKey("AllyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Ally");
+
+                    b.Navigation("Character");
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterEnemy", b =>
+                {
+                    b.HasOne("DMApp.Models.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Character", "Enemy")
+                        .WithMany()
+                        .HasForeignKey("EnemyId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Enemy");
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterFeature", b =>
+                {
+                    b.HasOne("DMApp.Models.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Feature", "Feature")
+                        .WithMany()
+                        .HasForeignKey("FeatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Feature");
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterItem", b =>
+                {
+                    b.HasOne("DMApp.Models.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterOrganization", b =>
+                {
+                    b.HasOne("DMApp.Models.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Organization", "Org")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Org");
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterSpell", b =>
+                {
+                    b.HasOne("DMApp.Models.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Spell", "Spell")
+                        .WithMany()
+                        .HasForeignKey("SpellId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Spell");
+                });
+
+            modelBuilder.Entity("DMApp.Models.CharacterTrait", b =>
+                {
+                    b.HasOne("DMApp.Models.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.Trait", "Trait")
+                        .WithMany()
+                        .HasForeignKey("TraitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Trait");
                 });
 
             modelBuilder.Entity("DMApp.Models.Feature", b =>
@@ -1723,124 +1804,184 @@ namespace DMApp.Migrations
                     b.Navigation("Class");
                 });
 
-            modelBuilder.Entity("GuildClass", b =>
+            modelBuilder.Entity("DMApp.Models.GuildCharacter", b =>
                 {
-                    b.HasOne("DMApp.Models.CharacterClass", null)
+                    b.HasOne("DMApp.Models.Character", "Character")
                         .WithMany()
-                        .HasForeignKey("ClassId")
+                        .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                    b.HasOne("DMApp.Models.DiscordGuild", "Guild")
                         .WithMany()
                         .HasForeignKey("GuildId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Guild");
                 });
 
-            modelBuilder.Entity("GuildFeature", b =>
+            modelBuilder.Entity("DMApp.Models.GuildClass", b =>
                 {
-                    b.HasOne("DMApp.Models.Feature", null)
+                    b.HasOne("DMApp.Models.CharacterClass", "CharacterClass")
                         .WithMany()
-                        .HasForeignKey("FeatureId")
+                        .HasForeignKey("CharacterClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                    b.HasOne("DMApp.Models.DiscordGuild", "Guild")
                         .WithMany()
                         .HasForeignKey("GuildId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CharacterClass");
+
+                    b.Navigation("Guild");
                 });
 
-            modelBuilder.Entity("GuildItem", b =>
+            modelBuilder.Entity("DMApp.Models.GuildItem", b =>
                 {
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                    b.HasOne("DMApp.Models.DiscordGuild", "Guild")
                         .WithMany()
                         .HasForeignKey("GuildId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DMApp.Models.Item", null)
+                    b.HasOne("DMApp.Models.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Guild");
+
+                    b.Navigation("Item");
                 });
 
-            modelBuilder.Entity("GuildOrganization", b =>
+            modelBuilder.Entity("DMApp.Models.GuildOrganization", b =>
                 {
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                    b.HasOne("DMApp.Models.DiscordGuild", "Guild")
                         .WithMany()
                         .HasForeignKey("GuildId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DMApp.Models.Organization", null)
+                    b.HasOne("DMApp.Models.Organization", "Org")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Guild");
+
+                    b.Navigation("Org");
                 });
 
-            modelBuilder.Entity("GuildRace", b =>
+            modelBuilder.Entity("DMApp.Models.GuildRace", b =>
                 {
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                    b.HasOne("DMApp.Models.CharacterRace", "CharacterRace")
+                        .WithMany()
+                        .HasForeignKey("CharacterRaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.DiscordGuild", "Guild")
                         .WithMany()
                         .HasForeignKey("GuildId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DMApp.Models.CharacterRace", null)
-                        .WithMany()
-                        .HasForeignKey("RaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("CharacterRace");
+
+                    b.Navigation("Guild");
                 });
 
-            modelBuilder.Entity("GuildSpell", b =>
+            modelBuilder.Entity("DMApp.Models.GuildSpell", b =>
                 {
-                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                    b.HasOne("DMApp.Models.DiscordGuild", "Guild")
                         .WithMany()
                         .HasForeignKey("GuildId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DMApp.Models.Spell", null)
+                    b.HasOne("DMApp.Models.Spell", "Spell")
                         .WithMany()
                         .HasForeignKey("SpellId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Guild");
+
+                    b.Navigation("Spell");
                 });
 
-            modelBuilder.Entity("GuildTrait", b =>
+            modelBuilder.Entity("DMApp.Models.Session", b =>
+                {
+                    b.HasOne("DMApp.Models.Campaign", "campaign")
+                        .WithMany("Sessions")
+                        .HasForeignKey("campaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("campaign");
+                });
+
+            modelBuilder.Entity("DMApp.Models.Trait", b =>
+                {
+                    b.HasOne("DMApp.Models.CharacterRace", "Race")
+                        .WithMany("Traits")
+                        .HasForeignKey("RaceId");
+
+                    b.Navigation("Race");
+                });
+
+            modelBuilder.Entity("DMApp.Models.Voice", b =>
+                {
+                    b.HasOne("DMApp.Models.DiscordGuild", "Guild")
+                        .WithMany()
+                        .HasForeignKey("GuildId");
+
+                    b.Navigation("Guild");
+                });
+
+            modelBuilder.Entity("DiscordGuildFeature", b =>
+                {
+                    b.HasOne("DMApp.Models.Feature", null)
+                        .WithMany()
+                        .HasForeignKey("FeaturesFeatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMApp.Models.DiscordGuild", null)
+                        .WithMany()
+                        .HasForeignKey("GuildsGuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DiscordGuildTrait", b =>
                 {
                     b.HasOne("DMApp.Models.DiscordGuild", null)
                         .WithMany()
-                        .HasForeignKey("GuildId")
+                        .HasForeignKey("GuildsGuildId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DMApp.Models.Trait", null)
                         .WithMany()
-                        .HasForeignKey("TraitId")
+                        .HasForeignKey("TraitsTraitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RacialTraits", b =>
+            modelBuilder.Entity("DMApp.Models.Campaign", b =>
                 {
-                    b.HasOne("DMApp.Models.CharacterRace", null)
-                        .WithMany()
-                        .HasForeignKey("RaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Characters");
 
-                    b.HasOne("DMApp.Models.Trait", null)
-                        .WithMany()
-                        .HasForeignKey("TraitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Sessions");
                 });
 
             modelBuilder.Entity("DMApp.Models.CharacterClass", b =>
@@ -1853,9 +1994,21 @@ namespace DMApp.Migrations
             modelBuilder.Entity("DMApp.Models.CharacterRace", b =>
                 {
                     b.Navigation("Characters");
+
+                    b.Navigation("Traits");
                 });
 
             modelBuilder.Entity("DMApp.Models.CharacterToken", b =>
+                {
+                    b.Navigation("Characters");
+                });
+
+            modelBuilder.Entity("DMApp.Models.DiscordGuild", b =>
+                {
+                    b.Navigation("Campaigns");
+                });
+
+            modelBuilder.Entity("DMApp.Models.Voice", b =>
                 {
                     b.Navigation("Characters");
                 });

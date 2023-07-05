@@ -16,10 +16,10 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        public int SpellId { get; set; }
-        public string Name { get; set; }
-        public int SpellLevel { get; set; }
-        public string Description { get; set; }
+        public int? SpellId { get; set; }
+        public string? Name { get; set; }
+        public int? SpellLevel { get; set; }
+        public string? Description { get; set; }
 
         // Other spell properties
         public IList<Character> Characters { get; set; }

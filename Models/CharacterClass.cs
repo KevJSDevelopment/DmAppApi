@@ -16,7 +16,7 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        public int CharacterClassId { get; set; }
+        public int? CharacterClassId { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
 

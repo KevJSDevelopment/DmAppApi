@@ -6,9 +6,9 @@ namespace DMApp.Data
     public interface IRaceRepo
     {
         bool SaveChanges();
-        CharacterRace CreateCharacterRace(CharacterRace characterRace);
+        CharacterRace CreateCharacterRace(CharacterRace characterRace, long guildId);
         CharacterRace GetCharacterRaceById(int id);
-        CharacterRace GetCharacterRaceByName(string name);
+        CharacterRace GetCharacterRaceByName(string name, long guildId);
         void DeleteCharacterRace(int characterRaceId);
     }
 }

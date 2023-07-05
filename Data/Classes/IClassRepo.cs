@@ -6,9 +6,9 @@ namespace DMApp.Data
     public interface IClassRepo
     {
         bool SaveChanges();
-        CharacterClass CreateClass(CharacterClass characterClass);
+        CharacterClass CreateCharacterClass(CharacterClass characterClass, long guildId);
         CharacterClass GetCharacterClassById(int id);
-        CharacterClass GetCharacterClassByName(string name);
+        CharacterClass GetCharacterClassByName(string name, long guildId);
         void DeleteClass(int classId);
     }
 }

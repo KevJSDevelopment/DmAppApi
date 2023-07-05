@@ -32,7 +32,7 @@ namespace DMApp.Controllers
 
             characterRace.Guilds.Add(guild);
 
-            _raceRepo.CreateCharacterRace(characterRace);
+            _raceRepo.CreateCharacterRace(characterRace, guildId);
 
             return Ok("Race Created");
         }

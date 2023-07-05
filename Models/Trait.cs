@@ -16,9 +16,9 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        public int TraitId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public int? TraitId { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
 
         public int? RaceId { get; set; }
         public CharacterRace? Race { get; set; }

@@ -32,7 +32,7 @@ namespace DMApp.Controllers
 
             characterClass.Guilds.Add(guild);
 
-            _classRepo.CreateClass(characterClass);
+            _classRepo.CreateCharacterClass(characterClass, guildId);
 
             return Ok("Class Created");
         }

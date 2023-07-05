@@ -16,9 +16,9 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        public int OrganizationId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public int? OrganizationId { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
 
         public IList<Character> Characters { get; set; }
         public IList<DiscordGuild> Guilds { get; set; }

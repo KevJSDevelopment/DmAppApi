@@ -69,15 +69,15 @@ namespace DMApp.Controllers
             characterReadGPTDto = JsonConvert.DeserializeObject<CharacterReadDto>(chatResponse.Choices[0].Message.Content);
 
             CharacterCreateDto characterCreatedDto = _mapper.Map<CharacterCreateDto>(characterReadGPTDto);
-            CharacterClass characterClass = _classRepo.GetCharacterClassByName(characterReadGPTDto.Class);
-            CharacterRace characterRace = _raceRepo.GetCharacterRaceByName(characterReadGPTDto.Race);
+            CharacterClass characterClass = _classRepo.GetCharacterClassByName(characterReadGPTDto.Class, guildId);
+            CharacterRace characterRace = _raceRepo.GetCharacterRaceByName(characterReadGPTDto.Race, guildId);
             DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
 
             if (characterClass == null)
             {
                 characterClass = new CharacterClass { Name = characterReadGPTDto.Class, Description = "" };
                 // Create the character class
-                characterClass = _classRepo.CreateClass(characterClass);
+                characterClass = _classRepo.CreateCharacterClass(characterClass, guildId);
 
                 // Add the guild to the character class
                 characterClass.Guilds.Add(guild);
@@ -94,7 +94,7 @@ namespace DMApp.Controllers
             {
                 characterRace = new CharacterRace { Name = characterReadGPTDto.Race, Description = "" };
                 // Create the character class
-                characterRace = _raceRepo.CreateCharacterRace(characterRace);
+                characterRace = _raceRepo.CreateCharacterRace(characterRace, guildId);
 
                 // Add the guild to the character class
                 characterRace.Guilds.Add(guild);
@@ -124,6 +124,12 @@ namespace DMApp.Controllers
 
             if (_characterRepo.SaveChanges())
             {
+                characterCreatedDto = _mapper.Map<CharacterCreateDto>(character);
+                characterReadGPTDto = _mapper.Map<CharacterReadDto>(characterCreatedDto);
+
+                characterReadGPTDto.Class = character.Class.Name;
+                characterReadGPTDto.Race = character.Race.Name;
+
                 return Ok(characterReadGPTDto);
             }
             else

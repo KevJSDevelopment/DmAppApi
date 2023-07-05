@@ -30,31 +30,31 @@ namespace DMApp.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Feature>()
-                .HasKey(f => f.FeatureId);
+            .HasKey(f => f.FeatureId);
             modelBuilder.Entity<Trait>()
-                .HasKey(t => t.TraitId);
+            .HasKey(t => t.TraitId);
             modelBuilder.Entity<Item>()
-                .HasKey(i => i.ItemId);
+            .HasKey(i => i.ItemId);
             modelBuilder.Entity<Spell>()
-                .HasKey(s => s.SpellId);
+            .HasKey(s => s.SpellId);
             modelBuilder.Entity<CharacterToken>()
-                .HasKey(ct => ct.TokenId);
+            .HasKey(ct => ct.TokenId);
             modelBuilder.Entity<Organization>()
-                .HasKey(o => o.OrganizationId);
+            .HasKey(o => o.OrganizationId);
             modelBuilder.Entity<Campaign>()
-                .HasKey(c => c.Id);
+            .HasKey(c => c.Id);
             modelBuilder.Entity<Session>()
-                .HasKey(s => s.Id);
-
+            .HasKey(s => s.Id);
             modelBuilder.Entity<Voice>()
-                .HasKey(v => v.Id);
+            .HasKey(v => v.Id);
+
 
             ConfigureCharacter(modelBuilder);
             ConfigureCharacterClass(modelBuilder);
             ConfigureCharacterRace(modelBuilder);
             ConfigureDiscordGuild(modelBuilder);
-            // Configure other entities...
 
+            // Seed Data
             CharacterSeedData.SeedData(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
@@ -85,90 +85,132 @@ namespace DMApp.Data
                 .WithMany(cc => cc.Characters)
                 .HasForeignKey(c => c.ClassId);
 
-            modelBuilder.Entity<Character>()
-                .HasMany(c => c.Guilds)
-                .WithMany(g => g.Characters)
-                .UsingEntity<Dictionary<string, object>>(
-                    "CharacterGuild",
-                    j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
-                    j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
-                    j =>
-                    {
-                        j.Property<DateTime>("JoinedOn").HasDefaultValueSql("GETDATE()");
-                        j.HasKey("GuildId", "CharacterId");
-                    }
-                );
+            // CharacterAlly
+            modelBuilder.Entity<CharacterAlly>()
+                .HasKey(ce => new { ce.AllyId, ce.CharacterId });
+
+            // CharacterEnemy
+            modelBuilder.Entity<CharacterEnemy>()
+                .HasKey(ce => new { ce.EnemyId, ce.CharacterId });
+
+            // CharacterOrganization
+            modelBuilder.Entity<CharacterOrganization>()
+                .HasKey(co => new { co.CharacterId, co.OrganizationId });
+
+            // CharacterFeature
+            modelBuilder.Entity<CharacterFeature>()
+                .HasKey(cf => new { cf.CharacterId, cf.FeatureId });
+
+            // CharacterTrait
+            modelBuilder.Entity<CharacterTrait>()
+                .HasKey(ct => new { ct.CharacterId, ct.TraitId });
+
+            // CharacterItem
+            modelBuilder.Entity<CharacterItem>()
+                .HasKey(ci => new { ci.CharacterId, ci.ItemId });
+
+            // CharacterSpell
+            modelBuilder.Entity<CharacterSpell>()
+                .HasKey(cs => new { cs.CharacterId, cs.SpellId });
 
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Allies)
                 .WithMany()
-                .UsingEntity<Dictionary<string, object>>(
-                    "CharacterAlly",
-                    j => j.HasOne<Character>().WithMany().HasForeignKey("AllyId"),
-                    j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
-                    j => j.HasKey("AllyId", "CharacterId")
+                .UsingEntity<CharacterAlly>(
+                    j => j
+                        .HasOne(ce => ce.Ally)
+                        .WithMany()
+                        .HasForeignKey(ce => ce.AllyId),
+                    j => j
+                        .HasOne(ce => ce.Character)
+                        .WithMany()
+                        .HasForeignKey(ce => ce.CharacterId)
                 );
 
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Enemies)
                 .WithMany()
-                .UsingEntity<Dictionary<string, object>>(
-                    "CharacterEnemy",
-                    j => j.HasOne<Character>().WithMany().HasForeignKey("EnemyId"),
-                    j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
-                    j => j.HasKey("EnemyId", "CharacterId")
+                .UsingEntity<CharacterEnemy>(
+                    j => j
+                        .HasOne(ce => ce.Enemy)
+                        .WithMany()
+                        .HasForeignKey(ce => ce.EnemyId),
+                    j => j
+                        .HasOne(ce => ce.Character)
+                        .WithMany()
+                        .HasForeignKey(ce => ce.CharacterId)
                 );
 
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Organizations)
                 .WithMany(o => o.Characters)
-                .UsingEntity<Dictionary<string, object>>(
-                    "CharacterOrganization",
-                    j => j.HasOne<Organization>().WithMany().HasForeignKey("OrganizationId"),
-                    j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
-                    j => j.HasKey("OrganizationId", "CharacterId")
+                .UsingEntity<CharacterOrganization>(
+                    j => j
+                        .HasOne(co => co.Org)
+                        .WithMany()
+                        .HasForeignKey(co => co.OrganizationId),
+                    j => j
+                        .HasOne(co => co.Character)
+                        .WithMany()
+                        .HasForeignKey(co => co.CharacterId)
                 );
 
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Features)
                 .WithMany(f => f.Characters)
-                .UsingEntity<Dictionary<string, object>>(
-                    "CharacterFeature",
-                    j => j.HasOne<Feature>().WithMany().HasForeignKey("FeatureId").OnDelete(DeleteBehavior.Restrict),
-                    j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
-                    j => j.HasKey("FeatureId", "CharacterId")
+                .UsingEntity<CharacterFeature>(
+                    j => j
+                        .HasOne(cf => cf.Feature)
+                        .WithMany()
+                        .HasForeignKey(cf => cf.FeatureId),
+                    j => j
+                        .HasOne(cf => cf.Character)
+                        .WithMany()
+                        .HasForeignKey(cf => cf.CharacterId)
                 );
 
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Traits)
                 .WithMany(t => t.Characters)
-                .UsingEntity<Dictionary<string, object>>(
-                    "CharacterTrait",
-                    j => j.HasOne<Trait>().WithMany().HasForeignKey("TraitId"),
-                    j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
-                    j => j.HasKey("TraitId", "CharacterId")
+                .UsingEntity<CharacterTrait>(
+                    j => j
+                        .HasOne(ct => ct.Trait)
+                        .WithMany()
+                        .HasForeignKey(ct => ct.TraitId),
+                    j => j
+                        .HasOne(ct => ct.Character)
+                        .WithMany()
+                        .HasForeignKey(ct => ct.CharacterId)
                 );
 
             modelBuilder.Entity<Character>()
-            .HasMany(c => c.Items)
-            .WithMany(i => i.Characters)
-            .UsingEntity<Dictionary<string, object>>(
-                "CharacterItem",
-                j => j.HasOne<Item>().WithMany().HasForeignKey("ItemId"),
-                j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
-                j => j.HasKey("CharacterId", "ItemId")
-            );
+                .HasMany(c => c.Items)
+                .WithMany(i => i.Characters)
+                .UsingEntity<CharacterItem>(
+                    j => j
+                        .HasOne(ci => ci.Item)
+                        .WithMany()
+                        .HasForeignKey(ci => ci.ItemId),
+                    j => j
+                        .HasOne(ci => ci.Character)
+                        .WithMany()
+                        .HasForeignKey(ci => ci.CharacterId)
+                );
 
             modelBuilder.Entity<Character>()
-                .HasMany(c => c.Spells)
-                .WithMany(s => s.Characters)
-                .UsingEntity<Dictionary<string, object>>(
-                    "CharacterSpell",
-                    j => j.HasOne<Spell>().WithMany().HasForeignKey("SpellId"),
-                    j => j.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
-                    j => j.HasKey("SpellId", "CharacterId")
-                );
-            // Configure other relationships and constraints for the Character entity
+               .HasMany(c => c.Spells)
+               .WithMany(i => i.Characters)
+               .UsingEntity<CharacterSpell>(
+                   j => j
+                       .HasOne(ci => ci.Spell)
+                       .WithMany()
+                       .HasForeignKey(ci => ci.SpellId),
+                   j => j
+                       .HasOne(ci => ci.Character)
+                       .WithMany()
+                       .HasForeignKey(ci => ci.CharacterId)
+               );
+
         }
 
         private void ConfigureCharacterClass(ModelBuilder modelBuilder)
@@ -207,77 +249,128 @@ namespace DMApp.Data
             .ValueGeneratedNever();
 
             modelBuilder.Entity<DiscordGuild>()
-            .HasMany(g => g.CharacterClasses)
-            .WithMany(c => c.Guilds)
-            .UsingEntity<Dictionary<string, object>>(
-                "GuildClass",
-                j => j.HasOne<CharacterClass>().WithMany().HasForeignKey("ClassId"),
-                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
-                j => j.HasKey("GuildId", "ClassId")
-            );
+             .HasMany(g => g.Characters)
+             .WithMany(c => c.Guilds)
+             .UsingEntity<GuildCharacter>(
+                j => j
+                     .HasOne(gc => gc.Character)
+                     .WithMany()
+                     .HasForeignKey(gc => gc.CharacterId),
+                j => j
+                     .HasOne(gc => gc.Guild)
+                     .WithMany()
+                     .HasForeignKey(gc => gc.GuildId),
+                j =>
+                    {
+                        j.Property<DateTime>("JoinedOn").HasDefaultValueSql("GETDATE()");
+                        j.HasKey("GuildId", "CharacterId");
+                    }
+                );
+
+            // GuildCharacter
+            modelBuilder.Entity<GuildCharacter>()
+                .HasKey(gc => new { gc.GuildId, gc.CharacterId });
+
+            // GuildClass
+            modelBuilder.Entity<GuildClass>()
+                .HasKey(gcl => new { gcl.GuildId, gcl.CharacterClassId });
+
+            // GuildRace
+            modelBuilder.Entity<GuildRace>()
+                .HasKey(gr => new { gr.GuildId, gr.CharacterRaceId });
+
+            // GuildOrganization
+            modelBuilder.Entity<GuildOrganization>()
+                .HasKey(go => new { go.GuildId, go.OrganizationId });
+
+            // GuildItem
+            modelBuilder.Entity<GuildItem>()
+                .HasKey(gi => new { gi.GuildId, gi.ItemId });
+
+            // GuildSpell
+            modelBuilder.Entity<GuildSpell>()
+                .HasKey(gs => new { gs.GuildId, gs.SpellId });
 
             modelBuilder.Entity<DiscordGuild>()
-            .HasMany(g => g.CharacterRaces)
-            .WithMany(c => c.Guilds)
-            .UsingEntity<Dictionary<string, object>>(
-                "GuildRace",
-                j => j.HasOne<CharacterRace>().WithMany().HasForeignKey("RaceId"),
-                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
-                j => j.HasKey("GuildId", "RaceId")
-            );
+                .HasMany(g => g.CharacterClasses)
+                .WithMany(cc => cc.Guilds)
+                .UsingEntity<GuildClass>(
+                    j => j
+                        .HasOne(gc => gc.CharacterClass)
+                        .WithMany()
+                        .HasForeignKey(gc => gc.CharacterClassId),
+                    j => j
+                        .HasOne(gc => gc.Guild)
+                        .WithMany()
+                        .HasForeignKey(gc => gc.GuildId),
+                    j => j
+                        .HasKey("GuildId", "CharacterClassId")
+                );
 
             modelBuilder.Entity<DiscordGuild>()
-            .HasMany(g => g.Features)
-            .WithMany(c => c.Guilds)
-            .UsingEntity<Dictionary<string, object>>(
-                "GuildFeature",
-                j => j.HasOne<Feature>().WithMany().HasForeignKey("FeatureId"),
-                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
-                j => j.HasKey("GuildId", "FeatureId")
-            );
-
-
-            modelBuilder.Entity<DiscordGuild>()
-            .HasMany(g => g.Traits)
-            .WithMany(c => c.Guilds)
-            .UsingEntity<Dictionary<string, object>>(
-                "GuildTrait",
-                j => j.HasOne<Trait>().WithMany().HasForeignKey("TraitId"),
-                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
-                j => j.HasKey("GuildId", "TraitId")
-            );
-
+                .HasMany(g => g.CharacterRaces)
+                .WithMany(cr => cr.Guilds)
+                .UsingEntity<GuildRace>(
+                    j => j
+                        .HasOne(gr => gr.CharacterRace)
+                        .WithMany()
+                        .HasForeignKey(gr => gr.CharacterRaceId),
+                    j => j
+                        .HasOne(gr => gr.Guild)
+                        .WithMany()
+                        .HasForeignKey(gr => gr.GuildId),
+                    j => j
+                        .HasKey("GuildId", "CharacterRaceId")
+                );
 
             modelBuilder.Entity<DiscordGuild>()
-            .HasMany(g => g.Organizations)
-            .WithMany(c => c.Guilds)
-            .UsingEntity<Dictionary<string, object>>(
-                "GuildOrganization",
-                j => j.HasOne<Organization>().WithMany().HasForeignKey("OrganizationId"),
-                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
-                j => j.HasKey("GuildId", "OrganizationId")
-            );
+                .HasMany(g => g.Organizations)
+                .WithMany(o => o.Guilds)
+                .UsingEntity<GuildOrganization>(
+                    j => j
+                        .HasOne(go => go.Org)
+                        .WithMany()
+                        .HasForeignKey(go => go.OrganizationId),
+                    j => j
+                        .HasOne(go => go.Guild)
+                        .WithMany()
+                        .HasForeignKey(go => go.GuildId),
+                    j => j
+                        .HasKey("GuildId", "OrganizationId")
+                );
 
             modelBuilder.Entity<DiscordGuild>()
-            .HasMany(g => g.Items)
-            .WithMany(c => c.Guilds)
-            .UsingEntity<Dictionary<string, object>>(
-                "GuildItem",
-                j => j.HasOne<Item>().WithMany().HasForeignKey("ItemId"),
-                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
-                j => j.HasKey("GuildId", "ItemId")
-            );
-
+                .HasMany(g => g.Items)
+                .WithMany(i => i.Guilds)
+                .UsingEntity<GuildItem>(
+                    j => j
+                        .HasOne(gi => gi.Item)
+                        .WithMany()
+                        .HasForeignKey(gi => gi.ItemId),
+                    j => j
+                        .HasOne(gi => gi.Guild)
+                        .WithMany()
+                        .HasForeignKey(gi => gi.GuildId),
+                    j => j
+                        .HasKey("GuildId", "ItemId")
+                );
 
             modelBuilder.Entity<DiscordGuild>()
-            .HasMany(g => g.Spells)
-            .WithMany(c => c.Guilds)
-            .UsingEntity<Dictionary<string, object>>(
-                "GuildSpell",
-                j => j.HasOne<Spell>().WithMany().HasForeignKey("SpellId"),
-                j => j.HasOne<DiscordGuild>().WithMany().HasForeignKey("GuildId"),
-                j => j.HasKey("GuildId", "SpellId")
-            );
+                .HasMany(g => g.Spells)
+                .WithMany(s => s.Guilds)
+                .UsingEntity<GuildSpell>(
+                    j => j
+                        .HasOne(gs => gs.Spell)
+                        .WithMany()
+                        .HasForeignKey(gs => gs.SpellId),
+                    j => j
+                        .HasOne(gs => gs.Guild)
+                        .WithMany()
+                        .HasForeignKey(gs => gs.GuildId),
+                    j => j
+                        .HasKey("GuildId", "SpellId")
+                );
+
 
             modelBuilder.Entity<DiscordGuild>()
             .HasMany(g => g.Campaigns)

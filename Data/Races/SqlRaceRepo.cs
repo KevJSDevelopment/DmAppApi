@@ -11,20 +11,32 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public CharacterRace CreateCharacterRace(CharacterRace characterRace)
+        public CharacterRace CreateCharacterRace(CharacterRace characterRace, long guildId)
         {
             if (characterRace == null)
             {
                 throw new ArgumentNullException(nameof(characterRace));
             }
 
-            characterRace.CharacterRaceId = 0;
+            // Check if a character race with the same name already exists for the guild
+            bool raceExists = _context.Races
+                .Any(r => r.Name == characterRace.Name && r.Guilds.Any(gr => gr.GuildId == guildId));
+
+            if (raceExists)
+            {
+                // Return a validation response indicating that the race already exists
+                // You can choose an appropriate way to handle this, such as throwing an exception or returning an error message.
+                throw new InvalidOperationException("A character race with the same name already exists for the guild.");
+            }
+
+            characterRace.CharacterRaceId = null;
 
             _context.Races.Add(characterRace);
             _context.SaveChanges();
 
             return characterRace;
         }
+
 
         public CharacterRace GetCharacterRaceById(int id)
         {
@@ -43,9 +55,9 @@ namespace DMApp.Data
             _context.Races.Remove(CharacterRace);
         }
 
-        public CharacterRace GetCharacterRaceByName(string name)
+        public CharacterRace GetCharacterRaceByName(string name, long guildId)
         {
-            return _context.Races.FirstOrDefault(r => r.Name == name);
+            return _context.Races.FirstOrDefault(r => r.Name == name && r.Guilds.Any(g => g.GuildId == guildId));
         }
 
         public bool SaveChanges()
