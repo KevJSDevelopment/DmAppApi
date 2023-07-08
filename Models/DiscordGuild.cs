@@ -19,7 +19,7 @@ namespace DMApp.Models
             Spells = new List<Spell>();
         }
 
-        public long GuildId { get; set; }
+        public long? GuildId { get; set; }
 
         public IList<Character> Characters { get; set; }
         public IList<Campaign> Campaigns { get; set; }

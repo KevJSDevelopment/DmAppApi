@@ -15,8 +15,13 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public Character CreateCharacter(Character character, long guildId)
+        public Character CreateCharacter(Character character,long guildId = 0)
         {
+            if (guildId == 0)
+            {
+                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
+            }
+
             character.CharacterId = null;
 
             DiscordGuild guild = _context.DiscordGuilds.FirstOrDefault(g => g.GuildId == guildId);
@@ -25,8 +30,6 @@ namespace DMApp.Data
             {
                 throw new ArgumentNullException(nameof(character));
             }
-
-
 
             character.Guilds.Add(guild);
             guild.Characters.Add(character); // Add the character to the guild's characters list

@@ -7,23 +7,27 @@ public static class CharacterSeedData
 {
     public static void SeedData(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<CharacterClass>().HasData(
+        var classes = new[]
+        {
             new CharacterClass { CharacterClassId = 1, Name = "Barbarian", Description = "A fierce warrior of primitive background who taps into their rage to unleash devastating attacks." },
             new CharacterClass { CharacterClassId = 2, Name = "Bard", Description = "A spellcaster who uses their performances to weave magic and inspire allies or hinder foes." },
-            new CharacterClass { CharacterClassId = 3, Name = "Cleric", Description = "A holy warrior who channels divine power to heal allies, smite enemies, and protect the faith."  },
-            new CharacterClass { CharacterClassId = 4, Name = "Druid", Description = "A spellcaster who draws power from nature and can transform into animals, commanding natural forces."  },
-            new CharacterClass { CharacterClassId = 5, Name = "Fighter", Description = "A versatile warrior skilled in combat maneuvers and capable of taking on a variety of roles."  },
-            new CharacterClass { CharacterClassId = 6, Name = "Monk", Description = "A disciplined warrior who has honed their body into a deadly weapon and gained mastery over ki."  },
-            new CharacterClass { CharacterClassId = 7, Name = "Paladin", Description = "A holy knight dedicated to upholding justice and righteousness, channeling divine power in combat."  },
-            new CharacterClass { CharacterClassId = 8, Name = "Ranger", Description = "A skilled hunter and tracker who excels at ranged combat and navigating the wilderness."  },
+            new CharacterClass { CharacterClassId = 3, Name = "Cleric", Description = "A holy warrior who channels divine power to heal allies, smite enemies, and protect the faith." },
+            new CharacterClass { CharacterClassId = 4, Name = "Druid", Description = "A spellcaster who draws power from nature and can transform into animals, commanding natural forces." },
+            new CharacterClass { CharacterClassId = 5, Name = "Fighter", Description = "A versatile warrior skilled in combat maneuvers and capable of taking on a variety of roles." },
+            new CharacterClass { CharacterClassId = 6, Name = "Monk", Description = "A disciplined warrior who has honed their body into a deadly weapon and gained mastery over ki." },
+            new CharacterClass { CharacterClassId = 7, Name = "Paladin", Description = "A holy knight dedicated to upholding justice and righteousness, channeling divine power in combat." },
+            new CharacterClass { CharacterClassId = 8, Name = "Ranger", Description = "A skilled hunter and tracker who excels at ranged combat and navigating the wilderness." },
             new CharacterClass { CharacterClassId = 9, Name = "Rogue", Description = "A stealthy scoundrel who specializes in deception, agility, and exploiting their foes' weaknesses." },
             new CharacterClass { CharacterClassId = 10, Name = "Sorcerer", Description = "A spellcaster with innate magical abilities, able to shape and cast spells through force of personality." },
             new CharacterClass { CharacterClassId = 11, Name = "Warlock", Description = "A spellcaster who makes a pact with a powerful entity, gaining magical abilities in exchange for service." },
             new CharacterClass { CharacterClassId = 12, Name = "Wizard", Description = "A scholarly magic-user who studies arcane knowledge and casts spells through careful study and preparation." }
             // Add more classes as needed
-        );
+        };
 
-        modelBuilder.Entity<CharacterRace>().HasData(
+        modelBuilder.Entity<CharacterClass>().HasData(classes);
+
+        var races = new[]
+        {
             new CharacterRace { CharacterRaceId = 1, Name = "Dragonborn", Description = "A humanoid creature with draconic ancestry, possessing dragon-like features and abilities." },
             new CharacterRace { CharacterRaceId = 2, Name = "Dwarf", Description = "A stout and tough humanoid known for their resilience, craftsmanship, and strong sense of tradition." },
             new CharacterRace { CharacterRaceId = 3, Name = "Elf", Description = "A graceful and long-lived humanoid race with a deep connection to magic and the natural world." },
@@ -33,12 +37,17 @@ public static class CharacterSeedData
             new CharacterRace { CharacterRaceId = 7, Name = "Halfling", Description = "A small and nimble humanoid known for their luck, agility, and ability to avoid danger." },
             new CharacterRace { CharacterRaceId = 8, Name = "Human", Description = "A versatile and adaptable humanoid race, known for their ambition, diversity, and capacity for greatness." },
             new CharacterRace { CharacterRaceId = 9, Name = "Tiefling", Description = "A humanoid with infernal bloodline, often bearing demonic traits and possessing a connection to the Fiend." }
-        // Add more races as needed
-        );
+            // Add more races as needed
+        };
 
-        modelBuilder.Entity<DiscordGuild>().HasData(new DiscordGuild { GuildId = 1077311704985239684 });
+        modelBuilder.Entity<CharacterRace>().HasData(races);
 
-        modelBuilder.Entity<Organization>().HasData(
+        var guild = new DiscordGuild { GuildId = 1077311704985239684 };
+
+        modelBuilder.Entity<DiscordGuild>().HasData(guild);
+
+        var organizations = new[]
+        {
             new Organization { OrganizationId = 1, Name = "Harper's Guild", Description = "A secret organization dedicated to preserving knowledge, maintaining balance, and fighting evil in all its forms." },
             new Organization { OrganizationId = 2, Name = "Order of the Gauntlet", Description = "A militant order that seeks to protect the innocent, enforce justice, and eradicate evil from the world." },
             new Organization { OrganizationId = 3, Name = "Emerald Enclave", Description = "A society of druids and other nature-focused individuals who strive to protect the natural world and maintain the balance of nature." },
@@ -47,9 +56,12 @@ public static class CharacterSeedData
             new Organization { OrganizationId = 6, Name = "Harpers", Description = "A scattered network of spies and informants who work to promote good, gather information, and thwart the plans of evil organizations." },
             new Organization { OrganizationId = 7, Name = "Cult of the Dragon", Description = "A fanatical cult that seeks to raise and control dragons, believing that they are the key to ultimate power and world domination." }
             // Add more organizations as needed
-        );
+        };
 
-        modelBuilder.Entity<Feature>().HasData(
+        modelBuilder.Entity<Organization>().HasData(organizations);
+
+        var features = new[]
+        {
             // Barbarian features
             new Feature { FeatureId = 1, Name = "Rage", Description = "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action.", ClassId = 1 },
             new Feature { FeatureId = 2, Name = "Unarmored Defense", Description = "While you are not wearing any armor, your AC equals 10 + your Dexterity modifier + your Constitution modifier.", ClassId = 1 },
@@ -88,9 +100,12 @@ public static class CharacterSeedData
             new Feature { FeatureId = 24, Name = "Arcane Recovery", Description = "You have learned to regain some of your magical energy by studying your spellbook.", ClassId = 12 }
             // Add more features for other classes
             // ...
-        );
+        };
 
-        modelBuilder.Entity<Trait>().HasData(
+        modelBuilder.Entity<Feature>().HasData(features);
+
+        var traits = new[]
+        {
             // Dragonborn traits
             new Trait { TraitId = 1, Name = "Draconic Ancestry", Description = "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table." },
             new Trait { TraitId = 2, Name = "Breath Weapon", Description = "You can use your action to exhale destructive energy." },
@@ -119,7 +134,9 @@ public static class CharacterSeedData
             new Trait { TraitId = 11, Name = "Hellish Resistance", Description = "You have resistance to fire damage.", }
             // Add more racial traits as needed
             // ...
-        );
+        };
+
+        modelBuilder.Entity<Trait>().HasData(traits);
 
         var items = new[]
         {
@@ -248,6 +265,26 @@ public static class CharacterSeedData
                     SpellId = spells[1].SpellId
                 }
             );
+
+        var guildClasses = new List<GuildClass>();
+
+        for(int i = 0; i < classes.Length; i++)
+        {
+            guildClasses.Add(new GuildClass { CharacterClassId = classes[i].CharacterClassId, GuildId = guild.GuildId });
+        }
+
+        modelBuilder.Entity<GuildClass>()
+            .HasData(guildClasses);
+
+        var guildRaces = new List<GuildRace>();
+
+        for (int i = 0; i < races.Length; i++)
+        {
+            guildRaces.Add(new GuildRace { CharacterRaceId = races[i].CharacterRaceId, GuildId = guild.GuildId });
+        }
+
+        modelBuilder.Entity<GuildRace>()
+            .HasData(guildRaces);
 
     }
 }

@@ -18,8 +18,12 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public CharacterClass CreateCharacterClass(CharacterClass characterClass, long guildId)
+        public CharacterClass CreateCharacterClass(CharacterClass characterClass,long guildId = 0)
         {
+            if (guildId == 0)
+            {
+                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
+            }
 
             if (characterClass == null) throw new ArgumentNullException(nameof(characterClass));
 
@@ -45,8 +49,13 @@ namespace DMApp.Data
             return _context.Classes.FirstOrDefault(c => c.CharacterClassId == id);
         }
 
-        public CharacterClass GetCharacterClassByName(string name, long guildId)
+        public CharacterClass GetCharacterClassByName(string name,long guildId = 0)
         {
+            if (guildId == 0)
+            {
+                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
+            }
+
             return _context.Classes.FirstOrDefault(c => c.Name == name && c.Guilds.Any(g => g.GuildId == guildId));
         }
 

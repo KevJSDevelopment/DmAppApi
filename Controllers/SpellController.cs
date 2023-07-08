@@ -20,8 +20,13 @@ namespace DMApp.Controllers
         }
 
         [HttpPost("/Spells/{guildId}")]
-        public ActionResult CreateSpell([FromBody] CharacterSheetPropertyDto spellDto, long guildId = 1077311704985239684)
+        public ActionResult CreateSpell([FromBody] CharacterSheetPropertyDto spellDto,long guildId = 0)
         {
+            if (guildId == 0)
+            {
+                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
+            }
+
             Spell spell = _mapper.Map<Spell>(spellDto);
             DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
 

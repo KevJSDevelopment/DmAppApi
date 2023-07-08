@@ -45,8 +45,13 @@ namespace DMApp.Controllers
 
 
         [HttpPost("/characters/new/{guildId}")]
-        public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterInitiateDto characterInitiateDto, long guildId = 1077311704985239684, int tokens = 250)
+        public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterInitiateDto characterInitiateDto, long guildId = 0, int tokens = 250)
         {
+            if(guildId == 0)
+            {
+                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
+            }
+
             string message = Prompts.CreateCharacter(characterInitiateDto, tokens);
 
             ChatResult chatResponse;

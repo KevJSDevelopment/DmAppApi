@@ -11,8 +11,13 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public CharacterRace CreateCharacterRace(CharacterRace characterRace, long guildId)
+        public CharacterRace CreateCharacterRace(CharacterRace characterRace,long guildId = 0)
         {
+            if (guildId == 0)
+            {
+                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
+            }
+
             if (characterRace == null)
             {
                 throw new ArgumentNullException(nameof(characterRace));
@@ -55,8 +60,13 @@ namespace DMApp.Data
             _context.Races.Remove(CharacterRace);
         }
 
-        public CharacterRace GetCharacterRaceByName(string name, long guildId)
+        public CharacterRace GetCharacterRaceByName(string name,long guildId = 0)
         {
+            if (guildId == 0)
+            {
+                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
+            }
+
             return _context.Races.FirstOrDefault(r => r.Name == name && r.Guilds.Any(g => g.GuildId == guildId));
         }
 

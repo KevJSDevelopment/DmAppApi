@@ -22,8 +22,13 @@ namespace DMApp.Controllers
         }
 
         [HttpPost("/features/{guildId}")]
-        public ActionResult CreateFeature([FromBody] CharacterSheetPropertyDto featureDto, [FromForm] int classId, long guildId = 1077311704985239684)
+        public ActionResult CreateFeature([FromBody] CharacterSheetPropertyDto featureDto, [FromForm] int classId,long guildId = 0)
         {
+            if (guildId == 0)
+            {
+                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
+            }
+
             Feature feature = _mapper.Map<Feature>(featureDto);
             DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
 

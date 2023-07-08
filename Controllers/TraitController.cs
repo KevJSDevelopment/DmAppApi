@@ -22,8 +22,13 @@ namespace DMApp.Controllers
         }
 
         [HttpPost("/Traits/{guildId}")]
-        public ActionResult CreateTrait([FromBody] CharacterSheetPropertyDto traitDto, [FromForm] int raceId, long guildId = 1077311704985239684)
+        public ActionResult CreateTrait([FromBody] CharacterSheetPropertyDto traitDto, [FromForm] int raceId,long guildId = 0)
         {
+            if (guildId == 0)
+            {
+                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
+            }
+
             Trait trait = _mapper.Map<Trait>(traitDto);
             DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
 
