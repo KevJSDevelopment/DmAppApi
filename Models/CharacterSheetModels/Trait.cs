@@ -1,30 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata;
-using Microsoft.AspNetCore.Http.HttpResults;
+using System.Diagnostics;
 
 namespace DMApp.Models
 {
-    public class Item
+    public class Trait
     {
-        public Item()
+        public Trait ()
         {
             Name = string.Empty;
             Description = string.Empty;
-            Cost = 0;
             Characters = new List<Character>();
             Guilds = new List<DiscordGuild>();
             CreatedOn = DateTime.UtcNow;
             UpdatedOn = DateTime.UtcNow;
         }
 
-        public int? ItemId { get; set; }
+        public int TraitId { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public int? Cost { get; set; }
 
-        // Other item properties
-        public IList<Character> Characters { get; set; } = new List<Character>();
+        public int? RaceId { get; set; }
+        public CharacterRace? Race { get; set; }
+
+        public IList<Character> Characters { get; set; }
         public IList<DiscordGuild> Guilds { get; set; }
 
         public DateTime CreatedOn { get; set; }

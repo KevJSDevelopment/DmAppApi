@@ -42,7 +42,7 @@ namespace DMApp.Data
             _context.Traits.Remove(Trait);
         }
 
-        public Trait GetTraitById(long TraitId)
+        public Trait GetTraitById(int TraitId)
         {
             return _context.Traits.FirstOrDefault(c => c.TraitId == TraitId);
         }

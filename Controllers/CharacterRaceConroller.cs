@@ -20,17 +20,12 @@ namespace DMApp.Controllers
         }
 
         [HttpPost("/character-race/{guildId}")]
-        public ActionResult CreateCharacterRace([FromBody] CharacterSheetPropertyDto characterRaceDto,long guildId = 0)
+        public ActionResult CreateCharacterRace([FromBody] CharacterSheetPropertyDto characterRaceDto, long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
-
             CharacterRace characterRace = _mapper.Map<CharacterRace>(characterRaceDto);
             DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
 
-            if(guild == null)
+            if (guild == null)
             {
                 guild = _guildRepo.CreateGuild(guildId);
             }
@@ -39,7 +34,7 @@ namespace DMApp.Controllers
 
             _raceRepo.CreateCharacterRace(characterRace, guildId);
 
-            return Ok("Race Created");
+            return Ok(new { Status = 200, message = "Race Created" });
         }
     }
 }

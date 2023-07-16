@@ -7,6 +7,7 @@ namespace DMApp.Data
     {
         bool SaveChanges();
         Trait CreateTrait(Trait trait);
+        Trait GetTraitById(int TraitId);
         void DeleteTrait(int TraitId);
     }
 }

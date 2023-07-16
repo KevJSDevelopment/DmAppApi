@@ -50,7 +50,7 @@ namespace DMApp.Controllers
                 orderRequest.AddHeader("content-type", "application/json");
                 orderRequest.AddHeader("authorization", $"Bearer {_neural_love_token}");
                 // Create the prompt JSON object using the character properties
-                string createImagePrompt = Prompts.CreateCharacterImage(properties);
+                string createImagePrompt = new Prompts(_mapper).CreateCharacterImage(properties);
 
                 ChatResult chatResponse = await _api.Chat.CreateChatCompletionAsync(new ChatRequest()
                 {

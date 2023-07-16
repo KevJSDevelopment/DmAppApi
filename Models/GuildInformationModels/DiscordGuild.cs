@@ -19,7 +19,20 @@ namespace DMApp.Models
             Spells = new List<Spell>();
         }
 
-        public long? GuildId { get; set; }
+        public void ValidateChannelConfiguration()
+        {
+            var characterAssetChannels = Channels.Count(c => c.isCharacterAssetChannel);
+            var dmOnlyCharacterAssetChannels = Channels.Count(c => c.isCharacterAssetChannel && c.isDmOnlyChannel);
+
+            if (characterAssetChannels >= 2 && dmOnlyCharacterAssetChannels < 1 || dmOnlyCharacterAssetChannels > 1)
+            {
+                throw new InvalidOperationException("You can only flag one channel as a character asset channel and one channel as a dm characters channel");
+            }
+        }
+
+        public long GuildId { get; set; }
+
+        public IList<DiscordGuildChannel> Channels { get; set; }
 
         public IList<Character> Characters { get; set; }
         public IList<Campaign> Campaigns { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 using DMApp.Dtos;
 using DMApp.Models;
 using Newtonsoft.Json;
@@ -7,12 +8,22 @@ namespace DMApp.Utils
 {
 	public class Prompts
     {
-        public static string CreateCharacter(CharacterInitiateDto characterInitiateDto, int tokens)
+        private readonly IMapper _mapper;
+
+        public Prompts(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
+        public string CreateCharacter(CharacterInitiateDto characterInitiateDto, int tokens)
         {
             CharacterReadDto characterReadDto = new CharacterReadDto();
 
             string properties = JsonConvert.SerializeObject(characterReadDto, Formatting.Indented);
-            string values = JsonConvert.SerializeObject(characterInitiateDto, Formatting.Indented);
+
+            characterReadDto = _mapper.Map<CharacterReadDto>(characterInitiateDto);
+
+            string values = JsonConvert.SerializeObject(characterReadDto, Formatting.Indented);
 
 
             return $"Create a D&D character and fill out each of the following properties, making sure none of the values are null or empty:\n\n{properties}\n\n" +
@@ -23,7 +34,7 @@ namespace DMApp.Utils
         }
 
 
-        public static string CreateCharacterImage(string properties)
+        public string CreateCharacterImage(string properties)
         {
             List<string> wordsToAvoid = new List<string> { "child", "chest", "facial" };
 

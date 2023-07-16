@@ -18,20 +18,17 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public CharacterClass CreateCharacterClass(CharacterClass characterClass,long guildId = 0)
+        public CharacterClass CreateCharacterClass(CharacterClass characterClass,long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
+            
 
             if (characterClass == null) throw new ArgumentNullException(nameof(characterClass));
 
 
-            characterClass.CharacterClassId = null;
+            characterClass.CharacterClassId = 0;
 
             // Check if a character class with the same name already exists for the guild
-            bool classExists = _context.Classes.Any(c => c.Name == characterClass.Name && c.Guilds.Any(g => g.GuildId == guildId));
+            bool classExists = _context.Classes.Any(c => c.Name != null && c.Name == characterClass.Name && c.Guilds.Any(g => g.GuildId == guildId));
 
             // Return a validation response indicating that the class already exists
             // You can choose an appropriate way to handle this, such as throwing an exception or returning an error message.
@@ -49,14 +46,19 @@ namespace DMApp.Data
             return _context.Classes.FirstOrDefault(c => c.CharacterClassId == id);
         }
 
-        public CharacterClass GetCharacterClassByName(string name,long guildId = 0)
+        public CharacterClass GetCharacterClassByName(string name, long guildId)
         {
-            if (guildId == 0)
+            long defaultId = 0;
+
+            try
             {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
+                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out defaultId);
+            }
+            catch (Exception ex) {
+                
             }
 
-            return _context.Classes.FirstOrDefault(c => c.Name == name && c.Guilds.Any(g => g.GuildId == guildId));
+            return _context.Classes.FirstOrDefault(c => c.Name == name && c.Guilds.Any(g => g.GuildId == guildId || g.GuildId == defaultId));
         }
 
         public void DeleteClass(int @classId)

@@ -15,14 +15,10 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public Character CreateCharacter(Character character,long guildId = 0)
+        public Character CreateCharacter(Character character,long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
-
-            character.CharacterId = null;
+            
+            character.CharacterId = 0;
 
             DiscordGuild guild = _context.DiscordGuilds.FirstOrDefault(g => g.GuildId == guildId);
 

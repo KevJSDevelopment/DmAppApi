@@ -11,13 +11,9 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public CharacterRace CreateCharacterRace(CharacterRace characterRace,long guildId = 0)
+        public CharacterRace CreateCharacterRace(CharacterRace characterRace,long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
-
+            
             if (characterRace == null)
             {
                 throw new ArgumentNullException(nameof(characterRace));
@@ -34,7 +30,7 @@ namespace DMApp.Data
                 throw new InvalidOperationException("A character race with the same name already exists for the guild.");
             }
 
-            characterRace.CharacterRaceId = null;
+            characterRace.CharacterRaceId = 0;
 
             _context.Races.Add(characterRace);
             _context.SaveChanges();
@@ -60,14 +56,20 @@ namespace DMApp.Data
             _context.Races.Remove(CharacterRace);
         }
 
-        public CharacterRace GetCharacterRaceByName(string name,long guildId = 0)
+        public CharacterRace GetCharacterRaceByName(string name,long guildId)
         {
-            if (guildId == 0)
+            long defaultId = 0;
+
+            try
             {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
+                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out defaultId);
+            }
+            catch (Exception ex)
+            {
+
             }
 
-            return _context.Races.FirstOrDefault(r => r.Name == name && r.Guilds.Any(g => g.GuildId == guildId));
+            return _context.Races.FirstOrDefault(r => r.Name == name && r.Guilds.Any(g => g.GuildId == guildId || g.GuildId == defaultId));
         }
 
         public bool SaveChanges()

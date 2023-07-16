@@ -42,7 +42,7 @@ namespace DMApp.Data
             _context.Spells.Remove(spell);
         }
 
-        public Spell GetSpellById(long spellId)
+        public Spell GetSpellById(int spellId)
         {
             return _context.Spells.FirstOrDefault(c => c.SpellId == spellId);
         }

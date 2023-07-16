@@ -15,6 +15,7 @@ namespace DMApp.Data
         IList<Organization> GetOrganizationsByGuildId(long guildId);
         IList<Item> GetItemsByGuildId(long guildId);
         IList<Spell> GetSpellsByGuildId(long guildId);
+        DiscordGuildChannel GetCharacterAssetChannelByGuildId(long guildId);
         DiscordGuild UpdateGuild(DiscordGuild guild);
         DiscordGuild CreateGuild(long guildId);
         DiscordGuild GetGuildByGuildId(long guildId);

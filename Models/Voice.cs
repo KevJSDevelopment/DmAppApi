@@ -10,7 +10,7 @@ namespace DMApp.Models
 			Characters = new List<Character>();
 		}
 
-		public int? Id { get; set; }
+		public int Id { get; set; }
 
 		public byte[]? VoiceBlob { get; set; }
 

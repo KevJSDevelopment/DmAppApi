@@ -7,6 +7,7 @@ namespace DMApp.Data
     {
         bool SaveChanges();
         Spell CreateSpell(Spell spell);
+        Spell GetSpellById(int spellId);
         void DeleteSpell(int spellId);
     }
 }

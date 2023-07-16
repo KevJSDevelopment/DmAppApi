@@ -40,9 +40,11 @@
     <None Remove="Dtos\CharacterDtos\" />
     <None Remove="Data\Items\" />
     <None Remove="Data\Spells\" />
-    <None Remove="Models\CharacterJoins\" />
-    <None Remove="Models\GuildJoins\" />
     <None Remove="Models\Indexes\" />
+    <None Remove="Models\Misc\" />
+    <None Remove="Models\CharacterSheetModels\" />
+    <None Remove="Models\GuildInformationModels\" />
+    <None Remove="Data\Campaigns\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
@@ -56,8 +58,10 @@
     <Folder Include="Dtos\CharacterDtos\" />
     <Folder Include="Data\Items\" />
     <Folder Include="Data\Spells\" />
-    <Folder Include="Models\CharacterJoins\" />
-    <Folder Include="Models\GuildJoins\" />
     <Folder Include="Models\Indexes\" />
+    <Folder Include="Models\Misc\" />
+    <Folder Include="Models\CharacterSheetModels\" />
+    <Folder Include="Models\GuildInformationModels\" />
+    <Folder Include="Data\Campaigns\" />
   </ItemGroup>
 </Project>

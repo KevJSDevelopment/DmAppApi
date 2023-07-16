@@ -3,7 +3,7 @@ namespace DMApp.Models
 {
 	public class Session
 	{
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? Name { get; set; }
         public int? SessionNumber { get; set; }
 

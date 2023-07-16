@@ -21,6 +21,7 @@ namespace DMApp.Data
         public DbSet<CharacterClass> Classes { get; set; }
         public DbSet<CharacterToken> CharacterTokens { get; set; }
         public DbSet<DiscordGuild> DiscordGuilds { get; set; }
+        public DbSet<DiscordGuildChannel> DiscordGuildChannels { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Trait> Traits { get; set; }
@@ -29,8 +30,34 @@ namespace DMApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            ConfigureKeys(modelBuilder);
+            ConfigureCharacter(modelBuilder);
+            ConfigureCharacterClass(modelBuilder);
+            ConfigureCharacterRace(modelBuilder);
+            ConfigureDiscordGuild(modelBuilder);
+            ConfigureCampaign(modelBuilder);
+
+            // Seed Data
+            CharacterSeedData.SeedData(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        private void ConfigureKeys(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Character>()
+            .HasKey(c => c.CharacterId);
+            modelBuilder.Entity<CharacterClass>()
+            .HasKey(c => c.CharacterClassId);
+            modelBuilder.Entity<CharacterRace>()
+            .HasKey(c => c.CharacterRaceId);
+            modelBuilder.Entity<DiscordGuild>()
+            .HasKey(g => g.GuildId);
             modelBuilder.Entity<Feature>()
             .HasKey(f => f.FeatureId);
+            modelBuilder.Entity<DiscordGuildChannel>()
+            .HasKey(f => f.ChannelId);
             modelBuilder.Entity<Trait>()
             .HasKey(t => t.TraitId);
             modelBuilder.Entity<Item>()
@@ -47,24 +74,10 @@ namespace DMApp.Data
             .HasKey(s => s.Id);
             modelBuilder.Entity<Voice>()
             .HasKey(v => v.Id);
-
-
-            ConfigureCharacter(modelBuilder);
-            ConfigureCharacterClass(modelBuilder);
-            ConfigureCharacterRace(modelBuilder);
-            ConfigureDiscordGuild(modelBuilder);
-
-            // Seed Data
-            CharacterSeedData.SeedData(modelBuilder);
-
-            base.OnModelCreating(modelBuilder);
         }
 
         private void ConfigureCharacter(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Character>()
-                .HasKey(c => c.CharacterId);
-
             modelBuilder.Entity<Character>()
                 .HasOne(c => c.Token)
                 .WithMany(t => t.Characters)
@@ -216,9 +229,6 @@ namespace DMApp.Data
         private void ConfigureCharacterClass(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CharacterClass>()
-              .HasKey(c => c.CharacterClassId);
-
-            modelBuilder.Entity<CharacterClass>()
                 .HasMany(c => c.Features)
                 .WithOne(f => f.Class)
                 .HasForeignKey(f => f.ClassId);
@@ -228,9 +238,6 @@ namespace DMApp.Data
 
         private void ConfigureCharacterRace(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CharacterRace>()
-                .HasKey(c => c.CharacterRaceId);
-
             modelBuilder.Entity<CharacterRace>()
                 .HasMany(r => r.Traits)
                 .WithOne(t => t.Race)
@@ -242,11 +249,13 @@ namespace DMApp.Data
         private void ConfigureDiscordGuild(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DiscordGuild>()
-            .HasKey(g => g.GuildId);
-
-            modelBuilder.Entity<DiscordGuild>()
             .Property(g => g.GuildId)
             .ValueGeneratedNever();
+
+            modelBuilder.Entity<DiscordGuild>()
+             .HasMany(g => g.Channels)
+             .WithOne(c => c.Guild)
+             .HasForeignKey(c => c.GuildId);
 
             modelBuilder.Entity<DiscordGuild>()
              .HasMany(g => g.Characters)
@@ -377,11 +386,38 @@ namespace DMApp.Data
             .WithOne(c => c.Guild);
         }
 
-        private void ConfigureSession(ModelBuilder modelBuilder)
+        private void ConfigureCampaign(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Session>()
-                .HasOne(s => s.campaign);
+            modelBuilder.Entity<Campaign>()
+                .HasMany(c => c.Sessions)
+                .WithOne(s => s.campaign);
 
+        }
+
+        public override int SaveChanges()
+        {
+            ValidateGuildChannelConfiguration();
+
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ValidateGuildChannelConfiguration();
+
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void ValidateGuildChannelConfiguration()
+        {
+            var guilds = ChangeTracker.Entries<DiscordGuild>()
+                .Where(e => e.State != EntityState.Deleted && (e.State == EntityState.Added || e.State == EntityState.Modified))
+                .Select(e => e.Entity);
+
+            foreach (var guild in guilds)
+            {
+                guild.ValidateChannelConfiguration();
+            }
         }
     }
 }

@@ -8,5 +8,6 @@ namespace DMApp.Dtos
         public string? Class { get; set; }
         public string? Race { get; set; }
         public string? Description { get; set; }
+        public int? CampaignId { get; set; }
     }
 }

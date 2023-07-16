@@ -33,11 +33,7 @@ namespace DMApp.Data
 
         public DiscordGuild CreateGuild(long guildId)
         {
-            if (guildId == 0)
-            {
-                throw new ArgumentException("Invalid guildId");
-            }
-
+            
             DiscordGuild guild = new DiscordGuild
             {
                 GuildId = guildId
@@ -105,6 +101,11 @@ namespace DMApp.Data
         public IList<Spell> GetSpellsByGuildId(long guildId)
         {
             return _context.Spells.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
+        }
+
+        public DiscordGuildChannel GetCharacterAssetChannelByGuildId(long guildId)
+        {
+            return _context.DiscordGuildChannels.FirstOrDefault(c => c.GuildId == guildId && c.isCharacterAssetChannel == true && c.isDmOnlyChannel == false);
         }
 
         public bool SaveChanges()

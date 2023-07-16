@@ -97,7 +97,7 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        public int? CharacterId { get; set; }
+        public int CharacterId { get; set; }
         public string? Name { get; set; }
 
         public int? RaceId { get; set; }

@@ -20,12 +20,9 @@ namespace DMApp.Controllers
         }
 
         [HttpPost("/character-class/{guildId}")]
-        public ActionResult CreateCharacterClass([FromBody] CharacterSheetPropertyDto characterClassDto,long guildId = 0)
+        public ActionResult CreateCharacterClass([FromBody] CharacterSheetPropertyDto characterClassDto,long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
+            
 
             CharacterClass characterClass = _mapper.Map<CharacterClass>(characterClassDto);
             DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
@@ -39,7 +36,7 @@ namespace DMApp.Controllers
 
             _classRepo.CreateCharacterClass(characterClass, guildId);
 
-            return Ok("Class Created");
+            return Ok(new { Status = 200, message = "Class Created" });
         }
     }
 }

@@ -17,26 +17,16 @@ namespace DMApp.Data
         }
 
         [HttpGet("/guilds/characters/{guildId}")]
-        public ActionResult GetCharactersByGuildId(long guildId = 0)
+        public ActionResult GetCharactersByGuildId(long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
-
             IList<Character> characters = _repository.GetCharactersByGuildId(guildId);
 
             return Ok(characters);
         }
 
         [HttpGet("/guilds/character-races/{guildId}")]
-        public ActionResult<IList<CharacterSheetPropertyDto>> GetCharacterRacesByGuildId(long guildId = 0)
+        public ActionResult<IList<CharacterSheetPropertyDto>> GetCharacterRacesByGuildId(long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
-
             IList<CharacterRace> characterRaces = _repository.GetCharacterRacesByGuildId(guildId);
             IList<CharacterSheetPropertyDto> characterRaceDtos = _mapper.Map<IList<CharacterSheetPropertyDto>>(characterRaces);
 
@@ -44,13 +34,8 @@ namespace DMApp.Data
         }
 
         [HttpGet("/guilds/character-classes/{guildId}")]
-        public ActionResult<IList<CharacterSheetPropertyDto>> GetClassesByGuildId(long guildId = 0)
+        public ActionResult<IList<CharacterSheetPropertyDto>> GetClassesByGuildId(long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
-
             IList<CharacterClass> characterClasses = _repository.GetCharacterClassesByGuildId(guildId);
             IList<CharacterSheetPropertyDto> characterClassDtos = _mapper.Map<IList<CharacterSheetPropertyDto>>(characterClasses);
 
@@ -58,13 +43,8 @@ namespace DMApp.Data
         }
 
         [HttpGet("/guilds/features/{guildId}")]
-        public ActionResult<IList<CharacterSheetPropertyDto>> GetFeaturesByGuildId(long guildId = 0)
+        public ActionResult<IList<CharacterSheetPropertyDto>> GetFeaturesByGuildId(long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
-
             IList<Feature> characterClasses = _repository.GetFeaturesByGuildId(guildId);
             IList<CharacterSheetPropertyDto> featureDtos = _mapper.Map<IList<CharacterSheetPropertyDto>>(characterClasses);
 
@@ -72,13 +52,8 @@ namespace DMApp.Data
         }
 
         [HttpGet("/guilds/traits/{guildId}")]
-        public ActionResult<IList<CharacterSheetPropertyDto>> GetTraitsByGuildId(long guildId = 0)
+        public ActionResult<IList<CharacterSheetPropertyDto>> GetTraitsByGuildId(long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
-
             IList<Trait> characterClasses = _repository.GetTraitsByGuildId(guildId);
             IList<CharacterSheetPropertyDto> traitDtos = _mapper.Map<IList<CharacterSheetPropertyDto>>(characterClasses);
 
@@ -86,12 +61,8 @@ namespace DMApp.Data
         }
 
         [HttpGet("/guilds/organizations/{guildId}")]
-        public ActionResult<IList<CharacterSheetPropertyDto>> GetOrganizationsByGuildId(long guildId = 0)
+        public ActionResult<IList<CharacterSheetPropertyDto>> GetOrganizationsByGuildId(long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
 
             IList<Organization> characterClasses = _repository.GetOrganizationsByGuildId(guildId);
             IList<CharacterSheetPropertyDto> organizationDtos = _mapper.Map<IList<CharacterSheetPropertyDto>>(characterClasses);
@@ -100,12 +71,9 @@ namespace DMApp.Data
         }
 
         [HttpGet("/guilds/items/{guildId}")]
-        public ActionResult<IList<CharacterSheetPropertyDto>> GetItemsByGuildId(long guildId = 0)
+        public ActionResult<IList<CharacterSheetPropertyDto>> GetItemsByGuildId(long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
+            
 
             IList<Item> characterClasses = _repository.GetItemsByGuildId(guildId);
             IList<CharacterSheetPropertyDto> itemDtos = _mapper.Map<IList<CharacterSheetPropertyDto>>(characterClasses);
@@ -114,12 +82,9 @@ namespace DMApp.Data
         }
 
         [HttpGet("/guilds/spells/{guildId}")]
-        public ActionResult<IList<CharacterSheetPropertyDto>> GetspellsByGuildId(long guildId = 0)
+        public ActionResult<IList<CharacterSheetPropertyDto>> GetspellsByGuildId(long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
+            
 
             IList<Spell> characterClasses = _repository.GetSpellsByGuildId(guildId);
             IList<CharacterSheetPropertyDto> spellDtos = _mapper.Map<IList<CharacterSheetPropertyDto>>(characterClasses);
@@ -127,14 +92,17 @@ namespace DMApp.Data
             return Ok(spellDtos);
         }
 
-        [HttpPost("/guilds/{guildId}")]
-        public ActionResult AddGuild(long guildId = 0)
+        [HttpGet("/guilds/assets/character-channel/{guildId}")]
+        public ActionResult<DiscordGuildChannel> GetCharacterAssetChannelByGuildId(long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
+            DiscordGuildChannel channel = _repository.GetCharacterAssetChannelByGuildId(guildId);
 
+            return Ok(channel);
+        }
+
+        [HttpPost("/guilds/{guildId}")]
+        public ActionResult AddGuild(long guildId)
+        {
             DiscordGuild guild = _repository.CreateGuild(guildId);
             if (_repository.SaveChanges()) return Ok(guild);
             else return BadRequest(new { error = $"Unable to save guild: {guildId}" });

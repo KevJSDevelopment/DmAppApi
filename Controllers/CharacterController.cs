@@ -18,10 +18,11 @@ namespace DMApp.Controllers
         private readonly IClassRepo _classRepo;
         private readonly IRaceRepo _raceRepo;
         private readonly IDiscordGuildRepo _guildRepo;
+        private readonly ICampaignRepo _campaignRepo;
         private readonly IMapper _mapper;
         private readonly OpenAIAPI _api;
 
-        public CharacterController(ICharacterRepo characterRepo, IClassRepo classRepo, IRaceRepo raceRepo, IDiscordGuildRepo guildRepo, IMapper mapper)
+        public CharacterController(ICharacterRepo characterRepo, IClassRepo classRepo, IRaceRepo raceRepo, IDiscordGuildRepo guildRepo, ICampaignRepo campaignRepo, IMapper mapper)
         {
             string? openai_key = Environment.GetEnvironmentVariable("OpenAI_Key");
             string? openai_org = Environment.GetEnvironmentVariable("OpenAi_Organization");
@@ -29,6 +30,7 @@ namespace DMApp.Controllers
             _classRepo = classRepo;
             _raceRepo = raceRepo;
             _guildRepo = guildRepo;
+            _campaignRepo = campaignRepo;
             _mapper = mapper;
             _api = new OpenAIAPI(new APIAuthentication(openai_key, openai_org));
         }
@@ -45,14 +47,9 @@ namespace DMApp.Controllers
 
 
         [HttpPost("/characters/new/{guildId}")]
-        public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterInitiateDto characterInitiateDto, long guildId = 0, int tokens = 250)
+        public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterInitiateDto characterInitiateDto, long guildId, int tokens = 250)
         {
-            if(guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
-
-            string message = Prompts.CreateCharacter(characterInitiateDto, tokens);
+            string message = new Prompts(_mapper).CreateCharacter(characterInitiateDto, tokens);
 
             ChatResult chatResponse;
 
@@ -129,13 +126,15 @@ namespace DMApp.Controllers
 
             if (_characterRepo.SaveChanges())
             {
+                if (characterInitiateDto.CampaignId.HasValue) _campaignRepo.AddCharacterToCampaign(characterInitiateDto.CampaignId.Value, character.CharacterId);
+
                 characterCreatedDto = _mapper.Map<CharacterCreateDto>(character);
                 characterReadGPTDto = _mapper.Map<CharacterReadDto>(characterCreatedDto);
 
                 characterReadGPTDto.Class = character.Class.Name;
                 characterReadGPTDto.Race = character.Race.Name;
 
-                return Ok(characterReadGPTDto);
+                return Ok(new { Status = 200, data = characterReadGPTDto, message = $"{characterReadGPTDto.Name} successfully created" });
             }
             else
             {

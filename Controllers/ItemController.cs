@@ -20,13 +20,8 @@ namespace DMApp.Controllers
         }
 
         [HttpPost("/Items/{guildId}")]
-        public ActionResult CreateItem([FromBody] CharacterSheetPropertyDto itemDto, long guildId = 0)
+        public ActionResult CreateItem([FromBody] CharacterSheetPropertyDto itemDto, long guildId)
         {
-            if (guildId == 0)
-            {
-                long.TryParse(Environment.GetEnvironmentVariable("DefaultGuildId"), out guildId);
-            }
-
             Item item = _mapper.Map<Item>(itemDto);
             DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
 
