@@ -45,6 +45,7 @@
     <None Remove="Models\CharacterSheetModels\" />
     <None Remove="Models\GuildInformationModels\" />
     <None Remove="Data\Campaigns\" />
+    <None Remove="Models\Types\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
@@ -63,5 +64,6 @@
     <Folder Include="Models\CharacterSheetModels\" />
     <Folder Include="Models\GuildInformationModels\" />
     <Folder Include="Data\Campaigns\" />
+    <Folder Include="Models\Types\" />
   </ItemGroup>
 </Project>

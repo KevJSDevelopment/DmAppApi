@@ -35,6 +35,10 @@ namespace DMApp.Data
             ConfigureCharacter(modelBuilder);
             ConfigureCharacterClass(modelBuilder);
             ConfigureCharacterRace(modelBuilder);
+            ConfigureFeature(modelBuilder);
+            ConfigureTrait(modelBuilder);
+            ConfigureItem(modelBuilder);
+            ConfigureSpell(modelBuilder);
             ConfigureDiscordGuild(modelBuilder);
             ConfigureCampaign(modelBuilder);
 
@@ -69,11 +73,11 @@ namespace DMApp.Data
             modelBuilder.Entity<Organization>()
             .HasKey(o => o.OrganizationId);
             modelBuilder.Entity<Campaign>()
-            .HasKey(c => c.Id);
+            .HasKey(c => c.CampaignId);
             modelBuilder.Entity<Session>()
-            .HasKey(s => s.Id);
+            .HasKey(s => s.SessionId);
             modelBuilder.Entity<Voice>()
-            .HasKey(v => v.Id);
+            .HasKey(v => v.VoiceId);
         }
 
         private void ConfigureCharacter(ModelBuilder modelBuilder)
@@ -93,10 +97,21 @@ namespace DMApp.Data
                 .WithMany(cr => cr.Characters)
                 .HasForeignKey(c => c.RaceId);
 
+            modelBuilder.Entity<CharacterClassCharacter>()
+                .HasKey(ccc => new { ccc.CharacterId, ccc.CharacterClassId });
+
             modelBuilder.Entity<Character>()
-                .HasOne(c => c.Class)
+                .HasMany(c => c.Classes)
                 .WithMany(cc => cc.Characters)
-                .HasForeignKey(c => c.ClassId);
+                .UsingEntity<CharacterClassCharacter>(
+                    j => j.HasOne(cc => cc.CharacterClass)
+                        .WithMany()
+                        .HasForeignKey(cc => cc.CharacterClassId),
+                    j => j
+                        .HasOne(c => c.Character)
+                        .WithMany()
+                        .HasForeignKey(c => c.CharacterId)
+                );
 
             // CharacterAlly
             modelBuilder.Entity<CharacterAlly>()
@@ -133,11 +148,13 @@ namespace DMApp.Data
                     j => j
                         .HasOne(ce => ce.Ally)
                         .WithMany()
-                        .HasForeignKey(ce => ce.AllyId),
+                        .HasForeignKey(ce => ce.AllyId)
+                        .OnDelete(DeleteBehavior.Restrict), // Set the delete behavior to Restrict
                     j => j
                         .HasOne(ce => ce.Character)
                         .WithMany()
                         .HasForeignKey(ce => ce.CharacterId)
+                        .OnDelete(DeleteBehavior.Cascade) // Set the delete behavior to Cascade
                 );
 
             modelBuilder.Entity<Character>()
@@ -147,12 +164,16 @@ namespace DMApp.Data
                     j => j
                         .HasOne(ce => ce.Enemy)
                         .WithMany()
-                        .HasForeignKey(ce => ce.EnemyId),
+                        .HasForeignKey(ce => ce.EnemyId)
+                        .OnDelete(DeleteBehavior.Restrict), // Set the delete behavior to Restrict
                     j => j
                         .HasOne(ce => ce.Character)
                         .WithMany()
                         .HasForeignKey(ce => ce.CharacterId)
+                        .OnDelete(DeleteBehavior.Cascade) // Set the delete behavior to Cascade
                 );
+
+
 
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Organizations)
@@ -244,6 +265,26 @@ namespace DMApp.Data
                 .HasForeignKey(t => t.RaceId);
 
             // Configure other relationships and constraints for the CharacterRace entity
+        }
+
+        private void ConfigureFeature(ModelBuilder modelBuilder)
+        {
+           
+        }
+
+        private void ConfigureTrait(ModelBuilder modelBuilder)
+        {
+            
+        }
+
+        private void ConfigureItem(ModelBuilder modelBuilder)
+        {
+
+        }
+
+        private void ConfigureSpell(ModelBuilder modelBuilder)
+        {
+
         }
 
         private void ConfigureDiscordGuild(ModelBuilder modelBuilder)
@@ -384,14 +425,18 @@ namespace DMApp.Data
             modelBuilder.Entity<DiscordGuild>()
             .HasMany(g => g.Campaigns)
             .WithOne(c => c.Guild);
+
         }
 
         private void ConfigureCampaign(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Campaign>()
                 .HasMany(c => c.Sessions)
-                .WithOne(s => s.campaign);
+                .WithOne(s => s.Campaign);
 
+            modelBuilder.Entity<Campaign>()
+                .HasMany(c => c.Characters)
+                .WithOne(ch => ch.Campaign);
         }
 
         public override int SaveChanges()

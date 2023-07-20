@@ -154,12 +154,37 @@ public static class CharacterSeedData
         };
         modelBuilder.Entity<Spell>().HasData(spells);
 
+
+        //var campaigns = new[]
+        //{
+        //    new Campaign { CampaignId = 1, Name = "Lord of the rings", GuildId = guild.GuildId },
+        //    new Campaign { CampaignId = 2, Name = "Harry Potter", GuildId = guild.GuildId },
+        //    // Add more character instances as needed
+        //};
+
+        //modelBuilder.Entity<Campaign>().HasData(campaigns);
+
         var characters = new[]
         {
-            new Character { CharacterId = 1, Name = "Grondar", RaceId = 1, ClassId = 1 },
-            new Character { CharacterId = 2, Name = "Zander", RaceId = 2, ClassId = 2 },
+            new Character { CharacterId = 1, Name = "Grondar", RaceId = 1 },
+            new Character { CharacterId = 2, Name = "Zander", RaceId = 2 },
             // Add more character instances as needed
         };
+
+        modelBuilder.Entity<CharacterClassCharacter>()
+            .HasData(
+                new CharacterClassCharacter
+                {
+                    CharacterClassId = classes[0].CharacterClassId,
+                    CharacterId = characters[0].CharacterId
+                },
+                new CharacterClassCharacter
+                {
+                    CharacterClassId = classes[1].CharacterClassId,
+                    CharacterId = characters[1].CharacterId
+                }
+
+            );
         modelBuilder.Entity<Character>().HasData(characters);
 
         modelBuilder.Entity<CharacterAlly>()

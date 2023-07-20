@@ -11,7 +11,7 @@ namespace DMApp
             double weightSkin = 4;
             double weightEyes = 3;
             double weightHair = 2;
-            double weightClass = 1;
+            double weightRace = 1;
             double weightBackground = 1;
             double weightTokenUsageCount = 1;
 
@@ -19,7 +19,7 @@ namespace DMApp
             double skinSimilarity = CalculatePropertySimilarity(character1.Skin, character2.Skin);
             double eyesSimilarity = CalculatePropertySimilarity(character1.Eyes, character2.Eyes);
             double hairSimilarity = CalculatePropertySimilarity(character1.Hair, character2.Hair);
-            double classSimilarity = CalculatePropertySimilarity(character1.Class.Name, character2.Class.Name);
+            double raceSimilarity = CalculatePropertySimilarity(character1.Race.Name, character2.Race.Name);
             double BackgroundSimilarity = CalculatePropertySimilarity(character1.Background, character2.Background);
 
             // Calculate token usage count similarity (inverse score)
@@ -29,7 +29,7 @@ namespace DMApp
             double overallSimilarity = (weightSkin * skinSimilarity)
                 + (weightEyes * eyesSimilarity)
                 + (weightHair * hairSimilarity)
-                + (weightClass * classSimilarity)
+                + (weightRace * raceSimilarity)
                 + (weightBackground * BackgroundSimilarity)
                 + (weightTokenUsageCount * tokenUsageCountSimilarity);
 

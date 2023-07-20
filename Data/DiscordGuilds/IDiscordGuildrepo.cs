@@ -7,6 +7,7 @@ namespace DMApp.Data
     public interface IDiscordGuildRepo
     {
         bool SaveChanges();
+        IList<Campaign> GetCampaignsByGuildId(long guildId);
         IList<Character> GetCharactersByGuildId(long guildId);
         IList<CharacterRace> GetCharacterRacesByGuildId(long guildId);
         IList<CharacterClass> GetCharacterClassesByGuildId(long guildId);

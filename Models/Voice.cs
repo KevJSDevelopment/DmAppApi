@@ -8,15 +8,21 @@ namespace DMApp.Models
 		public Voice()
 		{
 			Characters = new List<Character>();
-		}
 
-		public int Id { get; set; }
+            CreatedOn = DateTime.UtcNow;
+            UpdatedOn = DateTime.UtcNow;
+        }
+
+		public int VoiceId { get; set; }
 
 		public byte[]? VoiceBlob { get; set; }
 
 		public IList<Character> Characters { get; set; }
 
 		public DiscordGuild? Guild { get; set; }
-	}
+
+        public DateTime CreatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
+    }
 }
 

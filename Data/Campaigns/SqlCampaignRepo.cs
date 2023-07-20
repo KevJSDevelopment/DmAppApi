@@ -32,7 +32,7 @@ namespace DMApp.Data
 
         public void DeleteCampaign(int campaignId)
         {
-            Campaign campaign = _context.Campaigns.FirstOrDefault(c => c.Id == campaignId);
+            Campaign campaign = _context.Campaigns.FirstOrDefault(c => c.CampaignId == campaignId);
 
             if (campaign == null)
             {
@@ -44,18 +44,23 @@ namespace DMApp.Data
 
         public Campaign GetCampaignById(int campaignId)
         {
-            return _context.Campaigns.FirstOrDefault(c => c.Id == campaignId);
+            return _context.Campaigns.FirstOrDefault(c => c.CampaignId == campaignId);
         }
 
         public void AddCharacterToCampaign(int campaignId, int characterId)
         {
-            Campaign campaign = _context.Campaigns.FirstOrDefault(c => c.Id == campaignId);
+            Campaign campaign = _context.Campaigns.FirstOrDefault(c => c.CampaignId == campaignId);
 
             Character character = _context.Characters.FirstOrDefault(c => c.CharacterId == characterId);
 
-            campaign.Characters.Add(character);
+            if(campaign == null || character == null)
+            {
+                return;
+            }
 
+            campaign.Characters.Add(character);
             _context.SaveChanges();
+
         }
 
         public bool SaveChanges()

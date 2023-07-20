@@ -75,7 +75,8 @@ namespace DMApp.Controllers
             CharacterRace characterRace = _raceRepo.GetCharacterRaceByName(characterReadGPTDto.Race, guildId);
             DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
 
-            if (characterClass == null)
+            /* Add if users can create classes and races *
+             * if (characterClass == null)
             {
                 characterClass = new CharacterClass { Name = characterReadGPTDto.Class, Description = "" };
                 // Create the character class
@@ -108,12 +109,12 @@ namespace DMApp.Controllers
                 _guildRepo.UpdateGuild(guild);
 
             }
+            */
 
             Character character = _mapper.Map<Character>(characterCreatedDto);
 
             if (characterClass != null) {
-                character.Class = characterClass;
-                character.ClassId = characterClass.CharacterClassId;
+                character.Classes.Add(characterClass);
             }
 
             if (characterRace != null)
@@ -128,13 +129,7 @@ namespace DMApp.Controllers
             {
                 if (characterInitiateDto.CampaignId.HasValue) _campaignRepo.AddCharacterToCampaign(characterInitiateDto.CampaignId.Value, character.CharacterId);
 
-                characterCreatedDto = _mapper.Map<CharacterCreateDto>(character);
-                characterReadGPTDto = _mapper.Map<CharacterReadDto>(characterCreatedDto);
-
-                characterReadGPTDto.Class = character.Class.Name;
-                characterReadGPTDto.Race = character.Race.Name;
-
-                return Ok(new { Status = 200, data = characterReadGPTDto, message = $"{characterReadGPTDto.Name} successfully created" });
+                return Ok(new { Status = 200, data = character, message = $"{character.Name} successfully created" });
             }
             else
             {

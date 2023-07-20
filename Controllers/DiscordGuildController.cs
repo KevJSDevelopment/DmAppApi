@@ -16,6 +16,14 @@ namespace DMApp.Data
             _mapper = mapper;
         }
 
+        [HttpGet("/guilds/campaigns/{guildId}")]
+        public ActionResult GetCampaignsByGuildId(long guildId)
+        {
+            IList<Campaign> campaigns = _repository.GetCampaignsByGuildId(guildId);
+
+            return Ok(campaigns);
+        }
+
         [HttpGet("/guilds/characters/{guildId}")]
         public ActionResult GetCharactersByGuildId(long guildId)
         {

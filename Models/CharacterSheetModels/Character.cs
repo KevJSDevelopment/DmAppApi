@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata;
 
 namespace DMApp.Models
@@ -9,6 +10,7 @@ namespace DMApp.Models
         public Character()
         {
             Guilds = new List<DiscordGuild>();
+            Classes = new List<CharacterClass>();
             Allies = new List<Character>();
             Enemies = new List<Character>();
             Organizations = new List<Organization>();
@@ -18,6 +20,8 @@ namespace DMApp.Models
             Items = new List<Item>();
             Spells = new List<Spell>();
 
+            IsPlayerCharacter = false;
+
             // ability scores
             Strength = 10;
             Dexterity = 10;
@@ -25,6 +29,10 @@ namespace DMApp.Models
             Intelligence = 10;
             Wisdom = 10;
             Charisma = 10;
+
+            Immunities = string.Empty;
+            Resistances = string.Empty;
+            Vulnerabilities = string.Empty;
 
             // Skills
             Acrobatics = 0;
@@ -100,11 +108,12 @@ namespace DMApp.Models
         public int CharacterId { get; set; }
         public string? Name { get; set; }
 
+        public bool? IsPlayerCharacter { get; set; }
+
         public int? RaceId { get; set; }
         public CharacterRace? Race { get; set; }
 
-        public int? ClassId { get; set; }
-        public CharacterClass? Class { get; set; }
+        public IList<CharacterClass> Classes { get; set; }
 
         public int? TokenId { get; set; }
         public CharacterToken? Token { get; set; }
@@ -113,7 +122,11 @@ namespace DMApp.Models
         public Voice? CharacterVoice { get; set; }
 
         // Discord Server information
-        public IList<DiscordGuild> Guilds { get; set; } 
+        public IList<DiscordGuild> Guilds { get; set; }
+
+        //Campaign
+        public int? CampaignId { get; set; }
+        public Campaign? Campaign { get; set; }
 
         // Relationships & Organizations
         public IList<Character> Allies { get; set; } 
@@ -127,6 +140,14 @@ namespace DMApp.Models
         public int Intelligence { get; set; }
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
+
+        // Immunities & Resistances
+        
+        public string Immunities { get; set; }
+        
+        public string Resistances { get; set; }
+        
+        public string Vulnerabilities { get; set; }
 
         //Skills
         public int Acrobatics { get; set; } // Dexterity-based

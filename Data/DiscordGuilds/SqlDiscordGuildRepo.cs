@@ -57,6 +57,13 @@ namespace DMApp.Data
             _context.DiscordGuilds.Remove(guild);
         }
 
+        public IList<Campaign> GetCampaignsByGuildId(long guildId)
+        {
+            return _context.Campaigns
+            .Where(c => c.GuildId == guildId)
+            .ToList();
+        }
+
         public IList<Character> GetCharactersByGuildId(long guildId)
         {
             return _context.Characters

@@ -25,14 +25,18 @@ namespace DMApp
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.AddScoped<IDiscordGuildRepo, SqlDiscordGuildRepo>();
+            services.AddScoped<IChannelRepo, SqlChannelRepo>();
+            services.AddScoped<ICampaignRepo, SqlCampaignRepo>();
             services.AddScoped<ICharacterRepo, SqlCharacterRepo>();
             services.AddScoped<ICharacterTokenRepo, SqlCharacterTokenRepo>();
-            services.AddScoped<IDiscordGuildRepo, SqlDiscordGuildRepo>();
             services.AddScoped<IClassRepo, SqlClassRepo>();
             services.AddScoped<IRaceRepo, SqlCharacterRaceRepo>();
             services.AddScoped<IFeatureRepo, SqlFeatureRepo>();
             services.AddScoped<ITraitRepo, SqlTraitRepo>();
             services.AddScoped<IOrganizationRepo, SqlOrganizationRepo>();
+            services.AddScoped<ISpellRepo, SqlSpellRepo>();
+            services.AddScoped<IItemRepo, SqlItemRepo>();
 
             services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
