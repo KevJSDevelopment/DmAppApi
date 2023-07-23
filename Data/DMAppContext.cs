@@ -21,7 +21,7 @@ namespace DMApp.Data
         public DbSet<CharacterClass> Classes { get; set; }
         public DbSet<CharacterToken> CharacterTokens { get; set; }
         public DbSet<DiscordGuild> DiscordGuilds { get; set; }
-        public DbSet<DiscordGuildChannel> DiscordGuildChannels { get; set; }
+        //public DbSet<DiscordGuildChannel> DiscordGuildChannels { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Trait> Traits { get; set; }
@@ -60,8 +60,8 @@ namespace DMApp.Data
             .HasKey(g => g.GuildId);
             modelBuilder.Entity<Feature>()
             .HasKey(f => f.FeatureId);
-            modelBuilder.Entity<DiscordGuildChannel>()
-            .HasKey(f => f.ChannelId);
+            //modelBuilder.Entity<DiscordGuildChannel>()
+            //.HasKey(f => f.ChannelId);
             modelBuilder.Entity<Trait>()
             .HasKey(t => t.TraitId);
             modelBuilder.Entity<Item>()
@@ -294,11 +294,6 @@ namespace DMApp.Data
             .ValueGeneratedNever();
 
             modelBuilder.Entity<DiscordGuild>()
-             .HasMany(g => g.Channels)
-             .WithOne(c => c.Guild)
-             .HasForeignKey(c => c.GuildId);
-
-            modelBuilder.Entity<DiscordGuild>()
              .HasMany(g => g.Characters)
              .WithMany(c => c.Guilds)
              .UsingEntity<GuildCharacter>(
@@ -439,30 +434,30 @@ namespace DMApp.Data
                 .WithOne(ch => ch.Campaign);
         }
 
-        public override int SaveChanges()
-        {
-            ValidateGuildChannelConfiguration();
+        //public override int SaveChanges()
+        //{
+        //    ValidateGuildChannelConfiguration();
 
-            return base.SaveChanges();
-        }
+        //    return base.SaveChanges();
+        //}
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            ValidateGuildChannelConfiguration();
+        //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        //{
+        //    ValidateGuildChannelConfiguration();
 
-            return await base.SaveChangesAsync(cancellationToken);
-        }
+        //    return await base.SaveChangesAsync(cancellationToken);
+        //}
 
-        private void ValidateGuildChannelConfiguration()
-        {
-            var guilds = ChangeTracker.Entries<DiscordGuild>()
-                .Where(e => e.State != EntityState.Deleted && (e.State == EntityState.Added || e.State == EntityState.Modified))
-                .Select(e => e.Entity);
+        //private void ValidateGuildChannelConfiguration()
+        //{
+        //    var guilds = ChangeTracker.Entries<DiscordGuild>()
+        //        .Where(e => e.State != EntityState.Deleted && (e.State == EntityState.Added || e.State == EntityState.Modified))
+        //        .Select(e => e.Entity);
 
-            foreach (var guild in guilds)
-            {
-                guild.ValidateChannelConfiguration();
-            }
-        }
+        //    foreach (var guild in guilds)
+        //    {
+        //        guild.ValidateChannelConfiguration();
+        //    }
+        //}
     }
 }

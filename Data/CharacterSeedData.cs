@@ -157,8 +157,8 @@ public static class CharacterSeedData
 
         //var campaigns = new[]
         //{
-        //    new Campaign { CampaignId = 1, Name = "Lord of the rings", GuildId = guild.GuildId },
-        //    new Campaign { CampaignId = 2, Name = "Harry Potter", GuildId = guild.GuildId },
+        //    new Campaign { CampaignId = 1, Name = "Lord of the rings", },
+        //    new Campaign { CampaignId = 2, Name = "Harry Potter" },
         //    // Add more character instances as needed
         //};
 

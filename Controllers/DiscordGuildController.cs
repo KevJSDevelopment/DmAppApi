@@ -71,7 +71,6 @@ namespace DMApp.Data
         [HttpGet("/guilds/organizations/{guildId}")]
         public ActionResult<IList<CharacterSheetPropertyDto>> GetOrganizationsByGuildId(long guildId)
         {
-
             IList<Organization> characterClasses = _repository.GetOrganizationsByGuildId(guildId);
             IList<CharacterSheetPropertyDto> organizationDtos = _mapper.Map<IList<CharacterSheetPropertyDto>>(characterClasses);
 
@@ -81,8 +80,6 @@ namespace DMApp.Data
         [HttpGet("/guilds/items/{guildId}")]
         public ActionResult<IList<CharacterSheetPropertyDto>> GetItemsByGuildId(long guildId)
         {
-            
-
             IList<Item> characterClasses = _repository.GetItemsByGuildId(guildId);
             IList<CharacterSheetPropertyDto> itemDtos = _mapper.Map<IList<CharacterSheetPropertyDto>>(characterClasses);
 
@@ -92,20 +89,10 @@ namespace DMApp.Data
         [HttpGet("/guilds/spells/{guildId}")]
         public ActionResult<IList<CharacterSheetPropertyDto>> GetspellsByGuildId(long guildId)
         {
-            
-
             IList<Spell> characterClasses = _repository.GetSpellsByGuildId(guildId);
             IList<CharacterSheetPropertyDto> spellDtos = _mapper.Map<IList<CharacterSheetPropertyDto>>(characterClasses);
 
             return Ok(spellDtos);
-        }
-
-        [HttpGet("/guilds/assets/character-channel/{guildId}")]
-        public ActionResult<DiscordGuildChannel> GetCharacterAssetChannelByGuildId(long guildId)
-        {
-            DiscordGuildChannel channel = _repository.GetCharacterAssetChannelByGuildId(guildId);
-
-            return Ok(channel);
         }
 
         [HttpPost("/guilds/{guildId}")]

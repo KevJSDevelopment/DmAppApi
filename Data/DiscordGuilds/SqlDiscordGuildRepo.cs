@@ -110,11 +110,6 @@ namespace DMApp.Data
             return _context.Spells.Where(c => c.Guilds.Any(g => g.GuildId == guildId)).ToList();
         }
 
-        public DiscordGuildChannel GetCharacterAssetChannelByGuildId(long guildId)
-        {
-            return _context.DiscordGuildChannels.FirstOrDefault(c => c.GuildId == guildId && c.isCharacterAssetChannel == true && c.isDmOnlyChannel == false);
-        }
-
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);
