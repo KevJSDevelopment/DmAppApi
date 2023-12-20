@@ -62,7 +62,6 @@
     <Folder Include="Models\Indexes\" />
     <Folder Include="Models\Misc\" />
     <Folder Include="Models\CharacterSheetModels\" />
-    <Folder Include="Models\GuildInformationModels\" />
     <Folder Include="Data\Campaigns\" />
     <Folder Include="Models\Types\" />
   </ItemGroup>

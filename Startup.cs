@@ -25,8 +25,6 @@ namespace DMApp
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IDiscordGuildRepo, SqlDiscordGuildRepo>();
-            //services.AddScoped<IChannelRepo, SqlChannelRepo>();
             services.AddScoped<ICampaignRepo, SqlCampaignRepo>();
             services.AddScoped<ICharacterRepo, SqlCharacterRepo>();
             services.AddScoped<ICharacterTokenRepo, SqlCharacterTokenRepo>();

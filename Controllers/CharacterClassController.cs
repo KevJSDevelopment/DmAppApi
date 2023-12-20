@@ -9,32 +9,20 @@ namespace DMApp.Controllers
     public class CharacterClassConroller : Controller
 	{
         private readonly IClassRepo _classRepo;
-        private readonly IDiscordGuildRepo _guildRepo;
         private readonly IMapper _mapper;
 
-        public CharacterClassConroller(IClassRepo classRepo,IDiscordGuildRepo guildRepo, IMapper mapper)
+        public CharacterClassConroller(IClassRepo classRepo, IMapper mapper)
         {
             _classRepo = classRepo;
-            _guildRepo = guildRepo;
             _mapper = mapper;
         }
 
-        [HttpPost("/character-class/{guildId}")]
-        public ActionResult CreateCharacterClass([FromBody] CharacterSheetPropertyDto characterClassDto,long guildId)
+        [HttpPost("/character-class")]
+        public ActionResult CreateCharacterClass([FromBody] CharacterSheetPropertyDto characterClassDto)
         {
-            
-
             CharacterClass characterClass = _mapper.Map<CharacterClass>(characterClassDto);
-            DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
 
-            if (guild == null)
-            {
-                guild = _guildRepo.CreateGuild(guildId);
-            }
-
-            characterClass.Guilds.Add(guild);
-
-            _classRepo.CreateCharacterClass(characterClass, guildId);
+            _classRepo.CreateCharacterClass(characterClass);
 
             return Ok(new { Status = 200, message = "Class Created" });
         }

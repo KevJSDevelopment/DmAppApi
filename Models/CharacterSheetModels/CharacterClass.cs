@@ -11,7 +11,6 @@ namespace DMApp.Models
             Description = string.Empty;
             Characters = new List<Character>();
             Features = new List<Feature>();
-            Guilds = new List<DiscordGuild>();
             CreatedOn = DateTime.UtcNow;
             UpdatedOn = DateTime.UtcNow;
         }
@@ -22,7 +21,6 @@ namespace DMApp.Models
 
         public IList<Character> Characters { get; set; }
         public IList<Feature> Features { get; set; }
-        public IList<DiscordGuild> Guilds { get; set; }
 
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }

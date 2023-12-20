@@ -10,22 +10,20 @@ namespace DMApp.Controllers
 	{
         private readonly IFeatureRepo _featureRepo;
         private readonly IClassRepo _classRepo;
-        private readonly IDiscordGuildRepo _guildRepo;
+
         private readonly IMapper _mapper;
 
-        public FeatureConroller(IFeatureRepo featureRepo, IClassRepo classRepo, IDiscordGuildRepo guildRepo, IMapper mapper)
+        public FeatureConroller(IFeatureRepo featureRepo, IClassRepo classRepo, IMapper mapper)
         {
             _featureRepo = featureRepo;
             _classRepo = classRepo;
-            _guildRepo = guildRepo;
             _mapper = mapper;
         }
 
-        [HttpPost("/features/{guildId}")]
-        public ActionResult CreateFeature([FromBody] CharacterSheetPropertyDto featureDto, [FromForm] int classId, long guildId)
+        [HttpPost("/features")]
+        public ActionResult CreateFeature([FromBody] CharacterSheetPropertyDto featureDto, [FromForm] int classId)
         {
             Feature feature = _mapper.Map<Feature>(featureDto);
-            DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
 
             CharacterClass characterClass = _classRepo.GetCharacterClassById(classId);
 
@@ -34,13 +32,6 @@ namespace DMApp.Controllers
                 feature.Class = characterClass;
                 feature.ClassId = characterClass.CharacterClassId;
             }
-
-            if (guild == null)
-            {
-                guild = _guildRepo.CreateGuild(guildId);
-            }
-
-            feature.Guilds.Add(guild);
 
             _featureRepo.CreateFeature(feature);
 

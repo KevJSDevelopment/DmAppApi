@@ -42,10 +42,6 @@ public static class CharacterSeedData
 
         modelBuilder.Entity<CharacterRace>().HasData(races);
 
-        var guild = new DiscordGuild { GuildId = 1077311704985239684 };
-
-        modelBuilder.Entity<DiscordGuild>().HasData(guild);
-
         var organizations = new[]
         {
             new Organization { OrganizationId = 1, Name = "Harper's Guild", Description = "A secret organization dedicated to preserving knowledge, maintaining balance, and fighting evil in all its forms." },
@@ -196,22 +192,6 @@ public static class CharacterSeedData
                 }
             );
 
-        modelBuilder.Entity<GuildCharacter>()
-            .HasData(
-                new GuildCharacter
-                {
-                    GuildId = 1077311704985239684,
-                    CharacterId = characters[0].CharacterId,
-                    JoinedOn = DateTime.UtcNow
-                },
-                new GuildCharacter
-                {
-                    GuildId = 1077311704985239684,
-                    CharacterId = characters[1].CharacterId,
-                    JoinedOn = DateTime.UtcNow
-                }
-            );
-
         modelBuilder.Entity<CharacterEnemy>()
             .HasData(
                 new CharacterEnemy
@@ -290,26 +270,6 @@ public static class CharacterSeedData
                     SpellId = spells[1].SpellId
                 }
             );
-
-        var guildClasses = new List<GuildClass>();
-
-        for(int i = 0; i < classes.Length; i++)
-        {
-            guildClasses.Add(new GuildClass { CharacterClassId = classes[i].CharacterClassId, GuildId = guild.GuildId });
-        }
-
-        modelBuilder.Entity<GuildClass>()
-            .HasData(guildClasses);
-
-        var guildRaces = new List<GuildRace>();
-
-        for (int i = 0; i < races.Length; i++)
-        {
-            guildRaces.Add(new GuildRace { CharacterRaceId = races[i].CharacterRaceId, GuildId = guild.GuildId });
-        }
-
-        modelBuilder.Entity<GuildRace>()
-            .HasData(guildRaces);
 
     }
 }

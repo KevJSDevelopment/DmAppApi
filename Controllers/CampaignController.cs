@@ -10,29 +10,18 @@ namespace DMApp.Controllers
 	{
         private readonly ICharacterRepo _characterRepo;
         private readonly ICampaignRepo _campaignRepo;
-        private readonly IDiscordGuildRepo _guildRepo;
         private readonly IMapper _mapper;
 
-        public CampaignController(ICharacterRepo characterRepo, ICampaignRepo campaignRepo, IDiscordGuildRepo guildRepo, IMapper mapper)
+        public CampaignController(ICharacterRepo characterRepo, ICampaignRepo campaignRepo, IMapper mapper)
         {
             _characterRepo = characterRepo;
             _campaignRepo = campaignRepo;
-            _guildRepo = guildRepo;
             _mapper = mapper;
         }
 
-        [HttpPost("/campaigns/{guildId}")]
-        public ActionResult CreateCampaign([FromBody] Campaign campaign, long guildId)
+        [HttpPost("/campaigns")]
+        public ActionResult CreateCampaign([FromBody] Campaign campaign)
         {
-            DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
-
-            if (guild == null)
-            {
-                guild = _guildRepo.CreateGuild(guildId);
-            }
-
-            guild.Campaigns.Add(campaign);
-
             _campaignRepo.CreateCampaign(campaign);
 
             return Ok("Campaign Created");

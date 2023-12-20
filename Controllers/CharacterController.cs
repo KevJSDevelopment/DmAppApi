@@ -17,19 +17,17 @@ namespace DMApp.Controllers
         private readonly ICharacterRepo _characterRepo;
         private readonly IClassRepo _classRepo;
         private readonly IRaceRepo _raceRepo;
-        private readonly IDiscordGuildRepo _guildRepo;
         private readonly ICampaignRepo _campaignRepo;
         private readonly IMapper _mapper;
         private readonly OpenAIAPI _api;
 
-        public CharacterController(ICharacterRepo characterRepo, IClassRepo classRepo, IRaceRepo raceRepo, IDiscordGuildRepo guildRepo, ICampaignRepo campaignRepo, IMapper mapper)
+        public CharacterController(ICharacterRepo characterRepo, IClassRepo classRepo, IRaceRepo raceRepo, ICampaignRepo campaignRepo, IMapper mapper)
         {
             string? openai_key = Environment.GetEnvironmentVariable("OpenAI_Key");
             string? openai_org = Environment.GetEnvironmentVariable("OpenAi_Organization");
             _characterRepo = characterRepo;
             _classRepo = classRepo;
             _raceRepo = raceRepo;
-            _guildRepo = guildRepo;
             _campaignRepo = campaignRepo;
             _mapper = mapper;
             _api = new OpenAIAPI(new APIAuthentication(openai_key, openai_org));
@@ -46,8 +44,8 @@ namespace DMApp.Controllers
         }
 
 
-        [HttpPost("/characters/new/{guildId}")]
-        public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterInitiateDto characterInitiateDto, long guildId, int tokens = 250)
+        [HttpPost("/characters/new")]
+        public async Task<ActionResult<Character>> CreateCharacter([FromBody] CharacterInitiateDto characterInitiateDto, int tokens = 250)
         {
             string message = new Prompts(_mapper).CreateCharacter(characterInitiateDto, tokens);
 
@@ -71,9 +69,8 @@ namespace DMApp.Controllers
             characterReadGPTDto = JsonConvert.DeserializeObject<CharacterReadDto>(chatResponse.Choices[0].Message.Content);
 
             CharacterCreateDto characterCreatedDto = _mapper.Map<CharacterCreateDto>(characterReadGPTDto);
-            CharacterClass characterClass = _classRepo.GetCharacterClassByName(characterReadGPTDto.Class, guildId);
-            CharacterRace characterRace = _raceRepo.GetCharacterRaceByName(characterReadGPTDto.Race, guildId);
-            DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
+            CharacterClass characterClass = _classRepo.GetCharacterClassByName(characterReadGPTDto.Class);
+            CharacterRace characterRace = _raceRepo.GetCharacterRaceByName(characterReadGPTDto.Race);
 
             /* Add if users can create classes and races *
              * if (characterClass == null)
@@ -123,7 +120,7 @@ namespace DMApp.Controllers
                 character.RaceId = characterRace.CharacterRaceId;
             }
 
-            character = _characterRepo.CreateCharacter(character, guildId);
+            character = _characterRepo.CreateCharacter(character);
 
             if (_characterRepo.SaveChanges())
             {

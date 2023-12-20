@@ -13,7 +13,7 @@ namespace DMApp.Models
             Description = string.Empty;
             Cost = 0;
             Characters = new List<Character>();
-            Guilds = new List<DiscordGuild>();
+            
             CreatedOn = DateTime.UtcNow;
             UpdatedOn = DateTime.UtcNow;
         }
@@ -36,7 +36,7 @@ namespace DMApp.Models
 
         // Other item properties
         public IList<Character> Characters { get; set; }
-        public IList<DiscordGuild> Guilds { get; set; }
+        
 
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }

@@ -12,7 +12,6 @@ namespace DMApp.Models
             Name = string.Empty;
             Description = string.Empty;
             Characters = new List<Character>();
-            Guilds = new List<DiscordGuild>();
             CreatedOn = DateTime.UtcNow;
             UpdatedOn = DateTime.UtcNow;
 
@@ -73,11 +72,9 @@ namespace DMApp.Models
         public CharacterClass? Class { get; set; }
 
         public IList<Character> Characters { get; set; }
-        public IList<DiscordGuild> Guilds { get; set; }
-
+        
         public int? Level { get; set; }
 
-        
         public string Immunities { get; set; }    
         public string Resistances { get; set; }
         public string Vulnerabilities { get; set; }

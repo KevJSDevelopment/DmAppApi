@@ -12,7 +12,6 @@ namespace DMApp.Models
             SpellLevel = 0;
             Description = string.Empty;
             Characters = new List<Character>();
-            Guilds = new List<DiscordGuild>();
             CreatedOn = DateTime.UtcNow;
             UpdatedOn = DateTime.UtcNow;
         }
@@ -48,8 +47,6 @@ namespace DMApp.Models
 
         // Other spell properties
         public IList<Character> Characters { get; set; }
-        public IList<DiscordGuild> Guilds { get; set; }
-
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
 

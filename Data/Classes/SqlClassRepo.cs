@@ -18,22 +18,11 @@ namespace DMApp.Data
             _context = context;
         }
 
-        public CharacterClass CreateCharacterClass(CharacterClass characterClass,long guildId)
+        public CharacterClass CreateCharacterClass(CharacterClass characterClass)
         {
-            
-
             if (characterClass == null) throw new ArgumentNullException(nameof(characterClass));
 
-
             characterClass.CharacterClassId = 0;
-
-            // Check if a character class with the same name already exists for the guild
-            bool classExists = _context.Classes.Any(c => c.Name != null && c.Name == characterClass.Name && c.Guilds.Any(g => g.GuildId == guildId));
-
-            // Return a validation response indicating that the class already exists
-            // You can choose an appropriate way to handle this, such as throwing an exception or returning an error message.
-            if (classExists) throw new InvalidOperationException("A character class with the same name already exists for the guild.");
-
             _context.Classes.Add(characterClass);
             _context.SaveChanges();
 
@@ -46,7 +35,7 @@ namespace DMApp.Data
             return _context.Classes.FirstOrDefault(c => c.CharacterClassId == id);
         }
 
-        public CharacterClass GetCharacterClassByName(string name, long guildId)
+        public CharacterClass GetCharacterClassByName(string name)
         {
             long defaultId = 0;
 
@@ -58,7 +47,7 @@ namespace DMApp.Data
                 
             }
 
-            return _context.Classes.FirstOrDefault(c => c.Name == name && c.Guilds.Any(g => g.GuildId == guildId || g.GuildId == defaultId));
+            return _context.Classes.FirstOrDefault(c => c.Name == name);
         }
 
         public void DeleteClass(int @classId)

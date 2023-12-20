@@ -9,30 +9,20 @@ namespace DMApp.Controllers
     public class CharacterRaceConroller : Controller
 	{
         private readonly IRaceRepo _raceRepo;
-        private readonly IDiscordGuildRepo _guildRepo;
         private readonly IMapper _mapper;
 
-        public CharacterRaceConroller(IRaceRepo raceRepo, IDiscordGuildRepo guildRepo, IMapper mapper)
+        public CharacterRaceConroller(IRaceRepo raceRepo, IMapper mapper)
         {
             _raceRepo = raceRepo;
-            _guildRepo = guildRepo;
             _mapper = mapper;
         }
 
-        [HttpPost("/character-race/{guildId}")]
-        public ActionResult CreateCharacterRace([FromBody] CharacterSheetPropertyDto characterRaceDto, long guildId)
+        [HttpPost("/character-race")]
+        public ActionResult CreateCharacterRace([FromBody] CharacterSheetPropertyDto characterRaceDto)
         {
             CharacterRace characterRace = _mapper.Map<CharacterRace>(characterRaceDto);
-            DiscordGuild guild = _guildRepo.GetGuildByGuildId(guildId);
 
-            if (guild == null)
-            {
-                guild = _guildRepo.CreateGuild(guildId);
-            }
-
-            characterRace.Guilds.Add(guild);
-
-            _raceRepo.CreateCharacterRace(characterRace, guildId);
+            _raceRepo.CreateCharacterRace(characterRace);
 
             return Ok(new { Status = 200, message = "Race Created" });
         }

@@ -20,8 +20,6 @@ namespace DMApp.Data
         public DbSet<CharacterRace> Races { get; set; }
         public DbSet<CharacterClass> Classes { get; set; }
         public DbSet<CharacterToken> CharacterTokens { get; set; }
-        public DbSet<DiscordGuild> DiscordGuilds { get; set; }
-        //public DbSet<DiscordGuildChannel> DiscordGuildChannels { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Trait> Traits { get; set; }
@@ -39,7 +37,6 @@ namespace DMApp.Data
             ConfigureTrait(modelBuilder);
             ConfigureItem(modelBuilder);
             ConfigureSpell(modelBuilder);
-            ConfigureDiscordGuild(modelBuilder);
             ConfigureCampaign(modelBuilder);
 
             // Seed Data
@@ -56,12 +53,8 @@ namespace DMApp.Data
             .HasKey(c => c.CharacterClassId);
             modelBuilder.Entity<CharacterRace>()
             .HasKey(c => c.CharacterRaceId);
-            modelBuilder.Entity<DiscordGuild>()
-            .HasKey(g => g.GuildId);
             modelBuilder.Entity<Feature>()
             .HasKey(f => f.FeatureId);
-            //modelBuilder.Entity<DiscordGuildChannel>()
-            //.HasKey(f => f.ChannelId);
             modelBuilder.Entity<Trait>()
             .HasKey(t => t.TraitId);
             modelBuilder.Entity<Item>()
@@ -287,142 +280,6 @@ namespace DMApp.Data
 
         }
 
-        private void ConfigureDiscordGuild(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<DiscordGuild>()
-            .Property(g => g.GuildId)
-            .ValueGeneratedNever();
-
-            modelBuilder.Entity<DiscordGuild>()
-             .HasMany(g => g.Characters)
-             .WithMany(c => c.Guilds)
-             .UsingEntity<GuildCharacter>(
-                j => j
-                     .HasOne(gc => gc.Character)
-                     .WithMany()
-                     .HasForeignKey(gc => gc.CharacterId),
-                j => j
-                     .HasOne(gc => gc.Guild)
-                     .WithMany()
-                     .HasForeignKey(gc => gc.GuildId),
-                j =>
-                    {
-                        j.Property<DateTime>("JoinedOn").HasDefaultValueSql("GETDATE()");
-                        j.HasKey("GuildId", "CharacterId");
-                    }
-                );
-
-            // GuildCharacter
-            modelBuilder.Entity<GuildCharacter>()
-                .HasKey(gc => new { gc.GuildId, gc.CharacterId });
-
-            // GuildClass
-            modelBuilder.Entity<GuildClass>()
-                .HasKey(gcl => new { gcl.GuildId, gcl.CharacterClassId });
-
-            // GuildRace
-            modelBuilder.Entity<GuildRace>()
-                .HasKey(gr => new { gr.GuildId, gr.CharacterRaceId });
-
-            // GuildOrganization
-            modelBuilder.Entity<GuildOrganization>()
-                .HasKey(go => new { go.GuildId, go.OrganizationId });
-
-            // GuildItem
-            modelBuilder.Entity<GuildItem>()
-                .HasKey(gi => new { gi.GuildId, gi.ItemId });
-
-            // GuildSpell
-            modelBuilder.Entity<GuildSpell>()
-                .HasKey(gs => new { gs.GuildId, gs.SpellId });
-
-            modelBuilder.Entity<DiscordGuild>()
-                .HasMany(g => g.CharacterClasses)
-                .WithMany(cc => cc.Guilds)
-                .UsingEntity<GuildClass>(
-                    j => j
-                        .HasOne(gc => gc.CharacterClass)
-                        .WithMany()
-                        .HasForeignKey(gc => gc.CharacterClassId),
-                    j => j
-                        .HasOne(gc => gc.Guild)
-                        .WithMany()
-                        .HasForeignKey(gc => gc.GuildId),
-                    j => j
-                        .HasKey("GuildId", "CharacterClassId")
-                );
-
-            modelBuilder.Entity<DiscordGuild>()
-                .HasMany(g => g.CharacterRaces)
-                .WithMany(cr => cr.Guilds)
-                .UsingEntity<GuildRace>(
-                    j => j
-                        .HasOne(gr => gr.CharacterRace)
-                        .WithMany()
-                        .HasForeignKey(gr => gr.CharacterRaceId),
-                    j => j
-                        .HasOne(gr => gr.Guild)
-                        .WithMany()
-                        .HasForeignKey(gr => gr.GuildId),
-                    j => j
-                        .HasKey("GuildId", "CharacterRaceId")
-                );
-
-            modelBuilder.Entity<DiscordGuild>()
-                .HasMany(g => g.Organizations)
-                .WithMany(o => o.Guilds)
-                .UsingEntity<GuildOrganization>(
-                    j => j
-                        .HasOne(go => go.Org)
-                        .WithMany()
-                        .HasForeignKey(go => go.OrganizationId),
-                    j => j
-                        .HasOne(go => go.Guild)
-                        .WithMany()
-                        .HasForeignKey(go => go.GuildId),
-                    j => j
-                        .HasKey("GuildId", "OrganizationId")
-                );
-
-            modelBuilder.Entity<DiscordGuild>()
-                .HasMany(g => g.Items)
-                .WithMany(i => i.Guilds)
-                .UsingEntity<GuildItem>(
-                    j => j
-                        .HasOne(gi => gi.Item)
-                        .WithMany()
-                        .HasForeignKey(gi => gi.ItemId),
-                    j => j
-                        .HasOne(gi => gi.Guild)
-                        .WithMany()
-                        .HasForeignKey(gi => gi.GuildId),
-                    j => j
-                        .HasKey("GuildId", "ItemId")
-                );
-
-            modelBuilder.Entity<DiscordGuild>()
-                .HasMany(g => g.Spells)
-                .WithMany(s => s.Guilds)
-                .UsingEntity<GuildSpell>(
-                    j => j
-                        .HasOne(gs => gs.Spell)
-                        .WithMany()
-                        .HasForeignKey(gs => gs.SpellId),
-                    j => j
-                        .HasOne(gs => gs.Guild)
-                        .WithMany()
-                        .HasForeignKey(gs => gs.GuildId),
-                    j => j
-                        .HasKey("GuildId", "SpellId")
-                );
-
-
-            modelBuilder.Entity<DiscordGuild>()
-            .HasMany(g => g.Campaigns)
-            .WithOne(c => c.Guild);
-
-        }
-
         private void ConfigureCampaign(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Campaign>()
@@ -446,18 +303,6 @@ namespace DMApp.Data
         //    ValidateGuildChannelConfiguration();
 
         //    return await base.SaveChangesAsync(cancellationToken);
-        //}
-
-        //private void ValidateGuildChannelConfiguration()
-        //{
-        //    var guilds = ChangeTracker.Entries<DiscordGuild>()
-        //        .Where(e => e.State != EntityState.Deleted && (e.State == EntityState.Added || e.State == EntityState.Modified))
-        //        .Select(e => e.Entity);
-
-        //    foreach (var guild in guilds)
-        //    {
-        //        guild.ValidateChannelConfiguration();
-        //    }
         //}
     }
 }

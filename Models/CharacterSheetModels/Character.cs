@@ -9,7 +9,6 @@ namespace DMApp.Models
     {
         public Character()
         {
-            Guilds = new List<DiscordGuild>();
             Classes = new List<CharacterClass>();
             Allies = new List<Character>();
             Enemies = new List<Character>();
@@ -120,9 +119,6 @@ namespace DMApp.Models
 
         public int? VoiceId { get; set; }
         public Voice? CharacterVoice { get; set; }
-
-        // Discord Server information
-        public IList<DiscordGuild> Guilds { get; set; }
 
         //Campaign
         public int? CampaignId { get; set; }

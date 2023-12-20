@@ -1,31 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace DMApp.Models
 {
-    public class Organization
+    public class User
     {
-        public Organization()
+        public User()
         {
-            Name = string.Empty;
-            Description = string.Empty;
             Characters = new List<Character>();
-            
+            Campaigns = new List<Campaign>();
+
             CreatedOn = DateTime.UtcNow;
             UpdatedOn = DateTime.UtcNow;
         }
 
-        public int OrganizationId { get; set; }
+        public int Id { get; set; }
         public string? Name { get; set; }
-        public string? Description { get; set; }
 
         public IList<Character> Characters { get; set; }
-        
+        public IList<Campaign> Campaigns { get; set; }
 
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
     }
 }
-
-
