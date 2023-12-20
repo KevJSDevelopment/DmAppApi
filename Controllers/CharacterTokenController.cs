@@ -1,7 +1,6 @@
 ﻿using System;
 using AutoMapper;
 using Azure;
-using Discord;
 using DMApp.Data;
 using DMApp.Dtos;
 using DMApp.Models;
