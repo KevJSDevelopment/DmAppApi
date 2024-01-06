@@ -20,6 +20,7 @@ namespace DMApp.Models
 
         public IList<Character> Characters { get; set; }
         public IList<Session> Sessions { get; set; }
+        public IList<User> Users { get; set; }
 
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
