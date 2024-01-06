@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Discord;
 using Microsoft.Extensions.Hosting;
 
 namespace DMApp.Models

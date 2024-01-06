@@ -1,5 +1,4 @@
 ﻿using System;
-using Discord;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace DMApp.Models

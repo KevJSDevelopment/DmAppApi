@@ -17,6 +17,18 @@ namespace DMApp.Data
             _context = context;
         }
 
+        public List<Campaign> GetCampaigns(int userId)
+        {
+            List<Campaign> campaigns = _context.Campaigns.ToList();
+
+            if(campaigns == null)
+            {
+                throw new ArgumentException(nameof(campaigns));
+            }
+
+            return campaigns;
+        }
+
         public Campaign CreateCampaign(Campaign campaign)
         {
             if (campaign == null)

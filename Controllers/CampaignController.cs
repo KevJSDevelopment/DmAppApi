@@ -26,6 +26,14 @@ namespace DMApp.Controllers
 
             return Ok("Campaign Created");
         }
+
+        [HttpGet("/campaigns/{userId}")]
+        public ActionResult GetCampaigns(int userId) 
+        {
+            List<Campaign> campaigns = _campaignRepo.GetCampaigns(userId);
+
+            return Ok(campaigns); 
+        }
     }
 }
 
