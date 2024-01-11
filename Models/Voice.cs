@@ -13,7 +13,7 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-		public int VoiceId { get; set; }
+		public int Id { get; set; }
 
 		public byte[]? VoiceBlob { get; set; }
 

@@ -16,7 +16,7 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        public int SpellId { get; set; }
+        public int Id { get; set; }
         public string? Name { get; set; }
         public int? SpellLevel { get; set; }
         public string? Description { get; set; }

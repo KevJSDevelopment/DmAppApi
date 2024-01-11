@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace DMApp.Models
 {
@@ -9,12 +11,13 @@ namespace DMApp.Models
         {
             Characters = new List<Character>();
             Sessions = new List<Session>();
+            Users = new List<User>();
 
             CreatedOn = DateTime.UtcNow;
             UpdatedOn = DateTime.UtcNow;
         }
 
-		public int CampaignId { get; set; }
+		public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
 

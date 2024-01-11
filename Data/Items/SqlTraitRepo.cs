@@ -32,7 +32,7 @@ namespace DMApp.Data
 
         public void DeleteItem(int itemId)
         {
-            Item item = _context.Items.FirstOrDefault(c => c.ItemId == itemId);
+            Item item = _context.Items.FirstOrDefault(c => c.Id == itemId);
 
             if (item == null)
             {
@@ -44,7 +44,7 @@ namespace DMApp.Data
 
         public Item GetItemById(long itemId)
         {
-            return _context.Items.FirstOrDefault(c => c.ItemId == itemId);
+            return _context.Items.FirstOrDefault(c => c.Id == itemId);
         }
 
         public bool SaveChanges()

@@ -18,7 +18,7 @@ namespace DMApp.Data
         public Character CreateCharacter(Character character)
         {
             
-            character.CharacterId = 0;
+            character.Id = 0;
 
             if (character == null)
             {
@@ -44,7 +44,7 @@ namespace DMApp.Data
 
         public Character GetCharacterById(int id)
         {
-            return _context.Characters.FirstOrDefault(p => p.CharacterId == id);
+            return _context.Characters.FirstOrDefault(p => p.Id == id);
         }
 
         public void UpdateCharacter(Character character)

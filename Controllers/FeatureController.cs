@@ -30,7 +30,7 @@ namespace DMApp.Controllers
             if(characterClass != null)
             {
                 feature.Class = characterClass;
-                feature.ClassId = characterClass.CharacterClassId;
+                feature.ClassId = characterClass.Id;
             }
 
             _featureRepo.CreateFeature(feature);

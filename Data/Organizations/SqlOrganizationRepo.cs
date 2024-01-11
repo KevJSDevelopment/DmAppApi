@@ -32,7 +32,7 @@ namespace DMApp.Data
 
         public void DeleteOrganization(int organizationId)
         {
-            Organization Organization = _context.Organizations.FirstOrDefault(c => c.OrganizationId == organizationId);
+            Organization Organization = _context.Organizations.FirstOrDefault(c => c.Id == organizationId);
 
             if (Organization == null)
             {
@@ -44,7 +44,7 @@ namespace DMApp.Data
 
         public Organization GetOrganizationById(int organizationId)
         {
-            return _context.Organizations.FirstOrDefault(c => c.OrganizationId == organizationId);
+            return _context.Organizations.FirstOrDefault(c => c.Id == organizationId);
         }
 
         public bool SaveChanges()

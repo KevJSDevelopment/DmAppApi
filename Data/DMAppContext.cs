@@ -3,6 +3,7 @@ using System.Reflection.Metadata;
 using DMApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Hosting;
 
 namespace DMApp.Data
 {
@@ -28,8 +29,6 @@ namespace DMApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            ConfigureKeys(modelBuilder);
             ConfigureCharacter(modelBuilder);
             ConfigureCharacterClass(modelBuilder);
             ConfigureCharacterRace(modelBuilder);
@@ -40,37 +39,9 @@ namespace DMApp.Data
             ConfigureCampaign(modelBuilder);
 
             // Seed Data
-            CharacterSeedData.SeedData(modelBuilder);
+            // CharacterSeedData.SeedData(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
-        }
-
-        private void ConfigureKeys(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Character>()
-            .HasKey(c => c.CharacterId);
-            modelBuilder.Entity<CharacterClass>()
-            .HasKey(c => c.CharacterClassId);
-            modelBuilder.Entity<CharacterRace>()
-            .HasKey(c => c.CharacterRaceId);
-            modelBuilder.Entity<Feature>()
-            .HasKey(f => f.FeatureId);
-            modelBuilder.Entity<Trait>()
-            .HasKey(t => t.TraitId);
-            modelBuilder.Entity<Item>()
-            .HasKey(i => i.ItemId);
-            modelBuilder.Entity<Spell>()
-            .HasKey(s => s.SpellId);
-            modelBuilder.Entity<CharacterToken>()
-            .HasKey(ct => ct.TokenId);
-            modelBuilder.Entity<Organization>()
-            .HasKey(o => o.OrganizationId);
-            modelBuilder.Entity<Campaign>()
-            .HasKey(c => c.CampaignId);
-            modelBuilder.Entity<Session>()
-            .HasKey(s => s.SessionId);
-            modelBuilder.Entity<Voice>()
-            .HasKey(v => v.VoiceId);
         }
 
         private void ConfigureCharacter(ModelBuilder modelBuilder)
@@ -289,6 +260,11 @@ namespace DMApp.Data
             modelBuilder.Entity<Campaign>()
                 .HasMany(c => c.Characters)
                 .WithOne(ch => ch.Campaign);
+
+            modelBuilder.Entity<Campaign>()
+            .HasMany(c => c.Users)
+            .WithMany(u => u.Campaigns);
+
         }
 
         //public override int SaveChanges()

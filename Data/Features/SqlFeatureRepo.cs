@@ -32,7 +32,7 @@ namespace DMApp.Data
 
         public void DeleteFeature(int featureId)
         {
-            Feature feature = _context.Features.FirstOrDefault(c => c.FeatureId == featureId);
+            Feature feature = _context.Features.FirstOrDefault(c => c.Id == featureId);
 
             if (feature == null)
             {
@@ -44,7 +44,7 @@ namespace DMApp.Data
 
         public Feature GetFeatureById(long featureId)
         {
-            return _context.Features.FirstOrDefault(c => c.FeatureId == featureId);
+            return _context.Features.FirstOrDefault(c => c.Id == featureId);
         }
 
         public bool SaveChanges()

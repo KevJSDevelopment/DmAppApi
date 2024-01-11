@@ -30,7 +30,7 @@ namespace DMApp.Data
                 throw new InvalidOperationException("A character race with the same name already exists.");
             }
 
-            characterRace.CharacterRaceId = 0;
+            characterRace.Id = 0;
 
             _context.Races.Add(characterRace);
             _context.SaveChanges();
@@ -41,12 +41,12 @@ namespace DMApp.Data
 
         public CharacterRace GetCharacterRaceById(int id)
         {
-            return _context.Races.FirstOrDefault(r => r.CharacterRaceId == id);
+            return _context.Races.FirstOrDefault(r => r.Id == id);
         }
 
         public void DeleteCharacterRace(int characterRaceId)
         {
-            CharacterRace CharacterRace = _context.Races.FirstOrDefault(c => c.CharacterRaceId == characterRaceId);
+            CharacterRace CharacterRace = _context.Races.FirstOrDefault(c => c.Id == characterRaceId);
 
             if (CharacterRace == null)
             {

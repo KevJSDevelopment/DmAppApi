@@ -32,7 +32,7 @@ namespace DMApp.Data
 
         public void DeleteSpell(int spellId)
         {
-            Spell spell = _context.Spells.FirstOrDefault(c => c.SpellId == spellId);
+            Spell spell = _context.Spells.FirstOrDefault(c => c.Id == spellId);
 
             if (spell == null)
             {
@@ -44,7 +44,7 @@ namespace DMApp.Data
 
         public Spell GetSpellById(int spellId)
         {
-            return _context.Spells.FirstOrDefault(c => c.SpellId == spellId);
+            return _context.Spells.FirstOrDefault(c => c.Id == spellId);
         }
 
         public bool SaveChanges()

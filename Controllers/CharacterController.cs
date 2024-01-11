@@ -117,14 +117,14 @@ namespace DMApp.Controllers
             if (characterRace != null)
             {
                 character.Race = characterRace;
-                character.RaceId = characterRace.CharacterRaceId;
+                character.RaceId = characterRace.Id;
             }
 
             character = _characterRepo.CreateCharacter(character);
 
             if (_characterRepo.SaveChanges())
             {
-                if (characterInitiateDto.CampaignId.HasValue) _campaignRepo.AddCharacterToCampaign(characterInitiateDto.CampaignId.Value, character.CharacterId);
+                if (characterInitiateDto.CampaignId.HasValue) _campaignRepo.AddCharacterToCampaign(characterInitiateDto.CampaignId.Value, character.Id);
 
                 return Ok(new { Status = 200, data = character, message = $"{character.Name} successfully created" });
             }

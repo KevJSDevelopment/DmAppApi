@@ -52,8 +52,15 @@
     <None Remove="Data\Campaigns\" />
     <None Remove="Models\Types\" />
   </ItemGroup>
+
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <_WebToolingArtifacts Remove="Properties\launchSettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Properties\launchSettings.json" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Data\Characters\" />
     <Folder Include="Data\CharacterTokens\" />
     <Folder Include="Data\Classes\" />
@@ -66,7 +73,6 @@
     <Folder Include="Data\Spells\" />
     <Folder Include="Models\Indexes\" />
     <Folder Include="Models\Misc\" />
-    <Folder Include="Models\CharacterSheetModels\" />
     <Folder Include="Data\Campaigns\" />
     <Folder Include="Models\Types\" />
   </ItemGroup>

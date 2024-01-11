@@ -34,7 +34,7 @@ namespace DMApp.Controllers
             if(characterRace != null)
             {
                 trait.Race = characterRace;
-                trait.RaceId = characterRace.CharacterRaceId;
+                trait.RaceId = characterRace.Id;
             }
 
             _traitRepo.CreateTrait(trait);

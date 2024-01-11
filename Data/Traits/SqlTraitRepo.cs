@@ -32,7 +32,7 @@ namespace DMApp.Data
 
         public void DeleteTrait(int TraitId)
         {
-            Trait Trait = _context.Traits.FirstOrDefault(c => c.TraitId == TraitId);
+            Trait Trait = _context.Traits.FirstOrDefault(c => c.Id == TraitId);
 
             if (Trait == null)
             {
@@ -44,7 +44,7 @@ namespace DMApp.Data
 
         public Trait GetTraitById(int TraitId)
         {
-            return _context.Traits.FirstOrDefault(c => c.TraitId == TraitId);
+            return _context.Traits.FirstOrDefault(c => c.Id == TraitId);
         }
 
         public bool SaveChanges()

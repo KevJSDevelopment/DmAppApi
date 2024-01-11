@@ -18,7 +18,7 @@ namespace DMApp.Data
 
         public CharacterToken GetToken(int tokenId)
         {
-            return _context.CharacterTokens.FirstOrDefault(t => t.TokenId == tokenId);
+            return _context.CharacterTokens.FirstOrDefault(t => t.Id == tokenId);
         }
 
         public void CreateToken(CharacterToken token)
@@ -61,7 +61,7 @@ namespace DMApp.Data
 
         public Character GetCharacterById(int characterId)
         {
-            return _context.Characters.FirstOrDefault(c => c.CharacterId == characterId);
+            return _context.Characters.FirstOrDefault(c => c.Id == characterId);
         }
 
         public IList<CharacterToken> GetSimilarCharacterTokens(Character character)

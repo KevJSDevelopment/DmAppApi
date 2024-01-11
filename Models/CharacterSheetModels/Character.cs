@@ -104,7 +104,7 @@ namespace DMApp.Models
             UpdatedOn = DateTime.UtcNow;
         }
 
-        public int CharacterId { get; set; }
+        public int Id { get; set; }
         public string? Name { get; set; }
 
         public bool? IsPlayerCharacter { get; set; }

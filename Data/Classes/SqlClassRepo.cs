@@ -22,7 +22,7 @@ namespace DMApp.Data
         {
             if (characterClass == null) throw new ArgumentNullException(nameof(characterClass));
 
-            characterClass.CharacterClassId = 0;
+            characterClass.Id = 0;
             _context.Classes.Add(characterClass);
             _context.SaveChanges();
 
@@ -32,7 +32,7 @@ namespace DMApp.Data
 
         public CharacterClass GetCharacterClassById(int id)
         {
-            return _context.Classes.FirstOrDefault(c => c.CharacterClassId == id);
+            return _context.Classes.FirstOrDefault(c => c.Id == id);
         }
 
         public CharacterClass GetCharacterClassByName(string name)
@@ -52,7 +52,7 @@ namespace DMApp.Data
 
         public void DeleteClass(int @classId)
         {
-            CharacterClass @class = _context.Classes.FirstOrDefault(c => c.CharacterClassId == @classId);
+            CharacterClass @class = _context.Classes.FirstOrDefault(c => c.Id == @classId);
 
             if (@class == null)
             {
@@ -64,7 +64,7 @@ namespace DMApp.Data
 
         public CharacterClass GetClassById(int @classId)
         {
-            return _context.Classes.FirstOrDefault(c => c.CharacterClassId == @classId);
+            return _context.Classes.FirstOrDefault(c => c.Id == @classId);
         }
 
         public bool SaveChanges()
