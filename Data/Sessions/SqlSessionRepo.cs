@@ -13,7 +13,7 @@ namespace DMApp.Data
 
         public List<Session> GetSessions(int campaignid)
         {
-            List<Session> Sessions = _context.Sessions.Where(s => s.CampaignId == campaignid).ToList(); 
+            List<Session> Sessions = _context.Sessions.Where(s => s.CampaignId == campaignid).OrderBy(s => s.ScheduledStart).ToList(); 
 
             if(Sessions == null)
             {
