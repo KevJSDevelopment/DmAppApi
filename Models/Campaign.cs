@@ -10,7 +10,7 @@ namespace DMApp.Models
         public Campaign()
         {
             Characters = new List<Character>();
-            Sessions = new List<Session>();
+            CampaignSessions = new List<CampaignSession>();
             Users = new List<User>();
 
             CreatedOn = DateTime.UtcNow;
@@ -22,7 +22,7 @@ namespace DMApp.Models
         public string? Description { get; set; }
 
         public IList<Character> Characters { get; set; }
-        public IList<Session> Sessions { get; set; }
+        public IList<CampaignSession> CampaignSessions { get; set; }
         public IList<User> Users { get; set; }
 
         public DateTime CreatedOn { get; set; }

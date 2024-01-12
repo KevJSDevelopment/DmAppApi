@@ -1,9 +1,9 @@
 ﻿using System;
 namespace DMApp.Models
 {
-    public class Session
+    public class CampaignSession
     {
-        public Session()
+        public CampaignSession()
         {
             CreatedOn = DateTime.UtcNow;
             UpdatedOn = DateTime.UtcNow;

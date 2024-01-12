@@ -179,7 +179,7 @@ namespace DMApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sessions",
+                name: "CampaignSessions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -195,9 +195,9 @@ namespace DMApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sessions", x => x.Id);
+                    table.PrimaryKey("PK_CampaignSessions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sessions_Campaigns_CampaignId",
+                        name: "FK_CampaignSessions_Campaigns_CampaignId",
                         column: x => x.CampaignId,
                         principalTable: "Campaigns",
                         principalColumn: "Id");
@@ -655,6 +655,11 @@ namespace DMApp.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CampaignSessions_CampaignId",
+                table: "CampaignSessions",
+                column: "CampaignId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CampaignUser_UsersId",
                 table: "CampaignUser",
                 column: "UsersId");
@@ -730,11 +735,6 @@ namespace DMApp.Migrations
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sessions_CampaignId",
-                table: "Sessions",
-                column: "CampaignId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Traits_RaceId",
                 table: "Traits",
                 column: "RaceId");
@@ -743,6 +743,9 @@ namespace DMApp.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CampaignSessions");
+
             migrationBuilder.DropTable(
                 name: "CampaignUser");
 
@@ -769,9 +772,6 @@ namespace DMApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "CharacterTrait");
-
-            migrationBuilder.DropTable(
-                name: "Sessions");
 
             migrationBuilder.DropTable(
                 name: "Features");

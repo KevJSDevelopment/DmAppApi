@@ -27,7 +27,7 @@ namespace DMApp
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<ICampaignRepo, SqlCampaignRepo>();
-            services.AddScoped<ISessionRepo, SqlSessionRepo>();
+            services.AddScoped<ICampaignSessionRepo, SqlCampaignSessionRepo>();
             services.AddScoped<ICharacterRepo, SqlCharacterRepo>();
             services.AddScoped<ICharacterTokenRepo, SqlCharacterTokenRepo>();
             services.AddScoped<IClassRepo, SqlClassRepo>();

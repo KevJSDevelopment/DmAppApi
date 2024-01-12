@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DMApp.Migrations
 {
     [DbContext(typeof(DMAppContext))]
-    [Migration("20240111010015_InitialMigration")]
+    [Migration("20240112204854_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -63,6 +63,45 @@ namespace DMApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Campaigns");
+                });
+
+            modelBuilder.Entity("DMApp.Models.CampaignSession", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CampaignId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ScheduledEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ScheduledStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("SessionNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Summary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CampaignId");
+
+                    b.ToTable("CampaignSessions");
                 });
 
             modelBuilder.Entity("DMApp.Models.Character", b =>
@@ -741,45 +780,6 @@ namespace DMApp.Migrations
                     b.ToTable("Organizations");
                 });
 
-            modelBuilder.Entity("DMApp.Models.Session", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CampaignId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ScheduledEnd")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ScheduledStart")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("SessionNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CampaignId");
-
-                    b.ToTable("Sessions");
-                });
-
             modelBuilder.Entity("DMApp.Models.Spell", b =>
                 {
                     b.Property<int>("Id")
@@ -1062,6 +1062,15 @@ namespace DMApp.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DMApp.Models.CampaignSession", b =>
+                {
+                    b.HasOne("DMApp.Models.Campaign", "Campaign")
+                        .WithMany("CampaignSessions")
+                        .HasForeignKey("CampaignId");
+
+                    b.Navigation("Campaign");
+                });
+
             modelBuilder.Entity("DMApp.Models.Character", b =>
                 {
                     b.HasOne("DMApp.Models.Campaign", "Campaign")
@@ -1254,15 +1263,6 @@ namespace DMApp.Migrations
                     b.Navigation("Class");
                 });
 
-            modelBuilder.Entity("DMApp.Models.Session", b =>
-                {
-                    b.HasOne("DMApp.Models.Campaign", "Campaign")
-                        .WithMany("Sessions")
-                        .HasForeignKey("CampaignId");
-
-                    b.Navigation("Campaign");
-                });
-
             modelBuilder.Entity("DMApp.Models.Trait", b =>
                 {
                     b.HasOne("DMApp.Models.CharacterRace", "Race")
@@ -1274,9 +1274,9 @@ namespace DMApp.Migrations
 
             modelBuilder.Entity("DMApp.Models.Campaign", b =>
                 {
-                    b.Navigation("Characters");
+                    b.Navigation("CampaignSessions");
 
-                    b.Navigation("Sessions");
+                    b.Navigation("Characters");
                 });
 
             modelBuilder.Entity("DMApp.Models.CharacterClass", b =>

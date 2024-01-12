@@ -16,7 +16,7 @@ namespace DMApp.Data
 
         public DbSet<Character> Characters { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
-        public DbSet<Session> Sessions { get; set; }
+        public DbSet<CampaignSession> CampaignSessions { get; set; }
         public DbSet<Voice> Voices { get; set; }
         public DbSet<CharacterRace> Races { get; set; }
         public DbSet<CharacterClass> Classes { get; set; }
@@ -254,7 +254,7 @@ namespace DMApp.Data
         private void ConfigureCampaign(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Campaign>()
-                .HasMany(c => c.Sessions)
+                .HasMany(c => c.CampaignSessions)
                 .WithOne(s => s.Campaign);
 
             modelBuilder.Entity<Campaign>()
